@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background-color: black;
+    color: white; 
+    display: grid;
+}
+
+header {
+    position: fixed;
+    top: 0px;
+    margin: 3rem;
+}
+  
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 1rem;
+}
+
+footer {
+    background-color: #0e0e0e;
+    height: 10vh;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    border-top: 1px solid white;
+}
+
+footer > small {
+    font-size: 0.5rem;
+}
+
+main {
+    border: 1px solid white;
+    border-radius: 5px;
+    height: 65vh;
+    margin: 20vh 3rem 10vh 3rem;
+    padding: 0.75rem; 
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.command {
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.username{
+    color: green;
+}
+
+.hostname{ 
+    color: lightgreen;
+}
+
+.history {
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    resize: none;
+}
+
+.social{
+    color: white;
+    text-decoration: none;
+}
