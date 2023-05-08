@@ -37,24 +37,35 @@ footer {
 }
 
 footer > small {
-    font-size: 0.5rem;
+    font-size: 1rem;
 }
 
 main {
     border: 1px solid white;
     border-radius: 5px;
-    height: 65vh;
-    margin: 20vh 3rem 10vh 3rem;
+    height: 70vh;
+    margin: 15vh 3rem 10vh 3rem;
     padding: 0.75rem; 
     overflow: scroll;
     overflow-x: hidden;
 }
 
+@media only screen and (max-width: 460px) {
+    main {
+        height: 60vh;
+        margin: 25vh 3rem 10vh 3rem;
+    }
+}
+
 .command {
-    background-color: black;
     color: white;
+    background-color: black;
     border: none;
     outline: none;
+    font-size: 1rem;
+}
+
+.response {
     font-size: 1rem;
 }
 
@@ -68,7 +79,6 @@ main {
 
 .history {
     background-color: black;
-    color: white;
     border: none;
     outline: none;
     font-size: 1rem;
