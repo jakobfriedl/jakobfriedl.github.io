@@ -11,39 +11,15 @@ const commands = {
         <div class="response">
             Available commands:<br>
             - help<br>
-            - whoami<br> 
-            - github<br>
-            - linkedin<br>
-            - tryhackme<br> 
+            - whoami<br>  
             - clear
         </div><br>`,
     "whoami": `
         <div class="response">
-        Hi, my name is Jakob! I am a computer science student from Austria, with a passion for cybersecurity and penetration testing.
-        </div><br>`,
-    "github": `
-        <div class="response">
+        Hi, my name is Jakob! I am a computer science student from Austria with a passion for cybersecurity and penetration testing.<br> You can find me on the following platforms:<br>
         - <a class="social" href="${github}" target="_blank">GitHub</a><br>
-        <script>
-            var win = window.open("${github}", '_blank');
-            win.focus();
-        </script>
-        </div><br>`,
-    "linkedin": `
-        <div class="response">
         - <a class="social" href="${linkedin}" target="_blank">LinkedIn</a><br>
-        <script>
-            var win = window.open("${linkedin}", '_blank');
-            win.focus();
-        </script>
-        </div><br>`,
-    "tryhackme": `
-        <div class="response">
         - <a class="social" href="${tryhackme}" target="_blank">TryHackMe</a><br>
-        <script>
-            var win = window.open("${tryhackme}", '_blank');
-            win.focus();
-        </script>
         </div><br>`,
 }
 
