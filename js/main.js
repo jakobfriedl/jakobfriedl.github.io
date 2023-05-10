@@ -86,5 +86,5 @@ const handleCommand = (command) => {
         $(".history").append(commands[command]);
         return;
     }
-    $(".history").append(`<div class="response">Command '${command}' not found</div><br>`);
+    $(".history").append(`<div class="response">Command not found</div><br>`);
 }
