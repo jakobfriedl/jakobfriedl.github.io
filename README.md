@@ -1,2 +1,1 @@
-# Personal portfolio website
-## By Jakob Friedl
+Personal homepage: [jakobfriedl.github.io](jakobfriedl.github.io)
