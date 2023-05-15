@@ -21,7 +21,9 @@ const showHelp = () => {
             Available commands:<br>
             - help<br>
             - whoami<br>  
-            - ls<br>
+            - ls [directory]<br>
+            - cd [directory] (in progress)<br>
+            - cat [file] (in progress)<br>
             - clear
         </div><br>`
 }
