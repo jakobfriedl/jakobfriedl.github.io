@@ -1,7 +1,16 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Lexend Deca', sans-serif;
+    @font-face {
+        font-family: 'CaskaydiaCove Nerd Font Mono';
+        src: url("./fonts/CaskaydiaCoveNerdFontMono-Regular.ttf")
+    }
+    @font-face {
+        font-family: 'CaskaydiaCove Nerd Font Mono';
+        font-weight: bold;
+        src: url("./fonts/CaskaydiaCoveNerdFontMono-Bold.ttf");
+    }
+    font-family: 'CaskaydiaCove Nerd Font Mono', sans-serif;
 }
 
 body {
@@ -88,4 +97,17 @@ main {
 .social{
     color: white;
     text-decoration: none;
+}
+
+.social:hover{
+    color: lightgreen;
+}
+
+/* Table */
+.table-header > td {
+    text-decoration: underline;
+} 
+
+td {
+    padding: 0 1rem 0 0;
 }

@@ -1,0 +1,82 @@
+{
+    "name": "~",
+    "content": [
+        {
+            "type": "directory",
+            "icon": "\uf115", 
+            "name": "blog",
+            "content": [
+                {
+                    "type": "file",
+                    "name": "Rubber Ducky data exfiltration",
+                    "content": "TODO: Add blog post"
+                }
+            ]
+        }, 
+        {
+            "type": "directory",
+            "icon": "\uf115",
+            "name": "projects",
+            "content": [
+                
+            ]
+        },
+        {
+            "type": "directory",
+            "icon": "\uf115",
+            "name": "technologies",
+            "content": [
+                {
+                    "type": "file",
+                    "icon": "\ue614",
+                    "name": "CSharp.cs",
+                    "content": ""
+                },
+                {
+                    "type": "file",
+                    "icon": "\ue73c",
+                    "name": "Python.py",
+                    "content": ""
+                },
+                {
+                    "type": "file",
+                    "icon": "\uf489",
+                    "name": "Bash.sh",
+                    "content": ""
+                },
+                {
+                    "type": "file",
+                    "icon": "\ue61e",
+                    "name": "C.c",
+                    "content": ""
+                },
+                {
+                    "type": "file",
+                    "icon": "\ue26e",
+                    "name": "Nim.nim",
+                    "content": ""
+                },
+                {
+                    "type": "file",
+                    "icon": "\uf472", 
+                    "name": "Sql.sql",
+                    "content": ""
+                }         
+            ]
+        },
+        {
+            "type": "directory",
+            "icon": "\uf115",
+            "name": "certifications",
+            "content": [
+                
+            ]
+        },
+        {
+            "type": "file",
+            "icon": "\uf48a",
+            "name": "README.md",
+            "content": "TODO: Add README.md"
+        }
+    ]
+}
