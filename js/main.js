@@ -63,11 +63,12 @@ const listDirectory = async (args) => {
     for (let i = 0; i < content.length; i++) {
         let directoryIdentfier = content[i].type === "directory" ? "d" : "-";
         let size =  content[i].type === "directory" ? "-" : content[i].content.length;
+        let name = content[i].link !== undefined ? `<a href=${content[i].link}>${content[i].name}</a>` : content[i].name;
         output += `<tr>
             <td>${directoryIdentfier}rwxr--r--</td>
             <td>guest</td>
             <td>${size}</td>
-            <td>${content[i].icon !== undefined ? content[i].icon : "\uf4a5"} ${content[i].name}</td>
+            <td>${content[i].icon !== undefined ? content[i].icon : "\uf4a5"} ${name}</td>
         </tr>`
     }
     output += "</table><br>"
@@ -100,7 +101,7 @@ $(document).ready( () => {
 }); 
 
 // Font effect
-const fontEffect = (event, letters) => {
+const fontEffect = async (event, letters) => {
     let iteration = 0; 
     clearInterval(interval);
     interval = setInterval(() => {
@@ -124,7 +125,7 @@ const fontEffect = (event, letters) => {
     }, 20);
 } 
 
-$("h1").on("mouseover", (e) => fontEffect(e, uppercase_letters));
+$(".effect").on("mouseover", async (e) => await fontEffect(e, uppercase_letters));
 
 // Submit command
 const ENTER = 13; 

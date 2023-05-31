@@ -8,8 +8,9 @@
             "content": [
                 {
                     "type": "file",
-                    "name": "Rubber Ducky data exfiltration",
-                    "content": "TODO: Add blog post"
+                    "name": "TryHackMe Red Team Capstone Challenge Write-Up",
+                    "link": "blog/RedTeamCapstoneChallenge_WriteUp_Jako0b.pdf",
+                    "content": "Red Team Capstone Challenge Write-Up"
                 }
             ]
         }, 
