@@ -1,0 +1,17 @@
+.blog {
+    margin: 20vh 3rem 10vh 3rem;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.blog-entry {
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 1rem 0.5rem;
+    margin: 1rem 0;
+}
+
+.blog-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}

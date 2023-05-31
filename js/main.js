@@ -63,7 +63,7 @@ const listDirectory = async (args) => {
     for (let i = 0; i < content.length; i++) {
         let directoryIdentfier = content[i].type === "directory" ? "d" : "-";
         let size =  content[i].type === "directory" ? "-" : content[i].content.length;
-        let name = content[i].link !== undefined ? `<a href=${content[i].link}>${content[i].name}</a>` : content[i].name;
+        let name = content[i].link !== undefined ? `<a target="_blank" href="blog/${content[i].link}">${content[i].name}</a>` : content[i].name;
         output += `<tr>
             <td>${directoryIdentfier}rwxr--r--</td>
             <td>guest</td>
