@@ -7,52 +7,11 @@
             "name": "blog",
             "content": [
                 {
-                    "type": "file",
+                    "type": "blog",
                     "name": "TryHackMe Red Team Capstone Challenge Write-Up",
                     "link": "RedTeamCapstoneChallenge_WriteUp_Jako0b.pdf",
-                    "content": "TryHackMe Red Team Capstone Challenge Write-Up"
-                },
-                {
-                    "type": "file",
-                    "name": "DEMO BLOG",
-                    "link": "#",
-                    "content": "DEMO BLOG"
-                },
-                {
-                    "type": "file",
-                    "name": "DEMO BLOG",
-                    "link": "#",
-                    "content": "DEMO BLOG"
-                },
-                {
-                    "type": "file",
-                    "name": "DEMO BLOG",
-                    "link": "#",
-                    "content": "DEMO BLOG"
-                },
-                {
-                    "type": "file",
-                    "name": "DEMO BLOG",
-                    "link": "#",
-                    "content": "DEMO BLOG"
-                },
-                {
-                    "type": "file",
-                    "name": "DEMO BLOG",
-                    "link": "#",
-                    "content": "DEMO BLOG"
-                },
-                {
-                    "type": "file",
-                    "name": "DEMO BLOG",
-                    "link": "#",
-                    "content": "DEMO BLOG"
-                },
-                {
-                    "type": "file",
-                    "name": "DEMO BLOG",
-                    "link": "#",
-                    "content": "DEMO BLOG"
+                    "date": "2023-05-31", 
+                    "content": "The TryHackMe Red Team Capstone Challenge simulated a red team assessment on the corporate network infrastructure of a fictional bank. The objective was to enumerate and exploit the Active Directory environment to conduct a fraudulent money transfer to show the compromise of the bank's network. This 40+ page long write-up details the steps taken to complete the challenge and includes techniques like Kerberoasting, DCSync attacks, Golden ticket attacks as well as lateral movement and persistence inside a Active Directory domain."
                 }
             ]
         }, 

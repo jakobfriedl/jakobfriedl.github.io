@@ -16,76 +16,180 @@ class Command {
 }
 
 const showHelp = () => {
-    return `
-        <div class="response">
-            Available commands:<br>
-            - help<br>
-            - whoami<br>  
-            - ls [directory]<br>
-            - cd [directory] (in progress)<br>
-            - cat [file] (in progress)<br>
-            - clear
-        </div><br>`
+    let output = `
+        <table class="response command-help">
+            <tr>
+                <td>help</td>
+                <td>Displays all available commands (except the secret ones).</td>
+            </tr>
+            <tr>
+                <td>whoami</td>
+                <td>Get to know me :)</td>
+            </tr>
+            <tr>
+                <td>blog</td>
+                <td>Get information about my blog and how to access it.</td>
+            </tr>
+            <tr>
+                <td>ls [directory]</td>
+                <td>Lists all files and directories in the current or specified directory.</td>
+            </tr>
+            <tr>
+                <td>cd [directory]</td>
+                <td>Changes the current directory to the specified directory.</td>
+            </tr>
+            <tr>
+                <td>cat [file]</td>
+                <td>Prints the content of the specified file.</td>
+            </tr>
+            <tr>
+                <td>clear</td>
+                <td>Clears the terminal.</td>
+            </tr>
+        </table><br>`
+    $(".history").append(output);
 }
 
 const showAbout = () => {
-    return `
+    let output = `
     <div class="response">
-    Hi, my name is Jakob! I am a computer science student from Austria with a passion for cybersecurity and penetration testing.<br> You can find me on the following platforms:<br>
+    Hi, my name is Jakob! I am a computer science student from Austria with a passion for cybersecurity and penetration testing. Next to that, I also enjoy going to the gym and lifting weights.<br><br> You can find me on the following platforms:<br>
     - <a class="social" href="${github}" target="_blank">GitHub</a><br>
     - <a class="social" href="${linkedin}" target="_blank">LinkedIn</a><br>
     - <a class="social" href="${tryhackme}" target="_blank">TryHackMe</a><br>
     </div><br>`
+    $(".history").append(output);
 }
 
+const showBlog = () => {
+    let output = `
+    <div class="response">
+    Use 'ls blog' to view my latest blog posts and write-ups or visit <a href="blog">/blog</a> for a more detailed and organized overview.<br>
+    </div><br>`
+    $(".history").append(output);
+}
+
+
 const listDirectory = async (args) => {
-    let data = await fetch("./js/content.json")
-    let json = await data.json()
+    $.ajax({
+        url: "./js/content.json",
+        dataType: "json",
+        async: false,
+        success: (json) => {
+            let content = json['content']
 
-    let output = `<table class='response'>
-    <tr class="table-header">
-        <td>Permissions</td>
-        <td>Owner</td>
-        <td>Size</td>
-        <td>Name</td>
-    </tr>`
-    
-    let content = json['content']
-    if(args.length > 0) {
-        for(let j = 0; j < content.length; j++) {
-            if(content[j].name === args[0]){
-                content = content[j].content;
-                break;
+            // Get current directory
+            if (pwd !== "~") {
+                for (let i = 0; i < content.length; i++) {
+                    if(content[i].name === pwd){
+                        content = content[i].content;
+                        break;
+                    }
+                }
             }
-        }
-    }
 
-    for (let i = 0; i < content.length; i++) {
-        let directoryIdentfier = content[i].type === "directory" ? "d" : "-";
-        let size =  content[i].type === "directory" ? "-" : content[i].content.length;
-        let name = content[i].link !== undefined ? `<a target="_blank" href="blog/${content[i].link}">${content[i].name}</a>` : content[i].name;
-        output += `<tr>
-            <td>${directoryIdentfier}rwxr--r--</td>
-            <td>guest</td>
-            <td>${size}</td>
-            <td>${content[i].icon !== undefined ? content[i].icon : "\uf4a5"} ${name}</td>
-        </tr>`
-    }
-    output += "</table><br>"
-    return output
+            // Get specified directory
+            let found = false;
+            if(args.length > 0) {
+                for(let j = 0; j < content.length; j++) {
+                    if(content[j].name === args[0]){
+                        found = true;
+                        content = content[j].content;
+                        break;
+                    }
+                }
+            }
+            if(!found && args.length > 0 && args[0] !== "") {
+                $(".history").append(`<div class="response">ls: cannot access '${args[0]}': No such file or directory</div><br>`)
+                return
+            }
+
+
+            // List content
+            let output = `<div class="response"><table>
+                <tr class="table-header">
+                    <td>Permissions</td>
+                    <td>Owner</td>
+                    <td>Size</td>
+                    <td>Name</td>
+                </tr>`
+            for (let i = 0; i < content.length; i++) {                
+                let directoryIdentfier = content[i].type === "directory" ? "d" : "-";
+                let size =  content[i].type === "directory" ? "-" : content[i].content.length;
+                let name = content[i].link !== undefined ? `<a target="_blank" href="blog/${content[i].link}">${content[i].name}</a>` : content[i].name;
+                output += `<tr>
+                    <td>${directoryIdentfier}rwxr--r--</td>
+                    <td>guest</td>
+                    <td>${size}</td>
+                    <td>${content[i].icon !== undefined ? content[i].icon : "\uf4a5"} ${name}</td>
+                </tr>`
+            }
+            output += "</table></div><br>"
+            $(".history").append(output);
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    })
 }
 
 const changeDirectory = async (args) => {
-    return `<div class="response">cd: not implemented</div><br>`
+    pwd = args[0] === undefined ? "~" : args[0];
+    $(".history").append(`<div class="response">Changed directory to '${pwd}'</div><br>`)
 }
 
 const printFile = async (args) => {
-    return `<div class="response">cat: not implemented</div><br>`
+    if (args.length === 0 || args[0] === "") {
+        $(".history").append(`<div class="response">cat: missing operand</div><br>`)
+        return
+    }
+
+    $.ajax({
+        url: "./js/content.json",
+        dataType: "json",
+        async: false,
+        success: (json) => {
+            let content = json['content']
+
+            // Get current directory
+            if (pwd !== "~") {
+                for (let i = 0; i < content.length; i++) {
+                    if(content[i].name === pwd){
+                        content = content[i].content;
+                        break;
+                    }
+                }
+            }
+
+            // Get specified file
+            let fileContent = "";
+            if(args.length > 0) {
+                for(let j = 0; j < content.length; j++) {
+                    if(content[j].name === args[0]){
+                        fileContent = content[j].content;
+                        break;
+                    }
+                }
+            }
+            if(fileContent === "") {
+                $(".history").append(`<div class="response">cat: ${args[0]}: No such file or directory</div><br>`)
+                return
+            }   
+
+            // Print file
+            let output = `<div class="response">${fileContent}</div><br>`
+            $(".history").append(output);
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    })
 }
 
 const commands = [
     new Command("help", showHelp),
     new Command("whoami", showAbout),
+    new Command("blog", showBlog),
     new Command("ls", listDirectory),
     new Command("cd", changeDirectory),
     new Command("cat", printFile)
@@ -146,7 +250,8 @@ $(".command").on("keydown", (event) => {
         // Clear input
         event.currentTarget.value = "";
         // Scroll to bottom
-        $("main").scrollTop($("main")[0].scrollHeight);
+        //$("main").scrollTop($("main")[0].scrollHeight);
+        document.getElementById("main").scrollTo(0,document.getElementById("main").scrollHeight);
     }
 }); 
 
@@ -161,8 +266,7 @@ const handleCommand = async (command, args) => {
     // Handle complex command
     let c = commands.find(o => o.name === command.toLowerCase());
     if(c){
-        let output =  await c.output(args);
-        $(".history").append(output);
+        await c.output(args);
         return;
     } 
 
