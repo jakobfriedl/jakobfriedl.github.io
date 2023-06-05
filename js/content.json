@@ -78,7 +78,7 @@
             "type": "file",
             "icon": "\uf48a",
             "name": "README.md",
-            "content": "TODO: Add README.md"
+            "content": "There are a total of # secret commands available. Try to find them all! :)"
         }
     ]
 }

@@ -2,6 +2,42 @@ const uppercase_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lowercase_letters = "abcdefghijklmnopqrstuvwxyz";
 let interval = null;
 
+$(document).ready( () => {
+    $("h1").trigger("mouseover");
+    $(".command")
+        .val("")
+        .focus();
+    $("body").on("click", () => $(".command").focus());
+}); 
+
+// Font effect
+const fontEffect = async (event, letters) => {
+    let iteration = 0; 
+    clearInterval(interval);
+    interval = setInterval(() => {
+        event.target.innerText = event.target.innerText
+        .split("")
+        .map((letter, index) => {
+            if(letter === " ") return letter;
+            if(index < iteration) {
+                return event.target.dataset.value[index];
+            }
+            
+            return letters[Math.floor(Math.random() * 26)]
+        })
+          .join("");
+          
+          if(iteration >= event.target.dataset.value.length){ 
+          clearInterval(interval);
+        }
+        
+        iteration += 1 / 2;
+    }, 20);
+} 
+
+$(".effect").on("mouseover", async (e) => await fontEffect(e, uppercase_letters));
+
+// Terminal functionality
 const github = "https://github.com/jakobfriedl"
 const linkedin = "https://www.linkedin.com/in/jakobfriedl"
 const tryhackme = "https://tryhackme.com/p/Jako0b"
@@ -20,7 +56,7 @@ const showHelp = () => {
         <table class="response command-help">
             <tr>
                 <td>help</td>
-                <td>Displays all available commands (except the secret ones).</td>
+                <td>Displays all available commands</td>
             </tr>
             <tr>
                 <td>whoami</td>
@@ -28,27 +64,39 @@ const showHelp = () => {
             </tr>
             <tr>
                 <td>blog</td>
-                <td>Get information about my blog and how to access it.</td>
+                <td>Get information about my blog and how to access it</td>
             </tr>
             <tr>
                 <td>ls [directory]</td>
-                <td>Lists all files and directories in the current or specified directory.</td>
+                <td>Lists all files and directories in the current or specified directory</td>
             </tr>
             <tr>
                 <td>cd [directory]</td>
-                <td>Changes the current directory to the specified directory.</td>
+                <td>Changes the current directory to the specified directory. Passing no parameters returns to '~'</td>
             </tr>
             <tr>
                 <td>cat [file]</td>
-                <td>Prints the content of the specified file.</td>
+                <td>Prints the content of the specified file</td>
             </tr>
             <tr>
                 <td>clear</td>
-                <td>Clears the terminal.</td>
+                <td>Clears the terminal (CTRL+L is also supported)</td>
             </tr>
         </table><br>`
     $(".history").append(output);
 }
+
+const clearTerminal = () => {  
+    $(".history").empty();
+}
+
+// Clear terminal with CTRL + L
+onkeydown = function(e){
+    if(e.ctrlKey && e.key == 'l'){
+        e.preventDefault();
+        clearTerminal()
+    }
+}   
 
 const showAbout = () => {
     let output = `
@@ -69,6 +117,16 @@ const showBlog = () => {
     $(".history").append(output);
 }
 
+const getPwd = (json) => {
+    if (pwd !== "~") {
+        for (let i = 0; i < json.length; i++) {
+            if(json[i].name === pwd){
+                return json[i].content;
+            }
+        }
+    } 
+    return json;
+}
 
 const listDirectory = async (args) => {
     $.ajax({
@@ -79,14 +137,7 @@ const listDirectory = async (args) => {
             let content = json['content']
 
             // Get current directory
-            if (pwd !== "~") {
-                for (let i = 0; i < content.length; i++) {
-                    if(content[i].name === pwd){
-                        content = content[i].content;
-                        break;
-                    }
-                }
-            }
+            content = getPwd(content)
 
             // Get specified directory
             let found = false;
@@ -134,13 +185,43 @@ const listDirectory = async (args) => {
 }
 
 const changeDirectory = async (args) => {
-    pwd = args[0] === undefined ? "~" : args[0];
-    $(".history").append(`<div class="response">Changed directory to '${pwd}'</div><br>`)
+    $.ajax({
+        url: "./js/content.json",
+        dataType: "json",
+        async: false,
+        success: (json) => {
+            let content = json['content']
+
+            // Get current directory
+            content = getPwd(content)
+
+            // Get specified directory
+            let found = false;
+            if(args.length > 0) {
+                for(let j = 0; j < content.length; j++) {
+                    if(content[j].name === args[0]){
+                        found = true;
+                        content = content[j].content;
+                        break;
+                    }
+                }   
+            }
+            if(!found && args.length > 0 && args[0] !== "") {
+                $(".history").append(`<div class="response">cd: no such file or directory: ${args[0]}</div><br>`)
+                return
+            } else {
+                // Change to specified directory
+                pwd = (args[0] === undefined || args[0] == "") ? "~" : args[0];
+                // $(".history").append(`<div class="response">Changed directory to '${pwd}'</div><br>`)
+                $("#pwd").text(`:${pwd === "~" ? pwd : "~/"+pwd}$`)
+            }
+        }
+    })
 }
 
 const printFile = async (args) => {
     if (args.length === 0 || args[0] === "") {
-        $(".history").append(`<div class="response">cat: missing operand</div><br>`)
+        $(".history").append(`<div class="response">Usage: cat [file]</div><br>`)
         return
     }
 
@@ -152,20 +233,17 @@ const printFile = async (args) => {
             let content = json['content']
 
             // Get current directory
-            if (pwd !== "~") {
-                for (let i = 0; i < content.length; i++) {
-                    if(content[i].name === pwd){
-                        content = content[i].content;
-                        break;
-                    }
-                }
-            }
+            content = getPwd(content)
 
             // Get specified file
             let fileContent = "";
             if(args.length > 0) {
                 for(let j = 0; j < content.length; j++) {
                     if(content[j].name === args[0]){
+                        if(content[j].type !== "file") {
+                            $(".history").append(`<div class="response">cat: ${args[0]}: Is a directory</div><br>`)
+                            return
+                        }
                         fileContent = content[j].content;
                         break;
                     }
@@ -192,44 +270,11 @@ const commands = [
     new Command("blog", showBlog),
     new Command("ls", listDirectory),
     new Command("cd", changeDirectory),
-    new Command("cat", printFile)
+    new Command("cat", printFile),
+    new Command("clear", clearTerminal),
+
+    // secret commands
 ]
-
-$(document).ready( () => {
-    $("h1").trigger("mouseover");
-    $(".command")
-        .val("")
-        .before(`<span class='username'>guest</span>@<span class='hostname'>localhost</span>:${pwd}$ `)
-        .focus();
-    $("body").on("click", () => $(".command").focus());
-}); 
-
-// Font effect
-const fontEffect = async (event, letters) => {
-    let iteration = 0; 
-    clearInterval(interval);
-    interval = setInterval(() => {
-        event.target.innerText = event.target.innerText
-        .split("")
-        .map((letter, index) => {
-            if(letter === " ") return letter;
-            if(index < iteration) {
-                return event.target.dataset.value[index];
-            }
-            
-            return letters[Math.floor(Math.random() * 26)]
-        })
-          .join("");
-          
-          if(iteration >= event.target.dataset.value.length){ 
-          clearInterval(interval);
-        }
-        
-        iteration += 1 / 2;
-    }, 20);
-} 
-
-$(".effect").on("mouseover", async (e) => await fontEffect(e, uppercase_letters));
 
 // Submit command
 const ENTER = 13; 
@@ -240,7 +285,7 @@ $(".command").on("keydown", (event) => {
 
         input = input.replace(/[<>/\\&%:\(\)\[\]\}\{}]/g, "")
         // Append command & output to history
-        $(".history").append(`<label><span class='username'>guest</span>@<span class='hostname'>localhost</span>:${pwd}$ ${input}</label><br>`); 
+        $(".history").append(`<label><span class='username'>guest</span>@<span class='hostname'>localhost</span>:${pwd === "~" ? pwd : "~/"+pwd}$ ${input}</label><br>`); 
 
         let command = input.split(" ");
         let args = command.slice(1);
@@ -250,18 +295,14 @@ $(".command").on("keydown", (event) => {
         // Clear input
         event.currentTarget.value = "";
         // Scroll to bottom
-        //$("main").scrollTop($("main")[0].scrollHeight);
-        document.getElementById("main").scrollTo(0,document.getElementById("main").scrollHeight);
+        $("main").scrollTop($("main")[0].scrollHeight);
+       // document.getElementById("main").scrollTo(0,document.getElementById("main").scrollHeight);
     }
 }); 
 
 // Handle command 
 const handleCommand = async (command, args) => {
     if (command === "") return;
-    if (command === "clear") {
-        $(".history").html("");
-        return;
-    }
 
     // Handle complex command
     let c = commands.find(o => o.name === command.toLowerCase());
