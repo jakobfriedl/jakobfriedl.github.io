@@ -76,6 +76,7 @@ main {
     border: none;
     outline: none;
     font-size: 1rem;
+    width: fit-content; 
 }
 
 .response {

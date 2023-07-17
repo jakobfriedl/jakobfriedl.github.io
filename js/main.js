@@ -45,9 +45,10 @@ const tryhackme = "https://tryhackme.com/p/Jako0b"
 var pwd = "~"
 
 class Command {
-    constructor(name, output) {
+    constructor(name, output, hidden = false) {
         this.name = name;
         this.output = output;
+        this.hidden = hidden;
     }
 }
 
@@ -89,14 +90,6 @@ const showHelp = () => {
 const clearTerminal = () => {  
     $(".history").empty();
 }
-
-// Clear terminal with CTRL + L
-onkeydown = function(e){
-    if(e.ctrlKey && e.key == 'l'){
-        e.preventDefault();
-        clearTerminal()
-    }
-}   
 
 const showAbout = () => {
     let output = `
@@ -144,6 +137,10 @@ const listDirectory = async (args) => {
             if(args.length > 0) {
                 for(let j = 0; j < content.length; j++) {
                     if(content[j].name === args[0]){
+                        if(content[j].type !== "directory") {
+                            $(".history").append(`<div class="response">ls: '${args[0]}': Not a directory</div><br>`)
+                            return
+                        }
                         found = true;
                         content = content[j].content;
                         break;
@@ -170,7 +167,7 @@ const listDirectory = async (args) => {
                 let name = content[i].link !== undefined ? `<a target="_blank" href="blog/${content[i].link}">${content[i].name}</a>` : content[i].name;
                 output += `<tr>
                     <td>${directoryIdentfier}rwxr--r--</td>
-                    <td>guest</td>
+                    <td>jakob</td>
                     <td>${size}</td>
                     <td>${content[i].icon !== undefined ? content[i].icon : "\uf4a5"} ${name}</td>
                 </tr>`
@@ -200,6 +197,10 @@ const changeDirectory = async (args) => {
             if(args.length > 0) {
                 for(let j = 0; j < content.length; j++) {
                     if(content[j].name === args[0]){
+                        if (content[j].type !== "directory") {
+                            $(".history").append(`<div class="response">cd: ${args[0]}: Not a directory</div><br>`)
+                            return
+                        }
                         found = true;
                         content = content[j].content;
                         break;
@@ -264,6 +265,17 @@ const printFile = async (args) => {
     })
 }
 
+const sudo = () => {
+    $(".history").append(`<div class="response">Congratulations, you found a secret command! Still won't let you use 'sudo' though.</div><br>`)
+}
+const vim = () => {
+    $(".history").append(`<div class="response">Thank god you didn't want to use nano.</div><br>`)
+}
+const nano = () => {
+    $(".history").append(`<div class="response">Disgusting.</div><br>`)
+}
+
+
 const commands = [
     new Command("help", showHelp),
     new Command("whoami", showAbout),
@@ -273,8 +285,71 @@ const commands = [
     new Command("cat", printFile),
     new Command("clear", clearTerminal),
 
-    // secret commands
+    // hidden commands
+    new Command("sudo", sudo, hidden=true),
+    new Command("vim", vim, hidden=true),
+    new Command("nano", nano, hidden=true),
 ]
+
+onkeydown = function(e){
+    // Clear terminal with CTRL + L
+    if(e.ctrlKey && e.key == 'l'){
+        e.preventDefault();
+        clearTerminal()
+    }
+
+    if(e.key != 'Tab'){
+        $(".suggestions").text("");
+    }
+
+    // handle tab auto-complete
+    if(e.key == 'Tab'){
+        e.preventDefault();
+
+        let curr = $(".command").val().toLowerCase().split(" ")
+        
+        if(curr.length == 1){
+            // Autocomplete command if its the first word
+            complete(curr.at(-1), commands)
+        } else {
+            // Get files and directories in current directory
+            $.ajax({
+                url: "./js/content.json",
+                dataType: "json",
+                async: false,
+                success: (json) => {
+                    let content = json['content']
+                    content = getPwd(content)
+                    complete(curr.at(-1), content)
+                }
+            });
+        }
+    }
+} 
+
+const complete = (word, content) => {
+    // Get matching files and directories
+    let matches = []
+    for (let i = 0; i < content.length; i++) {
+        if(content[i].name.toLowerCase().startsWith(word) && !content[i].hidden){
+            matches.push(content[i].name);
+        }
+    }
+
+    // If there is only one match, complete the word
+    if(matches.length == 1){
+        let command = $(".command").val().split(" ")
+        command[command.length - 1] = matches[0]
+        $(".command").val(command.join(" "))
+    } else {
+        // If there are multiple matches, show them under the command
+        let output = ""
+        for (let i = 0; i < matches.length; i++) {
+            output += matches[i] + " "
+        }
+        $(".suggestions").text(output)
+    }
+}
 
 // Submit command
 const ENTER = 13; 
@@ -296,7 +371,6 @@ $(".command").on("keydown", (event) => {
         event.currentTarget.value = "";
         // Scroll to bottom
         $("main").scrollTop($("main")[0].scrollHeight);
-       // document.getElementById("main").scrollTo(0,document.getElementById("main").scrollHeight);
     }
 }); 
 

@@ -14,3 +14,8 @@ Welcome to the GitHub repository of my personal portfolio website. This site is 
 
 Speaking of blog, a more readable version of my blog can be found at [jakobfriedl.github.io/blog](https://jakobfriedl.github.io/blog). It contains a list of all my blog posts on various topics regarding cybersecurity and programming, as well as write-ups for CTF challenges or networks I have solved.
 
+## Other features
+
+- Tab-autocompletion
+- Clearing the terminal screen with `CTRL + L`
+- Secret commands :)
