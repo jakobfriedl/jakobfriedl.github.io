@@ -65,7 +65,7 @@ const showHelp = () => {
             </tr>
             <tr>
                 <td>blog</td>
-                <td>Get information about my blog and how to access it</td>
+                <td>Get information about my blog and learn how to access it</td>
             </tr>
             <tr>
                 <td>ls [directory]</td>
@@ -94,7 +94,7 @@ const clearTerminal = () => {
 const showAbout = () => {
     let output = `
     <div class="response">
-    Hi, my name is Jakob! I am a computer science student from Austria with a passion for cybersecurity and penetration testing. Next to that, I also enjoy going to the gym and lifting weights.<br><br> You can find me on the following platforms:<br>
+    Hi, my name is Jakob! I am a computer science student from Austria with a passion for cybersecurity and penetration testing. I am currently specializing in network penetration testing with emphasis on Windows Active Directory and learning malware development with Nim on the side. Next to that, I also enjoy going to the gym and lifting weights.<br><br> You can find me on the following platforms:<br>
     - <a class="social" href="${github}" target="_blank">GitHub</a><br>
     - <a class="social" href="${linkedin}" target="_blank">LinkedIn</a><br>
     - <a class="social" href="${tryhackme}" target="_blank">TryHackMe</a><br>

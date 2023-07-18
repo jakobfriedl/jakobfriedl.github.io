@@ -1,5 +1,5 @@
 .blog {
-    margin: 20vh 3rem 10vh 3rem;
+    margin: 0 3rem 10vh 0;
     overflow: scroll;
     overflow-x: hidden;
 }

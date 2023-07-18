@@ -17,20 +17,27 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <header>
+    <header class="row">
         <h1 class="effect" data-value="JAKOB FRIEDL">JAKOB FRIEDL</h1>
         <h3>Type 'help' to list all available commands.</h3>    
     </header>
 
-    <main id="main">
+    <div>
+        </div>
+
+    <div id="main" class="row">
         <div class="history" readonly>
         </div>
-        <span class='username'>guest</span>@<span class='hostname'>localhost</span><span id="pwd">:~$</span>
-        <input id="command" class="command" type="text" name="command" autofocus onblur="this.focus()"><br>
+        <div class="prompt">
+            <div>
+                <span class='username'>guest</span>@<span class='hostname'>localhost</span><span id="pwd">:~$</span>
+            </div>
+            <input id="command" class="command" type="text" name="command" autofocus onblur="this.focus()"><br>
+        </div>
         <span class='suggestions'></span>
-    </main>
-
-    <footer>
+    </div>
+    
+    <footer class="row">
         <small>Jakob Friedl © 2023</small>
     </footer>
 </body>

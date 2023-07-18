@@ -1,15 +1,16 @@
+@font-face {
+    font-family: 'CaskaydiaCove Nerd Font Mono';
+    src: url("./fonts/CaskaydiaCoveNerdFontMono-Regular.ttf")
+}
+@font-face {
+    font-family: 'CaskaydiaCove Nerd Font Mono';
+    font-weight: bold;
+    src: url("./fonts/CaskaydiaCoveNerdFontMono-Bold.ttf");
+}
+
 * {
     margin: 0;
     padding: 0;
-    @font-face {
-        font-family: 'CaskaydiaCove Nerd Font Mono';
-        src: url("./fonts/CaskaydiaCoveNerdFontMono-Regular.ttf")
-    }
-    @font-face {
-        font-family: 'CaskaydiaCove Nerd Font Mono';
-        font-weight: bold;
-        src: url("./fonts/CaskaydiaCoveNerdFontMono-Bold.ttf");
-    }
     font-family: 'CaskaydiaCove Nerd Font Mono', sans-serif;
 }
 
@@ -53,7 +54,7 @@ footer > small {
     font-size: 1rem;
 }
 
-main {
+#main {
     border: 1px solid white;
     border-radius: 5px;
     height: 62vh;
@@ -70,13 +71,18 @@ main {
     }
 }
 
+.prompt {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
 .command {
     color: white;
     background-color: black;
     border: none;
     outline: none;
     font-size: 1rem;
-    width: fit-content; 
+    margin-left: 0.5rem;
 }
 
 .response {
@@ -102,6 +108,7 @@ main {
 a{
     color: white;
     text-decoration: none;
+
 }
 
 a:hover{
