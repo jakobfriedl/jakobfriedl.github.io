@@ -1,3 +1,15 @@
+/* Variables */
+:root {
+    --bg-main: #27292B;
+    --bg-secondary: #1E1F20;
+    --fg-main: #F7F8FA;
+    --fg-secondary: #D6D0CE;
+    --primary-color: #63CCCA;
+    --secondary-color: #62929E;
+    --highlights: #E54B4B;
+}
+
+/* Fonts */
 @font-face {
     font-family: 'CaskaydiaCove Nerd Font Mono';
     src: url("./fonts/CaskaydiaCoveNerdFontMono-Regular.ttf")
@@ -16,8 +28,8 @@
 
 body {
     height: 100vh;
-    background-color: black;
-    color: white; 
+    background-color: var(--bg-main);
+    color: var(--fg-main); 
     display: flex; 
     flex-direction: column;
 }
@@ -63,15 +75,19 @@ h3{
     font-size: 1rem;
 }
 
+.highlight {
+    color: var(--highlights);
+}
+
 footer {
-    background-color: #0e0e0e;
-    height: 10vh;
+    background-color: var(--bg-secondary);
+    height: 7vh;
     position: fixed;
     bottom: 0px;
     width: 100%;
     display: grid;
     place-items: center;
-    border-top: 1px solid white;
+    border-top: 1px solid var(--fg-main);
     flex: 1 1 0;
 }
 
@@ -80,9 +96,9 @@ footer > small {
 }
 
 #main {
-    border: 1px solid white;
+    border: 1px solid var(--fg-main);
     border-radius: 0 0 5px 5px;
-    margin: 0 3rem 12vh 3rem; 
+    margin: 0 3rem 9vh 3rem; 
     padding: 0.75rem; 
     overflow: scroll;
     overflow-x: hidden;
@@ -95,9 +111,9 @@ footer > small {
     justify-content: right;
     align-items: center;
     margin: 0 3rem;
-    background-color: #0f0f0f;
+    background-color: var(--bg-secondary);
     border-radius: 5px 5px 0 0;
-    border: 1px solid white;
+    border: 1px solid var(--fg-main);
     border-bottom: none;
 }
 
@@ -114,18 +130,31 @@ footer > small {
 }
 
 .close{
-    background-color: red;
+    background-color: var(--highlights);
 }
 .minimize{
-    border: 1px solid white;
+    /* border: 1px solid var(--fg-main); */
+    background-color: var(--primary-color);
 }
 .maximize {
-    border: 1px solid white;
+    /* border: 1px solid var(--fg-main); */
+    background-color: var(--secondary-color);
 }
 
-@media only screen and (max-width: 460px) {
+@media only screen and (max-width: 700px) {
     main {
         margin: 30vh 3rem 10vh 3rem;
+    }
+    header > div {
+        flex-direction: column;
+        align-items: start;
+    }
+    nav {
+        margin-top: 1rem;
+    }
+    nav > ul > li {
+        margin-left: 0rem; 
+        margin-right: 0.5rem;
     }
 }
 
@@ -135,12 +164,16 @@ footer > small {
 }
 
 .command {
-    color: white;
-    background-color: black;
+    color: var(--fg-main);
+    background-color: var(--bg-main);
     border: none;
     outline: none;
     font-size: 1rem;
     margin-left: 0.5rem;
+}
+
+.suggestions {
+    color: var(--fg-secondary);
 }
 
 .response {
@@ -148,15 +181,15 @@ footer > small {
 }
 
 .username{
-    color: green;
+    color: var(--secondary-color);
 }
 
 .hostname{ 
-    color: lightgreen;
+    color: var(--primary-color);
 }
 
 .history {
-    background-color: black;
+    background-color: var(--bg-main);
     border: none;
     outline: none;
     font-size: 1rem;
@@ -164,13 +197,13 @@ footer > small {
 }
 
 a{
-    color: white;
+    color: var(--fg-main);
     text-decoration: none;
 
 }
 
 a:hover{
-    color: lightgreen;
+    color: var(--highlights);
 }
 
 /* Table */

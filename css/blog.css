@@ -6,7 +6,7 @@
 }
 
 .blog-entry {
-    border: 1px solid white;
+    border: 1px solid var(--fg-main);
     border-radius: 5px;
     padding: 1rem 0.5rem;
     margin: 1rem 0;
@@ -19,5 +19,5 @@
 
 .date{
     font-size: 1.25rem;
-    color: lightgreen;
+    color: var(--primary-color);
 }
