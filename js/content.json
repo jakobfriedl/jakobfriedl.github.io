@@ -9,14 +9,14 @@
                 {
                     "type": "pdf",
                     "name": "<b>Bachelor Paper</b>: Comparison of data exfiltration techniques for stealing Windows using keystroke injection attacks",
-                    "link": "Friedl_Jakob_Bachelorthesis.pdf",
+                    "link": "/blog/Friedl_Jakob_Bachelorthesis.pdf",
                     "date": "2023-06-21",
                     "content": "This paper compares keystroke injection data exfiltration techniques using specifically developed DuckyScript payloads deployed using the Hak5 USB Rubber Ducky. In particular, it covers exfiltration over a physical medium (USB), exfiltration over a network medium (HTTP), as well as the novel exfiltration method known as keystroke reflection. It was written as the final thesis of my Bachelor's degree at UAS Technikum Wien."
                 },
                 {
                     "type": "pdf",
                     "name": "<b>Write-Up</b>: TryHackMe Red Team Capstone Challenge",
-                    "link": "RedTeamCapstoneChallenge_WriteUp_Jako0b.pdf",
+                    "link": "/blog/RedTeamCapstoneChallenge_WriteUp_Jako0b.pdf",
                     "date": "2023-05-31", 
                     "content": "The TryHackMe Red Team Capstone Challenge simulates a red team assessment on the corporate network infrastructure of a fictional bank. The objective was to enumerate and exploit the Active Directory environment to conduct a fraudulent money transfer to show the compromise of the bank's network. This 40+ page long write-up details the steps taken to complete the challenge and includes techniques like Kerberoasting, DCSync attacks, Golden ticket attacks as well as lateral movement and persistence inside an Active Directory domain."
                 }
@@ -27,7 +27,20 @@
             "icon": "\uf115",
             "name": "projects",
             "content": [
-                
+                {
+                    "type": "file",
+                    "icon": "\uf121",
+                    "name": "parcel-logistics-service",
+                    "link": "https://github.com/jakobfriedl/parcel-logistics-service",
+                    "content": "The 'Parcel Logistics Service' application is a web-based parcel tracking system that allows users to track the status of their parcels based on real geographic data and coordinates. The route on which parcels are transferred is predicted automatically. It was developed as part of the 'Software Components Systems Lab' course at UAS Technikum Wien. The application is written in C# using the ASP.NET framework and uses a PostgreSQL database. It was developed in an agile manner using the Scrum methodology and Azure DevOps for continuous and test-driven development."
+                },
+                {
+                    "type": "file",
+                    "icon": "\uf121",
+                    "name": "ml-bd-for-code-quality",
+                    "link": "https://github.com/jakobfriedl/ML-BD-for-code-quality",
+                    "content": "As part of a 3 semester long innovation project, 'Machine Learning and Big Data for code quality' has been developed for comparing the efficiency and quality of different supervised and unsupervised machine learning algorithms for log file analysis. It clusters and groups stack traces based on their error type together and displays notable results and metrics to the user. The project is written in Python and uses the scikit-learn library for machine learning as well as the py-simplegui library to create a graphical user interface. It was developed in an agile manner using the Scrum methodology and git for version control."
+                }
             ]
         },
         {

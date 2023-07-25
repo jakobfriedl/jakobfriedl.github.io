@@ -5,19 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
     
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap" rel="stylesheet">
 
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script defer src="js/main.js"></script>
+    <script defer src="js/effects.js"></script>
+    <script defer src="js/terminal.js"></script>
 
     <title>Jakob Friedl</title>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <header class="row">
+    <header>
         <h1 class="effect" data-value="JAKOB FRIEDL">JAKOB FRIEDL</h1>
         <div>
             <h3>Type '<span class="highlight">help</span>' to list all available commands.</h3>  
@@ -41,7 +42,7 @@
             <span class="close"></span>
         </div>
     </div>
-    <div id="main" class="row">
+    <div id="main">
         <div class="history" readonly>
         </div>
         <div class="prompt">
@@ -53,7 +54,7 @@
         <span class='suggestions'></span>
     </div>
     
-    <footer class="row">
+    <footer>
         <small>Jakob Friedl © 2023</small>
     </footer>
 </body>

@@ -1,5 +1,6 @@
 /* Variables */
 :root {
+    --background: #2d2f31;
     --bg-main: #27292B;
     --bg-secondary: #1E1F20;
     --fg-main: #F7F8FA;
@@ -28,7 +29,7 @@
 
 body {
     height: 100vh;
-    background-color: var(--bg-main);
+    background-color: var(--background);
     color: var(--fg-main); 
     display: flex; 
     flex-direction: column;
@@ -96,6 +97,7 @@ footer > small {
 }
 
 #main {
+    background-color: var(--bg-main);
     border: 1px solid var(--fg-main);
     border-radius: 0 0 5px 5px;
     margin: 0 3rem 9vh 3rem; 
