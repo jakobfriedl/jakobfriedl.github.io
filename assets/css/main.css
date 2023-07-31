@@ -7,7 +7,7 @@
     --fg-secondary: #D6D0CE;
     --primary-color: #63CCCA;
     --secondary-color: #62929E;
-    --highlights: #E54B4B;
+    --highlight: #E54B4B;
 }
 
 /* Fonts */
@@ -77,7 +77,7 @@ h3{
 }
 
 .highlight {
-    color: var(--highlights);
+    color: var(--highlight);
 }
 
 footer {
@@ -132,7 +132,7 @@ footer > small {
 }
 
 .close{
-    background-color: var(--highlights);
+    background-color: var(--highlight);
 }
 .minimize{
     /* border: 1px solid var(--fg-main); */
@@ -205,7 +205,7 @@ a{
 }
 
 a:hover{
-    color: var(--highlights);
+    color: var(--highlight);
 }
 
 /* Table */

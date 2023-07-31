@@ -92,7 +92,7 @@ const getPwd = (json) => {
 
 const listDirectory = async (args) => {
     $.ajax({
-        url: "./js/content.json",
+        url: "./assets/js/content.json",
         dataType: "json",
         async: false,
         success: (json) => {
@@ -152,7 +152,7 @@ const listDirectory = async (args) => {
 
 const changeDirectory = async (args) => {
     $.ajax({
-        url: "./js/content.json",
+        url: "./assets/js/content.json",
         dataType: "json",
         async: false,
         success: (json) => {
@@ -196,7 +196,7 @@ const printFile = async (args) => {
     }
 
     $.ajax({
-        url: "./js/content.json",
+        url: "./assets/js/content.json",
         dataType: "json",
         async: false,
         success: (json) => {
@@ -241,7 +241,7 @@ const vim = () => {
     $(".history").append(`<div class="response">Thank god you didn't want to use nano.</div><br>`)
 }
 const nano = () => {
-    $(".history").append(`<div class="response">Disgusting.</div><br>`)
+    $(".history").append(`<div class="response">Eww, why would you want to use nano?</div><br>`)
 }
 
 const commands = [
@@ -282,7 +282,7 @@ onkeydown = function(e){
         } else {
             // Get files and directories in current directory
             $.ajax({
-                url: "./js/content.json",
+                url: "./assets/js/content.json",
                 dataType: "json",
                 async: false,
                 success: (json) => {

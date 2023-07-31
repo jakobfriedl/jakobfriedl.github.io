@@ -3,7 +3,7 @@ $(document).ready( async () => {
 })
 
 const getBlogEntries = async () => {
-    let data = await fetch("../js/content.json")
+    let data = await fetch("../assets/js/content.json")
     let json = await data.json()
     
     let content = json['content']

@@ -12,6 +12,10 @@
     margin: 1rem 0;
 }
 
+.blog-entry:hover {
+    border: 1px solid var(--highlight);
+}
+
 .blog-title {
     font-size: 1.5rem;
     font-weight: bold;
