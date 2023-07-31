@@ -91,7 +91,13 @@
             "icon": "\uf115",
             "name": "certifications",
             "content": [
-                
+                {
+                    "type": "file",
+                    "icon": "\uf1c1",
+                    "name": "Offshore",
+                    "link": "/certifications/Offshore.pdf",
+                    "content": "Offshore Pro Lab is an Active Directory lab that simulates the look and feel of a real-world corporate network. With this network, I was tasked to assess the external perimeter, gain an internal foothold and pivot across multiple hosts and forests. Users start from an external perspective and have to penetrate the “DMZ” and then move laterally through the CORP.LOCAL, DEV, ADMIN and CLIENT forests to complete the lab. To track progress, there are multiple flags planted along the way as well as a few side challenges not required to advance within the Active Directory environment. This lab proves the ability to compromise an real-world Active Directory environment, as well as the ability to pivot across multiple hosts and forests."
+                }
             ]
         },
         {
