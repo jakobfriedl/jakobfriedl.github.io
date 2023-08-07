@@ -40,6 +40,13 @@
                     "name": "ml-bd-for-code-quality",
                     "link": "https://github.com/jakobfriedl/ML-BD-for-code-quality",
                     "content": "As part of a 3 semester long innovation project, 'Machine Learning and Big Data for code quality' has been developed for comparing the efficiency and quality of different supervised and unsupervised machine learning algorithms for log file analysis. It clusters and groups stack traces based on their error type together and displays notable results and metrics to the user. The project is written in Python and uses the scikit-learn library for machine learning as well as the py-simplegui library to create a graphical user interface. It was developed in an agile manner using the Scrum methodology and git for version control."
+                },
+                {
+                    "type": "file",
+                    "icon": "\uf121",
+                    "name": "personal-website",
+                    "link": "https://github.com/jakobfriedl/jakobfriedl.github.io",
+                    "content": "This website has been a personal dream of mine for a long time. It is a static website that is hosted on GitHub Pages and is written in pure HTML, CSS and JavaScript. It is used to showcase my skills and projects to potential employers and to provide a platform for me to share my knowledge and experience with others. It is also used as a blog to share my thoughts and opinions on various cybersecurity-related topics, write-ups and other insights. The project is my personal twist on a terminal-themed website that uses user-input to navigate through the website and its content. The website uses a JSON file on the backend to simulate the directory structure of a UNIX-based shell, which is parsed and rendered on the frontend using JavaScript. A priority of mine is to make the terminal feel as authentic as possible, which is why I have implemented custom CSS styling, Tab-autocompletion, as well as the a clear-screen mechanic. Futhermore, the website aims to be explored and enjoyed by the user, which is why I have implemented various easter eggs and hidden features that can be discovered when browsing. Of course, there also exists a non-terminal version of the website for users that prefer a more traditional experience."
                 }
             ]
         },
@@ -51,38 +58,38 @@
                 {
                     "type": "file",
                     "icon": "\ue614",
-                    "name": "CSharp.cs",
-                    "content": ""
-                },
-                {
-                    "type": "file",
-                    "icon": "\ue73c",
-                    "name": "Python.py",
-                    "content": ""
-                },
-                {
-                    "type": "file",
-                    "icon": "\uf489",
-                    "name": "Bash.sh",
-                    "content": ""
-                },
-                {
-                    "type": "file",
-                    "icon": "\ue61e",
-                    "name": "C.c",
-                    "content": ""
+                    "name": "CSharp",
+                    "content": "The CSharp programming language has been thoroughly used during my studies at UAS Technikum Wien. Among other projects, it was mainly used to develop large scale full-stack applications like the <a class='in-text' href=https://github.com/jakobfriedl/parcel-logistics-service>Parcel Logistics Service</a> application, as well as the <a class='in-text' href=https://github.com/jakobfriedl/tour-planner>Tour Planner</a> application. It was used in conjunction with relational database managements like PostgreSQL and MySQL as well as with platforms like Azure DevOps and GitHub to practice continuous and agile development."
                 },
                 {
                     "type": "file",
                     "icon": "\ue26e",
-                    "name": "Nim.nim",
-                    "content": ""
+                    "name": "Nim",
+                    "content": "Nim is a low-level systems programming language that combines Python-like syntax and a good developer experience with C-like performance. I started learning Nim in december of 2022 with the yearly <a class='in-text' href=https://adventofcode.com/2022/>Advent of Code</a> challenge due to its similarity to Python and its ability to compile to C, C++ and JavaScript. I have since used Nim for various small projects like a Discord Bot, as well as picked up a passion for malware development due to it's fantastic integration with the Windows API. Most notably, I have developed a <a class='in-text' href=https://github.com/jakobfriedl/mini-projects/tree/main/nim/stager>shellcode stager</a> which is able to load and execute shellcode from a remote server into memory on the target machine, bypassing static defense and detection mechanisms."
+                },
+                {
+                    "type": "file",
+                    "icon": "\ue73c",
+                    "name": "Python",
+                    "content": "Python is used by me mainly for scripting and automating tasks and processes, as well as for writing exploits and tools for penetration testing engagements. It was also the language of choice for the <a class='in-text' href=https://github.com/jakobfriedl/ML-BD-for-code-quality>ML-BD-for-code-quality</a> machine learning project at UAS Technikum Wien."
+                },
+                {
+                    "type": "file",
+                    "icon": "\ue61e",
+                    "name": "C|C++",
+                    "content": "I learned C during my first semester at UAS Technikum Wien. It was used to teach the basics of programming and to introduce us to the C programming language. I have since used it for projects like a <a class='in-text' href=https://github.com/jakobfriedl/tw-mailer>mail server</a>  application that showcases my ability to work with sockets and the TCP/IP protocol. Further, I have used it to practice my understanding of the Windows API, though I have since switched to Nim for this purpose. C++ on the other hand was taught at UAS Technikum Wien using algorithms and data structures as well as object oriented game-programming."
+                },
+                {
+                    "type": "file",
+                    "icon": "\ue781",
+                    "name": "JavaScript|HTML|CSS|PHP",
+                    "content": "JavaScript has been used in combination with HTML, CSS and PHP during my studies at UAS Technikum Wien to develop web-applications. I am experienced with working with the LAMP technology stack, Node.js and the Angular web development framework. Personal projects using this language include a Discord bot that I have made for my friends and I to use, as well as this personal portfolio website, which features custom styling and a innovative JSON-based backend to simulate the look and feel of a UNIX-based terminal. I am also familiar with the OWASP Top 10 and identifying vulnerable JavaScript code that can be exploited by attackers."
                 },
                 {
                     "type": "file",
                     "icon": "\uf472", 
-                    "name": "Sql.sql",
-                    "content": ""
+                    "name": "SQL",
+                    "content": "Almost all projects I have worked on have included a database integration of some sorts. I have worked with MySQL, PostgreSQL, MongoDB and Microsoft SQL Server. I am equipped with the ability to securely integrate databases into applications and to write complex queries to retrieve and manipulate data. As a penetration tester, I am also able to identify and exploit SQL injection vulnerabilities and report remediation advice."
                 }         
             ]
         },

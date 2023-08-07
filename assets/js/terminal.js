@@ -64,9 +64,9 @@ const showAbout = () => {
     let output = `
     <div class="response">
     Hi, my name is Jakob! I am a computer science student from Austria with a passion for cybersecurity and penetration testing. I am currently specializing in network penetration testing with emphasis on Windows Active Directory and learning malware development with the Nim programming language on the side. Next to that, I also enjoy going to the gym and lifting weights.<br><br> You can find me on the following platforms:<br>
-    - <a class="social" href="${github}" target="_blank">GitHub</a><br>
-    - <a class="social" href="${linkedin}" target="_blank">LinkedIn</a><br>
-    - <a class="social" href="${tryhackme}" target="_blank">TryHackMe</a><br>
+    - <a class="social in-text" href="${github}" target="_blank">GitHub</a><br>
+    - <a class="social in-text" href="${linkedin}" target="_blank">LinkedIn</a><br>
+    - <a class="social in-text" href="${tryhackme}" target="_blank">TryHackMe</a><br>
     </div><br>`
     $(".history").append(output);
 }
@@ -74,20 +74,20 @@ const showAbout = () => {
 const showBlog = () => {
     let output = `
     <div class="response">
-    Use 'ls blog' to view my latest blog posts and write-ups or visit <a href="blog">/blog</a> for a more detailed and organized overview.<br>
+    Use 'ls blog' to view my latest blog posts and write-ups or visit <a class='in-text' href="blog">/blog</a> for a more detailed and organized overview.<br>
     </div><br>`
     $(".history").append(output);
 }
 
 const getPwd = (json) => {
-    if (pwd !== "~") {
-        for (let i = 0; i < json.length; i++) {
-            if(json[i].name === pwd){
-                return json[i].content;
-            }
+    if (pwd === "~") {
+        return json;
+    }
+    for (let i = 0; i < json.length; i++) {
+        if(json[i].name === pwd){
+            return json[i].content;
         }
-    } 
-    return json;
+    }
 }
 
 const listDirectory = async (args) => {

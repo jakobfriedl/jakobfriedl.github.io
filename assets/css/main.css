@@ -7,6 +7,7 @@
     --fg-secondary: #D6D0CE;
     --primary-color: #63CCCA;
     --secondary-color: #62929E;
+    --highlight-faded: #eb8d8d;
     --highlight: #E54B4B;
 }
 
@@ -199,9 +200,16 @@ footer > small {
 }
 
 a{
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
     color: var(--fg-main);
     text-decoration: none;
+}
 
+a.in-text{
+    color: var(--highlight-faded);
 }
 
 a:hover{
