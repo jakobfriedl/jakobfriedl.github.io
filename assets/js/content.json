@@ -103,7 +103,14 @@
                     "icon": "\udb84\udd87",
                     "name": "Offshore",
                     "link": "/certifications/Offshore.pdf",
-                    "content": "Offshore Pro Lab is an Active Directory lab that simulates the look and feel of a real-world corporate network. With this network, I was tasked to assess the external perimeter, gain an internal foothold and pivot across multiple hosts and forests. Users start from an external perspective and have to penetrate the “DMZ” and then move laterally through the CORP.LOCAL, DEV, ADMIN and CLIENT forests to complete the lab. To track progress, there are multiple flags planted along the way as well as a few side challenges not required to advance within the Active Directory environment. This lab proves the ability to compromise an real-world Active Directory environment, as well as the ability to pivot across multiple hosts and forests."
+                    "content": "Offshore Pro Lab is an Active Directory lab that simulates the look and feel of a real-world corporate network. With this network, I was tasked to assess the external perimeter, gain an internal foothold and pivot across multiple hosts and forests. Users start from an external perspective and have to penetrate the “DMZ” and then move laterally through the CORP.LOCAL, DEV, ADMIN and CLIENT forests to complete the lab. To track progress, there are multiple flags planted along the way as well as a few side challenges that are not required to advance within the Active Directory environment. This lab proves the ability to compromise an real-world Active Directory environment, as well as the ability to pivot across multiple hosts and forests."
+                },
+                {
+                    "type": "file",
+                    "icon": "\udb84\udd87",
+                    "name": "RastaLabs",
+                    "link": "/certifications/RastaLabs.pdf",
+                    "content": "RastaLabs Pro Lab is an Active Directory lab that simulates a red team engagement on a real-world corporate environment. The initial foothold is achieved by conducting a phishing attack on the company's employees. After gaining access to the network, the user has to escalate privileges and move laterally through the network to complete the lab. To track progress, there are multiple flags planted along the way as well as a few side challenges that are not required to advance within the Active Directory environment. Due to the installation of various endpoint security restrictions and anti-virus solutions deployed on the lab, RastaLabs requires the attacker to use advanced evasion and obfuscation techniques to move across the domain and compromise the Domain Admin accounts."
                 }
             ]
         },
