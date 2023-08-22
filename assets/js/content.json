@@ -111,6 +111,13 @@
                     "name": "RastaLabs",
                     "link": "/certifications/RastaLabs.pdf",
                     "content": "RastaLabs Pro Lab is an Active Directory lab that simulates a red team engagement on a real-world corporate environment. The initial foothold is achieved by conducting a phishing attack on the company's employees. After gaining access to the network, the user has to escalate privileges and move laterally through the network to complete the lab. To track progress, there are multiple flags planted along the way as well as a few side challenges that are not required to advance within the Active Directory environment. Due to the installation of various endpoint security restrictions and anti-virus solutions deployed on the lab, RastaLabs requires the attacker to use advanced evasion and obfuscation techniques to move across the domain and compromise the Domain Admin accounts."
+                },
+                {
+                    "type": "file",
+                    "icon": "\udb84\udd87",
+                    "name": "Zephyr",
+                    "link": "/certifications/Zephyr.pdf",
+                    "content": "Zephyr Pro Lab is the newest HackTheBox professional lab environment on the market and simulates an Active Directory environment consistent of multiple domains and forests. The objective is to establish a foothold on the corporate network and move laterally and vertically to reach Domain Admin privileges. To track progress, there are multiple flags planted along the way as well as a few side challenges that are not required to advance within the Active Directory environment. Apart from phishing and password cracking, this lab primarily focuses on Active Directory exploitation, Kerberos attacks as well as SQL Server attacks."
                 }
             ]
         },
