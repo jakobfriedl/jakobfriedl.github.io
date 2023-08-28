@@ -10,6 +10,7 @@ $(document).ready( () => {
 const github = "https://github.com/jakobfriedl"
 const linkedin = "https://www.linkedin.com/in/jakobfriedl"
 const tryhackme = "https://tryhackme.com/p/Jako0b"
+const hackthebox = "https://app.hackthebox.com/profile/591548"
 
 var pwd = "~"
 
@@ -62,18 +63,19 @@ const clearTerminal = () => {
 
 const showAbout = () => {
     let output = `
-    <div class="response">
+    <br><div class="response">
     Hi, my name is Jakob! I am a computer science student from Austria with a passion for cybersecurity and penetration testing. I am currently specializing in network penetration testing with emphasis on Windows Active Directory and learning malware development with the Nim programming language on the side. Next to that, I also enjoy going to the gym and lifting weights.<br><br> You can find me on the following platforms:<br>
     - <a class="social in-text" href="${github}" target="_blank">GitHub</a><br>
     - <a class="social in-text" href="${linkedin}" target="_blank">LinkedIn</a><br>
     - <a class="social in-text" href="${tryhackme}" target="_blank">TryHackMe</a><br>
+    - <a class="social in-text" href="${hackthebox}" target="_blank">HackTheBox</a>
     </div><br>`
     $(".history").append(output);
 }
 
 const showBlog = () => {
     let output = `
-    <div class="response">
+    <br><div class="response">
     Use 'ls blog' to view my latest blog posts and write-ups or visit <a class='in-text' href="blog">/blog</a> for a more detailed and organized overview.<br>
     </div><br>`
     $(".history").append(output);

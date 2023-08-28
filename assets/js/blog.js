@@ -15,11 +15,21 @@ const getBlogEntries = async () => {
     }
 
     for (let i = 0; i < content.length; i++) {
-        let entry = `<div class="blog-entry" onclick="window.open('${content[i].link}','_blank');" style="cursor: pointer;">
+        
+        let tags = '<div class="tag-list">' 
+        if (content[i].categories) { 
+            content[i].categories.forEach((tag) => {
+                tags += `<span class='tag'>${tag.tag}</span>`
+            }) 
+        }
+        tags += "</div>"
+
+        let entry = `<div class="blog-entry" onclick="window.open('${content[i].link}','${content[i].type == "pdf" ? "_blank" : "_self"}');" style="cursor: pointer;">
             <p class="date">${content[i].date}</p>
             <h2 class="blog-title">${content[i].name}</h2>
             <p class="blog-description">${content[i].content}</p>
+            ${tags}
         </div>`
-        $(".blog").append(entry)
+        $(".blog-list").append(entry)
     }
 }

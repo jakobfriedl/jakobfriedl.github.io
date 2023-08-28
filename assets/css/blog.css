@@ -1,28 +1,113 @@
-.blog {
-    margin: 0 3rem 10vh 3rem;
+.blog-body {
+    margin: 0 3rem;
     overflow: scroll;
     overflow-x: hidden;
-    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
 }
+
+.container {
+    background-color: var(--bg-main);
+    margin: 0 1rem 1rem 0; 
+    padding: 1rem;
+    border-radius: 5px;
+    border-left: 1px solid var(--secondary-color);
+}
+
+.blog-list {
+    grid-row: 1 / span 2; 
+    grid-column-start: 0;
+    margin-right: 1rem;
+}
+
+.blog-categories {
+    grid-column-start: 2;
+}
+
+.blog-recents {
+    grid-column-start: 2;
+}
+
+@media (min-width: 1000px) {
+    .blog-categories {
+        width: 15rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .blog-body{
+        display: flex;  
+        flex-direction: column;
+    }
+
+    .blog-categories{
+        grid-row-start: 1;
+        border-top: 1px solid var(--secondary-color);
+        border-left: none;
+        margin-right: 1rem;
+    }
+
+    .blog-recents{
+        grid-row-start: 0;
+        border-bottom: 1px solid var(--secondary-color);
+        border-left: none;
+        margin-right: 1rem;
+    }
+
+    .blog-list {
+        grid-row-start: 1;
+    }
+}
+
 
 .blog-entry {
     transition: all .2s ease-in;
+    background-color: var(--bg-main);
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
     padding: 1rem 0.5rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
 }
 
 .blog-entry:hover {
     border: 1px solid var(--highlight);
+
+    .tag {
+        background-color: var(--highlight);
+    }
+
+    .date {
+        color: var(--highlight)
+    }
 }
 
-.blog-title {
+h2{
     font-size: 1.5rem;
     font-weight: bold;
+    margin: 0.5rem 0;
 }
-
+  
 .date{
+    transition: all .2s ease-in;
     font-size: 1.25rem;
     color: var(--primary-color);
 }
+
+.tag-list{
+    margin: 1rem 0 0 0; 
+    text-align: right;
+}
+
+.tag{
+    transition: all .2s ease-in;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    padding: 0.25rem 0.5rem; 
+    margin-right: 0.5rem; 
+    color: var(--bg-secondary)
+}
+
+/* .tag:hover{
+    background-color: var(--highlight);
+} */

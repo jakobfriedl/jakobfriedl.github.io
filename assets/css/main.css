@@ -215,11 +215,15 @@ a{
 }
 
 a.in-text{
-    color: var(--highlight-faded);
+    color: var(--highlight);
 }
 
 a:hover{
     color: var(--highlight);
+}
+
+a.in-text:hover{
+    color: var(--fg-main);
 }
 
 .back-button {
