@@ -94,7 +94,7 @@ const getPwd = (json) => {
 
 const listDirectory = async (args) => {
     $.ajax({
-        url: "./assets/js/content.json",
+        url: "./../assets/js/content.json",
         dataType: "json",
         async: false,
         success: (json) => {
@@ -154,7 +154,7 @@ const listDirectory = async (args) => {
 
 const changeDirectory = async (args) => {
     $.ajax({
-        url: "./assets/js/content.json",
+        url: "./../assets/js/content.json",
         dataType: "json",
         async: false,
         success: (json) => {
@@ -198,7 +198,7 @@ const printFile = async (args) => {
     }
 
     $.ajax({
-        url: "./assets/js/content.json",
+        url: "./../assets/js/content.json",
         dataType: "json",
         async: false,
         success: (json) => {
@@ -284,7 +284,7 @@ onkeydown = function(e){
         } else {
             // Get files and directories in current directory
             $.ajax({
-                url: "./assets/js/content.json",
+                url: "./../assets/js/content.json",
                 dataType: "json",
                 async: false,
                 success: (json) => {

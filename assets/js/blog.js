@@ -19,7 +19,7 @@ const getBlogEntries = async () => {
         let tags = '<div class="tag-list">' 
         if (content[i].categories) { 
             content[i].categories.forEach((tag) => {
-                tags += `<span class='tag'>${tag.tag}</span>`
+                tags += `<div class='tag'>${tag.tag}</div>`
             }) 
         }
         tags += "</div>"

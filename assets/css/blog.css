@@ -58,6 +58,14 @@
     .blog-list {
         grid-row-start: 1;
     }
+
+    .tag-list { 
+        flex-direction: column;
+
+        .tag {
+            margin-bottom: 0.25rem;
+        }
+    }
 }
 
 
@@ -97,6 +105,10 @@ h2{
 .tag-list{
     margin: 1rem 0 0 0; 
     text-align: right;
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: right;
 }
 
 .tag{
@@ -107,7 +119,3 @@ h2{
     margin-right: 0.5rem; 
     color: var(--bg-secondary)
 }
-
-/* .tag:hover{
-    background-color: var(--highlight);
-} */
