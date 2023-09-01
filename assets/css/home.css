@@ -29,22 +29,22 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+}
 
-    li {
-        list-style-type: none;
-        margin: 0 1rem;
-    }
+li {
+    list-style-type: none;
+    margin: 0 1rem;
+}
 
-    a {
-        text-decoration: none;
-        color: var(--fg-main);
-        border-bottom: 0px solid var(--bg-secondary);
-        font-size: 1.5rem;
+li > a {
+    text-decoration: none;
+    color: var(--fg-main);
+    border-bottom: 0px solid var(--bg-secondary);
+    font-size: 1.5rem;
 
-        &:hover {
-            color: var(--highlight);
-            border-bottom: 5px solid var(--bg-secondary);
-        }
+    &:hover {
+        color: var(--highlight);
+        border-bottom: 5px solid var(--bg-secondary);
     }
 }
 

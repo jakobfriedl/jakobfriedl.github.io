@@ -37,6 +37,16 @@ nav {
     }
 }
 
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
+li {
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+}
+
 #terminal-buttons {
     display: flex;
     justify-content: space-between;
