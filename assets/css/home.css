@@ -61,9 +61,10 @@ li > a {
 
 .hero {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
     justify-content: center;
+    margin: 0 auto;
 }
 
 .hero-img {
@@ -82,7 +83,7 @@ li > a {
 }
 
 .hero-h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-top: 1rem;
 }
 
@@ -123,7 +124,8 @@ li > a {
     }
 
     .hero-h2 {
-        font-size: 1.5rem;
+        margin-top: 0.5rem;
+        font-size: 1.2rem;
     }
 }
 

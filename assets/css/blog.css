@@ -1,14 +1,13 @@
 .blog-body {
     margin: 0 3rem;
     overflow: scroll;
-    overflow-x: hidden;
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;
 }
 
 .container {
-    background-color: var(--bg-main);
+    background-color: var(--bg-secondary);
     margin: 0 1rem 1rem 0; 
     padding: 1rem;
     border-radius: 5px;
@@ -22,11 +21,20 @@
 }
 
 .blog-categories {
-    grid-column-start: 2;
+    grid-column-start: 0;
 }
 
 .blog-recents {
+    grid-column-start: 0;
+}
+
+.footer {
     grid-column-start: 2;
+    justify-self: center;
+    color: var(--secondary-color);
+    display: grid;
+    place-items: center;
+    margin-bottom: 1rem;
 }
 
 @media (min-width: 1000px) {
