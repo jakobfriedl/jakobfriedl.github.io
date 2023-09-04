@@ -10,6 +10,7 @@
     
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script defer src="../assets/js/effects.js"></script>
+    <script defer src="../assets/js/skills.js"></script>
     
     <title>Jakob Friedl - Skills</title>
     <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
@@ -21,7 +22,41 @@
     </header>
 
     <div class="main">
-        Under construction 🏗️
+        <div class="skills-menu">
+            <ul class="skills-tabs">
+                <li id="skills-tab-lang" class="skills-tab-item">Languages</li>
+                <li id="skills-tab-sec" class="skills-tab-item">Cybersecurity</li>
+                <li id="skills-tab-dev" class="skills-tab-item">Development</li>
+                <li id="skills-tab-cert" class="skills-tab-item">Certifications</li>
+            </ul>
+        </div>
+        <div class="skills-content">
+            <div id="skills-content-lang" hidden>
+                Under construction 🏗️
+                C, C++, C#, Nim, Python, JavaScript, HTML, CSS, PHP, SQL, Bash
+            </div>
+            <div id="skills-content-sec" hidden>
+                Under construction 🏗️
+                Linux, Havoc, Metasploit, BurpSuite, Pivoting, Active Directory, Threat Hunting, OWASP, MITRE, Wireshark
+            </div>
+            <div id="skills-content-dev" hidden>
+                Under construction 🏗️
+                Git, Docker, Azure DevOps, Scrum, ASP.NET, PostgreSQL, MySQL, MSSQL, Machine Learning
+            </div>
+            <div id="skills-content-cert" hidden>
+                <div class="cert-list">
+                    <div class="cert">
+                        <a href="../certs/Offshore.pdf" target="_blank"><img class="cert-img" src="https://app.hackthebox.com/images/icons/ic-prolabs/ic-offshore-overview.svg" alt="Offshore Pro Lab"/></a> 
+                    </div>
+                    <div class="cert">
+                        <a href="../certs/RastaLabs.pdf" target="_blank"><img class="cert-img" src="https://app.hackthebox.com/images/icons/ic-prolabs/ic-rastalabs-overview.svg" alt="RastaLabs Pro Lab"/></a>
+                    </div>
+                    <div class="cert">
+                        <a href="../certs/Zephyr.pdf" target="_blank"><img class="cert-img" src="https://app.hackthebox.com/images/icons/ic-prolabs/ic-zephyr-overview.svg" alt="Zephyr Pro Lab"/></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer>

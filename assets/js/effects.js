@@ -60,10 +60,10 @@ const clearTypewriter = () => {
             clearInterval(typewriterInterval);
         }
         iteration -= 1;
-    }, 100);
+    }, 75);
 
     typewriterIndex = (typewriterIndex + 1) % typewriterList.length;
-    setTimeout(typewriter, 3000, typewriterList[typewriterIndex]);
+    setTimeout(typewriter, 2000, typewriterList[typewriterIndex]);
 }
 
 $(document).ready( () => {

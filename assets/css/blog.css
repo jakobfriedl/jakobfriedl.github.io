@@ -44,9 +44,15 @@
 }
 
 @media (max-width: 1000px) {
+
+    header {
+        margin: 2rem 1rem 2vh 1rem;
+    }
+
     .blog-body{
         display: flex;  
         flex-direction: column;
+        margin: 0 1rem;
     }
 
     .blog-categories{

@@ -66,9 +66,14 @@
 }
 
 @media (max-width: 800px) {
+
+    .blog-header{
+        margin: 2rem 1rem 2vh 1rem;
+    }
     .blog-body{
         display: flex;  
         flex-direction: column;
+        margin: 0rem 1rem;
     }
 
     .blog-nav{
