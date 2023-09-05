@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     list-style: none;
-    padding: 1rem 0;
+    margin-bottom: 2rem;
 }
 
 .skills-tab-item {
@@ -38,14 +38,28 @@
     color: var(--secondary-color);
 }
 
+.skills-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 8rem 0;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+
 @media (max-width: 800px){
     .skills-menu {
         flex-direction: column;
         align-items: start;
     }
+    .skills-content{
+        justify-content: start;
+    }
     .skills-tabs {
         flex-direction: column;
         align-items: start;
+        margin-bottom: 1rem; 
     }
     .skills-tab-item:hover {
         border-bottom: none;
@@ -59,15 +73,65 @@
     }
 }
 
-.skills-content {
-    display: flex;
+/* Languages */
+.tech-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     justify-content: center;
     align-items: center;
-    margin: 0 0 8rem 0;
     width: 100%;
-    overflow-y: scroll;
+    padding: 0 20px;
+    overflow:hidden;
 }
 
+.wide-tiles {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tech{
+    transition: all 0.3s linear;
+    border: 3px solid var(--bg-secondary);
+    border-radius: 20px;
+    padding: 1rem 1rem; 
+    font-size: 1.5rem;
+    margin: 0.5rem;
+}
+
+.tech:hover {
+    border: 3px solid var(--secondary-color);
+    color: var(--secondary-color);
+    
+    svg {
+        fill: var(--secondary-color);
+    }
+}
+
+
+@media (max-width: 1100px){
+    .tech-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .wide-tiles {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 900px){
+    .tech-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .wide-tiles {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .tech-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+
+/* Certs */
 .cert-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -75,23 +139,23 @@
     align-items: center;
     width: 100%;
     padding: 0 20px;
+    overflow:hidden;
 }
 
-@media (max-width: 1200px){
+@media (max-width: 900px){
     .cert-list {
         grid-template-columns: repeat(2, 1fr);
     }
 }
-@media (max-width: 800px) {
+@media (max-width: 600px) {
     .cert-list {
         grid-template-columns: repeat(1, 1fr);
     }
 }
 
-
 .cert-img{
-    height: 200px;
-    width: 250px;
+    height: 150px;
+    width: 200px;
     margin: 0 1.5rem;
 }
 

@@ -19,3 +19,8 @@ Speaking of blog, a more readable version of my blog can be found at [jakobfried
 - Tab-autocompletion
 - Clearing the terminal screen with `CTRL + L`
 - Secret commands :)
+
+## Libraries 
+- [Ionicons](https://ionic.io/ionicons)
+- [Devicon](https://devicon.dev/)
+- [jQuery](https://jquery.com/)

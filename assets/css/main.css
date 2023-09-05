@@ -48,6 +48,7 @@ header {
     position: sticky;
     top: 0px;
     margin: 2rem 3rem 2vh 3rem;
+    display: flex; 
     flex: 0 0 1;
 }
 
@@ -70,12 +71,12 @@ h3{
 }
 
 .main{
-    margin: 1rem 3rem
+    margin: 0rem 3rem
 }
 
 @media (max-width: 800px){
     header {
-        margin: 2rem 1rem 2vh 1rem;
+        margin: 1rem 1rem 2vh 1rem;
     }
     .main{
         margin: 1rem 1rem

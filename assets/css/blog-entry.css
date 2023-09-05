@@ -49,6 +49,13 @@
     margin-bottom: 0.5rem;
 }
 
+.code-block {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: 5px;
+}
+
 .footer {
     grid-column: 1 / span 2;
     grid-row: 3;
