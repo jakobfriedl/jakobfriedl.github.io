@@ -20,6 +20,11 @@
     margin-right: 1rem;
 }
 
+.blog-description {
+    margin-right: 0.5rem;
+    text-align: justify;
+}
+
 .blog-categories {
     grid-column-start: 0;
 }

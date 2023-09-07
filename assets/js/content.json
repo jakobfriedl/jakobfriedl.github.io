@@ -10,7 +10,7 @@
                     "type": "html",
                     "name": "3 Certs in 6 Weeks: Offshore, RastaLabs and Zephyr Pro Lab Review",
                     "link": "/blog/offshore-rastalabs-zephyr.html",
-                    "date": "2023-09-05",
+                    "date": "2023-09-07",
                     "content": "During July and August of 2023 I had the opportunity to complete three of the HackTheBox Pro Lab certifications: Offshore, a 'Penetration Tester Level 3' lab, as well as RastaLabs and Zephyr, both of which are 'Red Team Operator Level 1' certifications respectively. In this blog post I want to outline my experiences, struggles and learning outcomes of these labs and provide my personal opinion on them.",
                     "categories": [
                         {
@@ -18,18 +18,6 @@
                         }, 
                         {
                             "tag": "Active Directory"
-                        }
-                    ]
-                },
-                {
-                    "type": "html",
-                    "name": "Template",
-                    "link": "/blog/template.html",
-                    "date": "2023-06-28",
-                    "content": "HTML blog template",
-                    "categories": [
-                        {
-                            "tag": "Template"
                         }
                     ]
                 },

@@ -105,11 +105,11 @@ svg {
     border: 3px solid var(--secondary-color);
     color: var(--secondary-color);
     
-    svg {
-        fill: var(--secondary-color);
-    }
 }
 
+.tech:hover > svg {
+    fill: var(--secondary-color);
+}
 
 @media (max-width: 1100px){
     .tech-list {
