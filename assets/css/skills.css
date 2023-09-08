@@ -158,8 +158,9 @@ svg {
 }
 
 .cert-img{
-    height: 150px;
+    /* height: 150px; */
     width: 200px;
     margin: 0 1.5rem;
 }
+
 

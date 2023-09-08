@@ -50,6 +50,7 @@ header {
     margin: 2rem 3rem 2vh 3rem;
     display: flex; 
     flex: 0 0 1;
+    flex-direction: column;
 }
 
 header > div {

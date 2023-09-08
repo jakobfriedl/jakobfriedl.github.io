@@ -91,10 +91,6 @@ li {
     }
 }
 
-@media (max-width: 800px) {
-
-}
-
 .prompt {
     display: grid;
     grid-template-columns: auto 1fr;
