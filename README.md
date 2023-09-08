@@ -21,6 +21,5 @@ Speaking of blog, a more readable version of my blog can be found at [jakobfried
 - Secret commands :)
 
 ## Libraries 
-- [Ionicons](https://ionic.io/ionicons)
-- [Devicon](https://devicon.dev/)
+- [Iconify](https://iconify.design/)
 - [jQuery](https://jquery.com/)

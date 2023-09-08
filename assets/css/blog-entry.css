@@ -10,22 +10,28 @@ h1 {
 
 .blog-body{
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr;
+    grid-template:
+        "nav content"
+        "resources content"
+        "tags content"
+        "socials content"
+        " . content"
+        "footer footer";
     margin: 0rem 3rem;
 }
 
 .blog-container {
-    background-color: var(--bg-main);
     border-radius: 5px;
-}
-
-.blog-nav{
-    grid-row-start: 0;
     border-right: 1px solid var(--secondary-color);
     margin: 0.5rem 0; 
     padding: 1rem;
     background-color: var(--bg-secondary);
+}
+
+
+.blog-nav{
+    grid-area: nav;
+
 }
 
 .blog-nav > ul > li {
@@ -39,29 +45,59 @@ h1 {
 }
 
 .blog-resources {
-    grid-column-start: 0;
-    grid-column-end: 0;
-    grid-row-start: 0; 
-    border-right: 1px solid var(--secondary-color);
-    margin: 0.5rem 0; 
-    padding: 1rem;
-    background-color: var(--bg-secondary);
+    grid-area: resources;
 }
 
 .blog-resources > ul > li {
     margin: 0.5rem 0;
 }
 
+.blog-tags {
+    grid-area: tags;
+}
+
+.blog-tags  > ul > li {
+    margin: 0.5rem 0;
+
+    &::before {
+        content: "#";
+        color: var(--secondary-color);
+        margin-right: 0.5rem;
+    }
+}
+
+.blog-socials {
+    grid-area: tags;
+}
+
+.blog-socials > ul > li {
+    margin: 0.5rem 0;
+}
+
+.blog-socials {
+    grid-area: socials;
+    border-right: 1px solid var(--secondary-color);
+    margin: 0.5rem 0; 
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+}
+
+.blog-socials > ul > li {
+    margin: 0.5rem 0;
+}
+
 .blog-content {
-    grid-column-start: 2;
-    grid-row: 1 / span 2;
+    background-color: var(--bg-main);
+    border-radius: 5px;
+    grid-area: content;
     margin: 0.5rem;
     padding: 1rem;
 }
 
 .blog-heading{
     color: var(--secondary-color);
-    margin: 1rem 0 0.5rem 0; 
+    margin: 0 0 0.5rem 0; 
+    font-size: 1.25rem; 
 }
 
 .blog-paragraph{
@@ -73,13 +109,6 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1rem 0;
-}
-
-.divider {
-    width: 100%;
-    height: 1px;
-    background-color: var(--secondary-color);
     margin: 1rem 0;
 }
 
@@ -97,8 +126,7 @@ h1 {
 }
 
 .footer {
-    grid-column: 1 / span 2;
-    grid-row: 3;
+    grid-area: footer;
     justify-self: center;
     color: var(--secondary-color);
     margin: 1rem 0; 
@@ -120,6 +148,7 @@ h1 {
     .blog-header{
         margin: 2rem 1rem 2vh 1rem;
     }
+
     .blog-body{
         display: flex;  
         flex-direction: column;
@@ -128,15 +157,11 @@ h1 {
 
     .blog-nav{
         grid-row-start: 1;
-        border-bottom: 1px solid var(--secondary-color);
-        border-right: none;
-        margin-right: 0rem;
     }
 
-    .blog-resources{
-        margin: 0rem;
+    .blog-container {
+        margin: 1rem 0 0 0;
         border-top: 1px solid var(--secondary-color);
-
         border-right: none;
     }
 
@@ -156,10 +181,7 @@ ul {
     padding: 0;
     margin: 0;
 }
-ul > li {
-    margin: 0.1rem 0;
-}
 
-ion-icon {
-    color: var(--secondary-color)
+ul > li {
+    margin: 0.5rem 0;
 }

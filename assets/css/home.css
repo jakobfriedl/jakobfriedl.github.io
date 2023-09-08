@@ -132,3 +132,23 @@ li > a {
 .typewriter {
     color: var(--secondary-color);
 }
+
+.socials {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.socials > a {
+    margin-right: 1rem; 
+    font-size: 2rem;
+    color: var(--fg-main);
+}
+
+.icon:hover {
+    color: var(--highlight);
+}
+
