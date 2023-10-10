@@ -27,7 +27,7 @@
     <div class="blog-body">
 
         <div class="blog-nav blog-container">
-            <h3 class="blog-heading">Overview</h3>
+            <h3>Overview</h3>
             <ul>
                 <li><a href="#introduction">Introduction</a></li>
                 <li><a href="#what-are-pro-labs">What are HackTheBox Pro Labs?</a></li>
@@ -40,7 +40,7 @@
 
         <div class="blog-content">
             <div class="image-wrapper">
-                <img class="blog-image" src="../assets/img/htbcerts.png">
+                <img class="blog-image" src="../assets/img/blog/htb-labs-1/htbcerts.png">
             </div>
             <h2 class="blog-heading" id="introduction">Introduction</h2>
             <p class="blog-paragraph">
@@ -55,7 +55,7 @@
                 HackTheBox is one of the leading companies in the field of cyber security training and certification. They offer a wide variety of free and paid services, including free penetration testing training machines that can be used to hone enumeration and exploitation skills on Linux or Windows targets. In addition to these standalone boxes, the platform also provides paid access to the so-called HackTheBox Pro Labs for advanced training purposes. Pro Labs are immersive Active Directory networks that are designed to simulate real-world environments and consist of multiple machines that are connected to each other. The overall goal of each lab is to obtain Domain Admin privileges on the entire network and collect all flags along the way that are then submitted as a proof of compromise. While some flags are necessary to progress through the lab, others are acquired by completing additional exploitation on standalone domains or machines in the network. After completion, a certificate is issued that can be used to prove the holder's skills and knowledge in the field of penetration testing Active Directory environments and red team tactics. 
             </p>
             <div class="image-wrapper">
-                <img class="blog-image" src="../assets/img/labs.png">
+                <img class="blog-image" src="../assets/img/blog/htb-labs-1/labs.png">
             </div>
             <p class="blog-paragraph">
                 The Pro Lab service is subscription based: For 40€ per month, a buyer gets access to all 6 networks with difficulties ranging from suiting beginner penetration testers to APT-level red team operators. The labs can be completed via VPN access in any order and at any time, as long as the subscription is active. 
@@ -69,7 +69,7 @@
                 For auditing a network of this scale, simple reverse shell handlers are simply not enough to keep track of all the machines and their respective shells. It demands for a more advanced approach, using a Command & Control framework. The <a class="in-text" href="https://www.thec2matrix.com/">C2-Matrix</a> provides a great overview of the most popular frameworks and their respective features, like Metasploit or the infamous Cobalt Strike. I personally fell in love with the <a class="in-text" href="https://havocframework.com/">Havoc</a> framework, due to its beautiful user interface, open source code and uncanny similarity to the commercial Cobalt Strike. Havoc manages sessions that are created by executing agents (so-called demons) on the target machines and allows the user to use a variety of commands and modules to interact with the victim hosts. 
             </p>
             <div class="image-wrapper">
-                <img class="blog-image" src="../assets/img/havoc.jpg">
+                <img class="blog-image" src="../assets/img/blog/htb-labs-1/havoc.jpg">
             </div>
             <p class="blog-paragraph">
                 It was also in this lab when I learned the importance of pivoting. For those unaware, pivoting is the process of using a compromised machine to attack other machines in the network. This is especially useful when the compromised machine is not directly accessible from the attacker's machine. While I initially attempted to pivot using a socks proxy on the target machine and proxychains on the attacker box, this turned out to be very inefficient and resulted in the incredible long runtime of scans and commands. Luckily, I came across the fantastic <a class="in-text" href="https://github.com/Nicocha30/ligolo-ng">ligolo-ng</a> tool, which instead uses a TCP tunnel to forward traffic from the target machine to the attacker's machine. This greatly improved the speed of scans and commands and made the lab a lot more enjoyable. It also proved to be very useful for the subsequent labs, since those are heavily reliant on pivoting as well.
@@ -119,7 +119,7 @@
         </div>
 
         <div class="blog-resources blog-container">
-            <h3 class="blog-heading">Tools & Resources</h3>
+            <h3>Tools & Resources</h3>
             <ul>
                 <li><a href="https://www.hackthebox.com/hacker/pro-labs"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> HackTheBox Pro Labs</a></li>
                 <li><a href="https://github.com/HavocFramework/Havoc"><iconify-icon class="icon" icon="ph:wrench"></iconify-icon> Havoc</a></li>
@@ -130,7 +130,7 @@
         </div>
 
         <div class="blog-tags blog-container">
-            <h3 class="blog-heading">Categories</h3>
+            <h3>Categories</h3>
             <ul>
                 <li><a>HackTheBox</a></li>
                 <li><a>Active Directory</a></li>
@@ -138,7 +138,7 @@
         </div>
 
         <div class="blog-socials blog-container">
-            <h3 class="blog-heading">Socials</h3>
+            <h3>Socials</h3>
             <ul>
                 <li><a href="https://www.linkedin.com/in/jakobfriedl/"><iconify-icon class="icon" icon="mdi:linkedin"></iconify-icon> LinkedIn</a></li>
                 <li><a href="https://github.com/jakobfriedl"><iconify-icon class="icon" icon="mdi:github"></iconify-icon> GitHub</a></li>

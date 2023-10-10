@@ -5,7 +5,14 @@
 }
 
 h1 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    color: var(--secondary-color);
+
 }
 
 .blog-body{
@@ -97,7 +104,7 @@ h1 {
 .blog-heading{
     color: var(--secondary-color);
     margin: 0 0 0.5rem 0; 
-    font-size: 1.25rem; 
+    font-size: 1.75rem; 
 }
 
 .blog-paragraph{
@@ -123,6 +130,7 @@ h1 {
     background-color: var(--bg-secondary);
     border-radius: 5px;
     color: var(--fg-secondary);
+    overflow-x: auto;
 }
 
 .footer {
@@ -185,3 +193,38 @@ ul {
 ul > li {
     margin: 0.5rem 0;
 }
+
+.blog-ordered-list {
+    margin: 1rem 2rem;
+}
+
+.blog-ordered-list > ol > li {
+    text-align: justify;
+    margin: 0.5rem 0;
+}
+
+.blog-unordered-list {
+    margin: 1rem 2rem;
+}
+
+.blog-unordered-list > ul > li {
+    text-align: justify;
+    margin: 0.5rem 0;
+}
+
+.advantages > ul > li {
+    &&::before {
+        content: "+";
+        color: var(--primary-color);
+        margin-right: 0.5rem;
+    }
+}
+
+.disadvantages > ul > li {
+    &&::before {
+        content: "-";
+        color: var(--highlight);
+        margin-right: 0.5rem;
+    }
+}
+
