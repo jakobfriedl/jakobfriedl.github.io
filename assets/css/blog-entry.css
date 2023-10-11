@@ -133,6 +133,35 @@ h3 {
     overflow-x: auto;
 }
 
+.blog-ordered-list {
+    margin: 1rem 2rem;
+}
+
+.blog-ordered-list > ol > li {
+    text-align: justify;
+    margin: 0.5rem 0;
+}
+
+.blog-unordered-list {
+    margin: 1rem 2rem;
+}
+
+.blog-unordered-list > ul > li {
+    text-align: justify;
+    margin: 0.5rem 0;
+}
+
+.blog-iframe{
+    display:flex; 
+    justify-content: center;
+    margin: 2rem 0; 
+}
+
+.blog-iframe > iframe {
+    width: 32%;
+    margin: 0 auto;
+}
+
 .footer {
     grid-area: footer;
     justify-self: center;
@@ -177,6 +206,18 @@ h3 {
         margin: 1rem 0rem;
 
     }
+
+    .blog-iframe {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin: 2rem 0;
+    }
+
+    .blog-iframe > iframe {
+        width: 50%;
+        margin: 0.5rem auto;
+    }
 }
 
 h2 {
@@ -194,23 +235,6 @@ ul > li {
     margin: 0.5rem 0;
 }
 
-.blog-ordered-list {
-    margin: 1rem 2rem;
-}
-
-.blog-ordered-list > ol > li {
-    text-align: justify;
-    margin: 0.5rem 0;
-}
-
-.blog-unordered-list {
-    margin: 1rem 2rem;
-}
-
-.blog-unordered-list > ul > li {
-    text-align: justify;
-    margin: 0.5rem 0;
-}
 
 .advantages > ul > li {
     &&::before {

@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="blog-header">
-        <h1><a class="back-button" href="/blog">../</a>Kerberos Authentication - A detailed explanation</h1>
+        <h1><a class="back-button" href="/blog">../</a>Kerberos - A detailed explanation</h1>
         <h4><span class="color-primary">2023-10-10</span> ~ Jakob Friedl</h4>
     </div>
     
@@ -40,33 +40,38 @@
         </div>
 
         <div class="blog-content">
+
+            <div class="image-wrapper">
+                <img class="blog-image" src="../assets/img/blog/kerberos/logo.png">
+            </div>
+            
             <h2 class="blog-heading" id="introduction">Introduction</h2>
             <p class="blog-paragraph">
                 I decided to publish this blog post after completing an assignment for university, where I had to explain the Kerberos authentication protocol in detail, as well as implement a working example on a Linux Slackware virtual machine. Since I gathered a lot of information about this topic and I feel like it is a very interesting topic, I decided to share my knowledge with you and attempt to explain the workings of the protocol in a graspable manner.  Since I am a passionate penetration tester, I will also cover some attack vectors that can be used to exploit Kerberos, especially in regard to Active Directory environments. While I will not cover the exploits in depth in this article, I am planning to post write-ups of common Kerberos attacks in the future.
             </p>
-
-            <!-- TODO Kerberos Logo -->
 
             <h2 class="blog-heading" id="what-is-kerberos">What is Kerberos?</h2>
             <p class="blog-paragraph">
                 The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM. <br> The name Kerberos stems from the three-headed dog Cerberus, who in Greek mythology guards the gates of the underworld. Similarly, Kerberos is used to guard a network from unwanted and unauthenticated users. It was developed by the Massachusetts Institute of Technology (MIT) in 1988, with it's current version, Kerberos Version 5 having been initially published in 1993 and reworked to meet security standards in 2005. The protocol is open source and has been built into Windows as the default authentication mechanism since Windows 2000. The following timeline shows key events in the history of the Kerberos protocol:
             </p>
 
-            <!-- TODO Timeline image -->
+            <div class="image-wrapper">
+                <img class="blog-image" src="../assets/img/blog/kerberos/history.png">
+            </div>
 
             <h2 class="blog-heading" id="components">Components of a Kerberos authentication system</h2>
             <p class="blog-paragraph">
                 The domain or network where Kerberos is the authentication authority is called a Kerberos <span class="color-primary">realm</span>. Subjects like users or services in a realm are called <span class="color-primary">principals</span> and have a unique identifier assigned to them. The most important component of a Kerberos realm is the <span class="color-primary">Key Distribution Center (KDC)</span> which is usually located on the domain controller in an Active Directory environment. The KDC consists of two servers, the <span class="color-primary">Authentication Server (AS)</span>, which is responsible for verifying user's credentials against the <span class="color-primary">Kerberos database</span> which stores the secret symmetric keys of all principals, as well as the <span class="color-primary">Ticket Granting Server (TGS)</span>, which is tasked to issue tickets to the authenticated user that allow them to access the desired services. There a two forms of tickets used with Kerberos authentication. A <span class="color-primary">Ticket Granting Ticket (TGT)</span> is obtained after successful authentication to the AS and allows for the retrieval of <span class="color-primary">Service Tickets (ST)</span> from the TGS, which are then used by the user to access the service they want to use. There is also another message type known as the <span class="color-primary">Authenticator</span>, which is used to verify the identity of the user to a service.
             </p>
 
-            <!-- TODO Diagram of Kerberos components -->
+            <div class="image-wrapper">
+                <img class="blog-image" src="../assets/img/blog/kerberos/components.png">
+            </div>
 
             <h2 class="blog-heading" id="workflow">How does Kerberos authentication work?</h2>
             <p class="blog-paragraph">
                 The Kerberos authentication process consists of 6 steps that ensure mutual authentication between a client and a resource server and that the user can access the desired service. I have created a diagram that shows the workflow of the authentication process, which I will explain in detail below.
             </p>
-
-            <!-- TODO Diagram of Kerberos workflow -->
 
             <div class="blog-ordered-list">
                 <ol>
@@ -108,6 +113,10 @@
             <p class="blog-paragraph">
                 After step 6, the mutual authentication between a user and service is complete and the user is allowed to access the service. An advantage of Kerberos is that at no point in the workflow, credentials are sent across the network. After the authentication, the user and service use the Service Session Key to encrypt all further communication, which is why Kerberos is also referred to as a session-based authentication protocol.
             </p>
+
+            <div class="image-wrapper">
+                <img class="blog-image" src="../assets/img/blog/kerberos/workflow.png">
+            </div>
 
             <h2 class="blog-heading" id="attack-vectors">Attack Vectors</h2>
             <p class="blog-paragraph">
@@ -176,7 +185,7 @@
             </div>
             
 
-            <h2 class="blog-heading" id="sources">Conclusion</h2>
+            <h2 class="blog-heading" id="conclusion">Conclusion</h2>
             <p class="blog-paragraph">
                 Kerberos is a network authentication protocol designed to provide strong authentication for client/server applications. Using secret-key cryptography, it allows a client to prove its identity to a server (and vice versa) across an insecure network connection. Central to the protocol is the Key Distribution Center (KDC), which consists of the Authentication Server (AS) and the Ticket-Granting Server (TGS). Clients first authenticate with the AS to obtain a Ticket-Granting Ticket (TGT), which is then used to request service-specific tickets from the TGS. The protocol ensures both authentication and confidentiality and relies on time-sensitive tickets to prevent replay attacks. Kerberos has become an attractive target for threat actors when targeting Active Directory environments, due to its role as an authentication authority and the quantity of effective attack vectors. 
             </p>
@@ -184,17 +193,31 @@
             <div class="divider"></div>
 
             <p class="blog-paragraph">
-                I hope you enjoyed my blog post about the Kerberos authentication protocol and maybe learned a thing or two. I am very interested in this topic, so there will be a lot more Kerberos-related blog posts with more focus on exploitation coming in the future. Feel free to reach out to me on <a class="in-text" href="https://www.linkedin.com/in/jakobfriedl/">LinkedIn</a> if you have any questions or feedback. 
+                I hope you enjoyed my blog post about the Kerberos authentication protocol and maybe learned a thing or two. I am very interested in this topic, so there will be a lot more Kerberos-related blog posts with more focus on exploitation coming in the future. Feel free to reach out to me on <a class="in-text" href="https://www.linkedin.com/in/jakobfriedl/">LinkedIn</a> if you have any questions or feedback. Following this section, you can find a list of fantastic videos that helped me understand the Kerberos authentication workflow.
             </p>
+
+            <div class="blog-iframe">
+                <iframe width="400" height="225" src="https://www.youtube.com/embed/5N242XcKAsM" title="Kerberos Authentication Explained | A deep dive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe width="400" height="225" src="https://www.youtube.com/embed/qW361k3-BtU" title="Taming Kerberos - Computerphile" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <br><iframe width="400" height="225" src="https://www.youtube.com/embed/snGeZlDQL2Q" title="Kerberos Explained (In 3 Levels Of Detail)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
 
         </div>
 
         <div class="blog-resources blog-container">
             <h3>Tools & Resources</h3>
             <ul>
-                <li><a href=""><iconify-icon class="icon" icon="ph:wrench"></iconify-icon> Tool</a></li>
-                <li><a href=""><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> Website</a></li>
-                <li><a href=""><iconify-icon class="icon" icon="mdi:youtube"></iconify-icon> Video</a></li>
+                <li><a href="https://youtu.be/5N242XcKAsM"><iconify-icon class="icon" icon="mdi:youtube"></iconify-icon> Kerberos Authentication Explained - Destination Certification</a></li>
+                <li><a href="https://youtu.be/qW361k3-BtU"><iconify-icon class="icon" icon="mdi:youtube"></iconify-icon> Taming Kerberos - Computerphile</a></li>
+                <li><a href="https://www.youtube.com/embed/snGeZlDQL2Q"><iconify-icon class="icon" icon="mdi:youtube"></iconify-icon> Kerberos Explained - VbScrub</a></li>
+                <li><a href="https://kerberos.org/software/tutorial.html"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> kerberos.org</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-kile/b4af186e-b2ff-43f9-b18e-eedb366abf13"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> MS-KILE</a></li>
+                <li><a href="https://web.mit.edu/kerberos/"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> MIT Kerberos</a></li>
+                <li><a href="https://www.freecodecamp.org/news/how-does-kerberos-work-authentication-protocol/"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> freecodecamp.org</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Kerberos_(protocol)"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> Kerberos - Wikipedia</a></li>
+                <li><a href="https://www.crowdstrike.com/cybersecurity-101/kerberoasting/"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> Kerberoasting</a></li>
+                <li><a href="https://blog.netwrix.com/2021/11/30/what-is-kerberos-delegation-an-overview-of-kerberos-delegation/"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> Kerberos Delegation</a></li>
+                <li><a href="https://blog.netwrix.com/2022/09/29/resource-based-constrained-delegation-abuse/"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> RBCD</a></li>
             </ul>
         </div>
 
