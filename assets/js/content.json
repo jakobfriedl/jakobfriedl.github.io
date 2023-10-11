@@ -8,6 +8,21 @@
             "content": [
                 {
                     "type": "html",
+                    "name": "Kerberos - A detailed explanation",
+                    "link": "/blog/kerberos.html",
+                    "date": "2023-10-10",
+                    "content": "Kerberos is a network authentication protocol designed to provide strong authentication for client/server applications. Using secret-key cryptography, it allows a client to prove its identity to a server (and vice versa) across an insecure network connection. This blog post covers the basics of Kerberos, its components and how its authentication workflow works in detail. It also includes an overview over common attacks against Kerberos.",
+                    "categories": [
+                        {
+                            "tag": "Kerberos"
+                        }, 
+                        {
+                            "tag": "Active Directory"
+                        }
+                    ]
+                },
+                {
+                    "type": "html",
                     "name": "3 Certs in 6 Weeks: Offshore, RastaLabs and Zephyr Pro Lab Review",
                     "link": "/blog/offshore-rastalabs-zephyr.html",
                     "date": "2023-09-07",
