@@ -8,6 +8,17 @@
             "content": [
                 {
                     "type": "html",
+                    "name": "Shhhavoc.py - Implementing an UI extension for the Havoc framework",
+                    "link": "/blog/shhhavoc.html",
+                    "date": "2023-10-21",
+                    "content": "Shhhavoc.py is a python script that integrates the Shhhloader shellcode loader payload generation into the Havoc command & control framework. It is a proof-of-concept implementation of a UI extension for Havoc that allows users to generate Shhhloader payloads from within the Havoc framework. This blog post covers an overview over the technology behind it, the implementation of the UI extension, as well as the process of integrating it into the Havoc framework.",
+                    "categories": [
+                        {
+                            "tag": "Offensive Development"
+                        }
+                    ]
+                },{
+                    "type": "html",
                     "name": "Kerberos - A detailed explanation",
                     "link": "/blog/kerberos.html",
                     "date": "2023-10-10",

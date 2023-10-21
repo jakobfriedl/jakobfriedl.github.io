@@ -171,16 +171,13 @@ h3 {
     place-items: center;
 }
 
-@media (min-width: 800px) {
-    .blog-nav {
-        width: 15rem;
-    }
-    .blog-resources {
+@media (min-width: 1000px) {
+    .blog-container {
         width: 15rem;
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 
     .blog-header{
         margin: 2rem 1rem 2vh 1rem;
@@ -251,4 +248,3 @@ ul > li {
         margin-right: 0.5rem;
     }
 }
-

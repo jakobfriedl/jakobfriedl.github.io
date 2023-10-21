@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="../assets/css/main.css" rel="stylesheet">
+    <link href="../assets/css/blog-entry.css" rel="stylesheet">
+    <link href="../assets/css/gist.css" rel="stylesheet">
+    
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script defer src="../assets/js/effects.js"></script>
+    <script defer src="../assets/js/blog.js"></script>
+
+    <!-- Icons -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    
+    <title>Jakob Friedl - Blog</title>
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="blog-header">
+        <h1><a class="back-button" href="/blog">../</a>Shhhavoc.py</h1>
+        <h2>Implementing an UI extension for the Havoc framework</h2>
+        <h4><span class="color-primary">2023-10-21</span> ~ Jakob Friedl</h4>
+    </div>
+    
+    <div class="blog-body">
+
+        <div class="blog-nav blog-container">
+            <h3>Overview</h3>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#havoc">What is Havoc?</a></li>
+                <li><a href="#shhhloader">What is Shhhloader?</a></li>
+                <li><a href="#implementation">Implementation</a></li>
+                <li><a href="#usage">Usage</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </div>
+
+        <div class="blog-content">
+
+            <h2 class="blog-heading" id="introduction">Introduction</h2>
+            <p class="blog-paragraph">
+                During my work on the HackTheBox <a class="in-text" href="/blog/offshore-rastalabs-zephyr.html">ProLabs</a>, I fell in love with the <a class="in-text" href="https://havocframework.com/">Havoc</a> C2 framework and have been using it ever since i completed these networks. However, I quickly noticed that the default agents that Havoc is able to generate are not meant to be evasive and are easily detected and blocked by common anti-virus software. That's where I came across a fantastic tool called <a class="in-text" href="https://github.com/icyguider/Shhhloader">Shhhloader</a>, that aims to solve this problem. In this blog, I want to outline how I used the Havoc Python API to integrate Shhhloader into the Havoc framework and designed a beautiful UI using a simple Python script. 
+            </p>
+
+            <h2 class="blog-heading" id="havoc">What is Havoc?</h2>
+            <p class="blog-paragraph">
+                The Havoc framework is a modern and malleable post-exploitation command and control framework for penetration testers and red teams. It was created by <a class="in-text" href="https://github.com/Cracked5pider">C5pider</a>, is open-source and supports a wide range of features. Visually, it is very similar to the well-known commercial Cobalt Strike framework, but in contrast to CS, the teamserver in Havoc is written in Go, the client is developed using Qt in C++ and the agents are written in C. This makes Havoc a very fast and lightweight framework, that is easy to use and extend. Like in any other Command & Control framework, Havoc provides the ability to create HTTP/S listeners, compile payloads for these agents and receive callbacks to agents that are executed on a target system. The default agent, the <span class="color-primary">Demon</span>, supports the exploitation of Windows hosts and has a lot of amazing built-in features, like being able to execute .NET-assemblies in memory, take screenshots or perform privilege escalation exploits. It can either be compiled as a Windows Executable, DLL, Service Executable or as raw shellcode, which comes in handy when you want to build a loader around it. 
+            </p>
+
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/payload.png" alt="Havoc payload generator" class="blog-image">
+            </div>
+
+            <p class="blog-paragraph">
+                The Havoc framework is very modular and allows the user to easily extend it by writing custom agents, listeners or even UI extensions. Havoc supports a Python API, which although not very well documented, is very powerful and allows the user to interact with the Havoc client and teamserver. A good friend of mine, <a class="in-text" href="https://leosmith.wtf/">Leo / p4p1</a> has been working on implementing support for a lot of different Qt elements for the Python API, so that the user can easily create custom UI extensions for the Havoc client with it. The elements include widgets, dialogs, tabs, buttons, labels, comboboxes and many more. For updates regarding his work, check out his blog, where he posts his progress and new implementations regularly. 
+            </p> 
+
+
+            <h2 class="blog-heading" id="shhhloader">What is Shhhloader?</h2>
+            <p class="blog-paragraph">
+                Shhhloader is a shellcode loader that supports a wide range of evasion techniques, like process hollowing, threadless injection and others to evade anti-virus software and other security mechanisms. It was created by <a class="in-text" href="https://github.com/icyguider">icyguider</a>. It takes raw shellcode as the input and then uses a python builder to compile a C++ stub that can be executed on the target systems. Shhhloader supports a variety of different evasion techniques, shellcode execution methods and syscall execution methods like SysWhispers3. Other features include NTDLL unhooking, generating the payload as a DLL, as well as different sandbox evasion techniques. Since it's a command-line-based tool, this means that a lot of flags and arguments have to be passed to the builder to configure the payload. The Shhhloader repository already includes a Cobalt Strike aggressor script, which creates a dialog in CS that allows the user to configure the payload with checkboxes, comboboxes and input fields and then generates the payload. A screenshot of the Cobalt Strike UI can be seen below. This is where the idea and inspiration to integrate Shhhloader into Havoc came from. In the next chapter, I want to outline my vision and how I implemented it using the HavocUI Python API.
+            </p>
+
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/shhhloader_cs.png" alt="Cobalt Strike Shhhloader UI" class="blog-image">
+            </div>
+
+
+            <h2 class="blog-heading" id="implementation">Implementation</h2>
+            <p class="blog-paragraph">
+                My primary goal was to create a UI extension for the Havoc client that allows the user to configure the Shhhloader payload using a dialog and then generate the payload. The UI should be very similar to the Cobalt Strike UI, so that users who are familiar with it can easily use the Havoc UI extension but also cover the features that are missing in the CS implementation. Unfortunately, the Havoc framework does not yet support generating payloads from the API, so for now, a user has to upload the generated shellcode into the Havoc client manually.
+            </p>
+
+            <p class="blog-paragraph">
+                I started out my development of the plugin by trying out the different API features that Leo had implemented for Havoc. I created a simple dialog window, added labels, checkboxes and comboboxes, which lets a user choose out of a list of pre-defined values. I also made use of the <span class="color-primary">OpenFileDialog</span> to get the path of the shellcode that has to be used with Shhhloader. First and foremost, I added the configuration options for the shellcode execution method, syscall execution method, injection process and checkboxes for verbose-mode and NTDLL unhooking. The basic structure of an element can be seen in the following code snippet. In this case, I created a combobox-element for the syscall execution method, but a similar approach is used for checkboxes and input fields. First, a label is created, which is the text that is displayed above to the element. Then a list of the values of the combobox is defined. It has to be noted, that the default value <span class="color-primary">GetSyscallStub</span> is not included in this list and is instead set to the <span class="color-primary">syscalls_exec_method</span> variable at the top of the script. This way, the combobox does not have an additional field which can be selected but doesn't hold a value. The variable is now updated whenever the combobox is changed. If the default value is assigned, the execution method is set to <span class="color-primary">GetSyscallStub</span> again. With <span class="color-primary">dialog.addComboBox()</span>, the element is added to the dialog window. The arguments of this function are the callback method for changing the value, the default value thats displayed and the list of values. I used the Python *-operator to break down the list in distinct strings to be passed to the function.
+            </p>    
+
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/combobox.png" alt="Syscalls combobox example" class="blog-image">
+            </div>  
+                
+            <p class="blog-paragraph">
+                I then added a button that first prompts the user to specify a output file and then executes the Shhhloader builder with the selected options and shellcode. The script requires the Shhhloader repository to be cloned in /opt so that it can be used to build the finished payload. I am using the <span class="color-primary">subprocess</span> module to execute the Shhhloader builder, primarily to capture stdout and stderr output of the command. 
+            </p>
+            
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/subprocess.png" alt="Subprocess to run command" class="blog-image">
+            </div>
+
+            <p class="blog-paragraph"> 
+                After verifying that the base functionality of the plugin works, I started to add more of the Shhhloader options to the script and tried to improve the user experience by using comboboxes instead of simple input fields whenever possible. I also discovered, that the label - the element that only contains text - support html out of the box, so I was able to add some styles to the labels to make the UI look better. Another feature of the HavocUI API is the ability to create a logger-widget, to which text can be appended. This was perfect for a build console, so I implemented that a tab window is created, after the payload builder is executed. In this tab, the Shhhloader-command as well as the output and possible error messages are displayed and highlighted. The <a class="in-text" href="#screenshots">screenshots</a> below show that error messages are highlighted in red and success messages in green. I also made sure to assign default values to the variables in the script, so that the user does not have to specify every single option if they just wanted to create a simple payload. The path of the Shhhloader repository and python installation are also configurable at the top of the script. 
+            </p>
+
+            <p class="blog-paragraph">
+                The full source code of the plugin can be seen in the following: 
+            </p>
+
+            <div class="image-wrapper">
+                <script src="https://gist.github.com/jakobfriedl/0887eb75b31b96568526521282e63681.js"></script>
+            </div>
+
+            <h2 class="blog-heading" id="usage">Usage</h2>
+            <p class="blog-paragraph">
+                Using Python scripts in Havoc is as straight forward as it gets. In order to use the UI elements, the <span class="color-primary">dev branch</span> of the Havoc repository has to be used, which can be switched to with the following command. After switching the branch, the Havoc client has to be recompiled to support the API calls. 
+            </p>
+            <pre class="code-block">git checkout dev
+make</pre>
+
+            <p class="blog-paragraph">
+                After a successful build, open the client and connect to any teamserver. Shhhavoc.py is developed to be used with the Havoc Scripts Manager extension, which allows the user to easily load and unload Python scripts into the Havoc client. Navigate to the <span class="color-primary">Scripts</span> tab at the top of the application and choose <span class="color-primary">Scripts Manager</span>. The Manager is opened in the bottom panel of the Havoc client. Click on the <span class="color-primary">Load</span> button and select the Shhhavoc.py script. The script is now loaded into the client and a Shhhavoc tab should have appeared on the menu bar at the top. Click on it to open the payload generator, as can be seen in the screenshots below. If the tab is not created, check the Havoc client console for any errors and reach out to me if you think that there is a problem with the plugin.
+            </p>
+
+            <h2 class="blog-heading" id="screenshots">Screenshots</h2>
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/dialog.png" alt="Dialog" class="blog-image">
+            </div>
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/success_log.png" alt="Success Log" class="blog-image">
+            </div>
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/error_log.png" alt="Error Log" class="blog-image">
+            </div>
+            <div class="image-wrapper">
+                <img src="../assets/img/blog/shhhavoc/shhhavoc.png" alt="Shhhavoc" class="blog-image">
+            </div>
+
+
+            <h2 class="blog-heading" id="conclusion">Conclusion</h2>
+            <p class="blog-paragraph">
+                The Shhhavoc plugin is the first project with which I contributed to open source code. Since I enjoy designing user interfaces I had a lot of fun trying to build a beautiful and useful extension. This is also definitely not the last time I will be working with the Havoc framework and the it's Python API. I am probably going to convert more Cobalt Strike aggressor scripts (*.cna) to work with Havoc and help advance the Python API to cover more complex UI elements and features. The Havoc framework is a very powerful C2 framework that is easy to use and extend. I am very excited to see how the framework will develop in the future and will try my best to contribute to the extension of the framework and I am looking forward to working on and with it. 
+            </p>
+
+            <div class="divider"></div>
+
+            <p class="blog-paragraph">
+                I hope you enjoyed reading this blog post and learned something new about my favorite command and control framework. Check out my <a class="in-text" href="https://github.com/jakobfriedl">GitHub</a> to have a look at more of my projects and feel free to follow me to stay up to date with my work. I would be very happy if you would check out the Shhhavoc plugin, try it out and give me feedback for it. If you have any ideas on how to improve the plugin or the Havoc framework in general, feel free to reach out to me. 
+            </p>
+            
+        </div>
+
+        <div class="blog-resources blog-container">
+            <h3>Tools & Resources</h3>
+            <ul>
+                <li><a href="https://gist.github.com/jakobfriedl/0887eb75b31b96568526521282e63681"><iconify-icon class="icon" icon="ph:wrench"></iconify-icon> Shhhavoc.py</a></li>
+                <li><a href="https://github.com/HavocFramework/Havoc"><iconify-icon class="icon" icon="ph:wrench"></iconify-icon> Havoc</a></li>
+                <li><a href="https://github.com/icyguider/Shhhloader"><iconify-icon class="icon" icon="ph:wrench"></iconify-icon> Shhhloader</a></li>
+                <li><a href="https://leosmith.wtf/"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> Leo / p4p1</a></li>
+                <li><a href="https://github.com/icyguider/Shhhloader/pull/36"><iconify-icon class="icon" icon="iconoir:www"></iconify-icon> Pull Request</a></li>
+            </ul>
+        </div>
+
+        <div class="blog-tags blog-container">
+            <h3>Categories</h3>
+            <ul>
+                <li><a>Offensive Development</a></li>
+            </ul>
+        </div>
+
+        <div class="blog-socials blog-container">
+            <h3>Socials</h3>
+            <ul>
+                <li><a href="https://www.linkedin.com/in/jakobfriedl/"><iconify-icon class="icon" icon="mdi:linkedin"></iconify-icon> LinkedIn</a></li>
+                <li><a href="https://github.com/jakobfriedl"> <iconify-icon class="icon" icon="mdi:github"></iconify-icon> GitHub</a></li>
+                <li><a href="https://tryhackme.com/p/Jako0b"><iconify-icon class="icon" icon="simple-icons:tryhackme"></iconify-icon> TryHackMe </a></li>
+                <li><a href="https://app.hackthebox.com/profile/591548"><iconify-icon class="icon" icon="simple-icons:hackthebox"></iconify-icon> HackTheBox</a></li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <small>Jakob Friedl © 2023</small>
+        </div>
+
+    </div>
+</body>
+</html>
