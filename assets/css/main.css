@@ -29,6 +29,28 @@
     color: var(--bg-secondary);
 }
 
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+  scrollbar-width: thin;
+  scrollbar-color: #1e1f20 #2d2f31;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #2d2f31;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #27292b;
+  border-radius: 10px;
+  border: 2px solid #2d2f31;
+}
+
 /* General Styles */
 * {
     margin: 0;
