@@ -33,22 +33,22 @@
   /* Firefox */
   * {
   scrollbar-width: thin;
-  scrollbar-color: #1e1f20 #2d2f31;
+  scrollbar-color: var(--bg-secondary) var(--background); 
 }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 *::-webkit-scrollbar-track {
-  background: #2d2f31;
+  background: var(--background);
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #27292b;
-  border-radius: 10px;
-  border: 2px solid #2d2f31;
+  background-color: var(--bg-secondary);
+  border-radius: 2.5px;
+  /* border: .5px solid var(--secondary-color); */
 }
 
 /* General Styles */

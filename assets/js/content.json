@@ -180,6 +180,13 @@
                     "name": "PWST",
                     "link": "/certs/PWST.pdf",
                     "content": "\"Practical Web Application Security and Testing\" is a certificate that covers the OWASP Top 10 web application vulnerabilities and proves the ability to understand and exploit web application attacks."
+                },
+                {
+                    "type": "file",
+                    "icon": "\udb84\udd87",
+                    "name": "Cybernetics",
+                    "link": "/certs/Cybernetics.pdf",
+                    "content": "Cybernetics Pro Lab is an advanced HackTheBox professional lab that simulates an red team engagement against a huge corporate network consisting of multiple domains and forests. The objective is to establish a foothold on the corporate network and move laterally and vertically to reach Domain Admin privileges. To track progress, there are multiple flags planted along the way. This lab provides a realistic challenge for penetration testers and covers advanced Active Directory exploitation techniques like Kerberos attacks, SQL server attacks, as well as AD certificate abuse. It also requires the use of advanced evasion and obfuscation techniques to bypass endpoint security solutions."
                 }
             ]
         },
