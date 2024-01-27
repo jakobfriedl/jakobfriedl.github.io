@@ -8,6 +8,20 @@
             "content": [
                 {
                     "type": "html",
+                    "name": "High Level Red Team Training: Cybernetics & APTLabs Review",
+                    "link": "/blog/cybernetics-aptlabs.html",
+                    "date": "2024-01-27",
+                    "content": "Cybernetics and APTLabs are the hardest professional lab environments that HackTheBox has to offer. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers. In this blog post, I want to outline my experiences with these labs, summarize the techniques and attacks that I have learned and recommend tools and resources that I have found useful during my journey. ",
+                    "categories": [
+                        {
+                            "tag": "HackTheBox"
+                        }, 
+                        {
+                            "tag": "Active Directory"
+                        }
+                    ]
+                },{
+                    "type": "html",
                     "name": "Shhhavoc.py - Implementing an UI extension for the Havoc framework",
                     "link": "/blog/shhhavoc.html",
                     "date": "2023-10-21",
