@@ -187,6 +187,13 @@
                     "name": "Cybernetics",
                     "link": "/certs/Cybernetics.pdf",
                     "content": "Cybernetics Pro Lab is an advanced HackTheBox professional lab that simulates an red team engagement against a huge corporate network consisting of multiple domains and forests. The objective is to establish a foothold on the corporate network and move laterally and vertically to reach Domain Admin privileges. To track progress, there are multiple flags planted along the way. This lab provides a realistic challenge for penetration testers and covers advanced Active Directory exploitation techniques like Kerberos attacks, SQL server attacks, as well as AD certificate abuse. It also requires the use of advanced evasion and obfuscation techniques to bypass endpoint security solutions."
+                }, 
+                {
+                    "type": "file",
+                    "icon": "\udb84\udd87",
+                    "name": "APTLabs",
+                    "link": "/certs/APTLabs.pdf",
+                    "content": "The APTLabs Pro Lab is the most advanced HackTheBox professional lab that simulates an targeted attack against a managed service provider. The objective is to establish a foothold on the corporate network and move laterally and vertically to reach Domain Admin privileges. To track progress, there are multiple flags planted along the way. This lab provides a realistic challenge for penetration testers and covers advanced Active Directory exploitation techniques and sophisticated relaying attacks. It further requires the use of advanced AV evasion techniques and knowledge to bypass security solutions like AppLocker or JEA."
                 }
             ]
         },
