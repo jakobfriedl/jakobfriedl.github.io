@@ -169,6 +169,12 @@
                 {
                     "type": "file",
                     "icon": "\udb84\udd87",
+                    "name": "Dante",
+                    "link": "/certs/Dante.pdf",
+                    "content": "Dante Pro Lab is an beginner friendly lab environment that focuses on obtaining access and elevating privileges on standalone Windows and Linux machines. It also covers basic Active Directory exploitation and buffer overflows. Most vulnerabilities are exploited using known CVEs or easy misconfigurations. The goal is to obtain root or administrator privileges on all machines. To track progress, there are multiple flags on each machine."
+                },{
+                    "type": "file",
+                    "icon": "\udb84\udd87",
                     "name": "Offshore",
                     "link": "/certs/Offshore.pdf",
                     "content": "Offshore Pro Lab is an Active Directory lab that simulates the look and feel of a real-world corporate network. With this network, I was tasked to assess the external perimeter, gain an internal foothold and pivot across multiple hosts and forests. Users start from an external perspective and have to penetrate the “DMZ” and then move laterally through the CORP.LOCAL, DEV, ADMIN and CLIENT forests to complete the lab. To track progress, there are multiple flags planted along the way as well as a few side challenges that are not required to advance within the Active Directory environment. This lab proves the ability to compromise an real-world Active Directory environment, as well as the ability to pivot across multiple hosts and forests."
