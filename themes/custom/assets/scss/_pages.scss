@@ -1,0 +1,13 @@
+.homepage {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 7rem);
+
+    .banner {
+        .banner-title {
+            text-transform: uppercase;
+            border-bottom: 1px solid $colorPrimary;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Jakob Friedl'
+theme = 'custom'
+
+pluralizeListTitles = false
+
+[taxonomies]
+    category = 'categories'
+
+[params]
+    author = 'Jakob Friedl'
+    dateFormat = 'January 2, 2006'
+
+[menus]
+    [[menus.main]]
+    name = 'Blog'
+    pageRef = '/blog'
+    weight = 10
+
+    [[menus.main]]
+    name = 'Categories'
+    pageRef = '/categories'
+    weight = 20
+
+    [[menus.main]]
+    name = 'About'
+    pageRef = '/about'
+    weight = 30

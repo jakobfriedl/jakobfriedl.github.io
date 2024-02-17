@@ -1,0 +1,12 @@
+@import 'variables';
+@import 'typography';
+@import 'layout';
+@import 'syntax';
+@import 'components';
+@import 'pages'; 
+
+* {
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+}
