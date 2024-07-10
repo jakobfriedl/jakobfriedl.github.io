@@ -1,7 +1,7 @@
 baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'Jakob Friedl'
-theme = 'hugo-theme-monochrome'
+theme = 'monochrome'
 
 [params]
 defaultContentLanguage = "en"
