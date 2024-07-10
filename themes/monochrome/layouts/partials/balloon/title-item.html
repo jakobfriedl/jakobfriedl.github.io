@@ -1,0 +1,6 @@
+<div class="balloon-title-item">
+    <div class="balloon-title-item-line">
+        {{ partial "balloon/line.html" false }}
+    </div>
+    <h5 class="balloon-title-item-content">{{ .Date | time.Format ":date_long" }}</h5>
+</div>

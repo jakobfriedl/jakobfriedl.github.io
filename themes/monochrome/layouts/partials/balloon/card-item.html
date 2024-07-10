@@ -1,0 +1,11 @@
+<div class="balloon-card-item">
+    <div class="balloon-card-item-line">
+        {{ partial "balloon/line.html" false }}
+        {{ partial "balloon/dot.html" }}
+        {{ partial "balloon/line.html" .last_item }}
+    </div>
+
+    <div class="balloon-card-item-content" onclick="location.href='{{ .ctx.RelPermalink}}';" style="cursor: pointer;">
+        {{- partial "blog-entry.html" (dict "ctx" .ctx "title" .ctx.Title "tags" .ctx.Params.Tags "summary" .ctx.Summary) -}}
+    </div>
+</div>
