@@ -1,29 +1,44 @@
 baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'Jakob Friedl'
-theme = 'custom'
-
-pluralizeListTitles = false
-
-[taxonomies]
-    category = 'categories'
+theme = 'hugo-theme-monochrome'
 
 [params]
-    author = 'Jakob Friedl'
-    dateFormat = 'January 2, 2006'
+defaultContentLanguage = "en"
+color_scheme = "dark"
 
-[menus]
-    [[menus.main]]
-    name = 'Blog'
-    pageRef = '/blog'
-    weight = 10
+# Table of contents
+enable_toc = true
+enable_collapsible_toc = true
+enable_collapsible_changelogs = true
 
-    [[menus.main]]
-    name = 'Categories'
-    pageRef = '/categories'
-    weight = 20
+# Footer
+# footer = "Jakob Friedl © 2024"
 
-    [[menus.main]]
-    name = 'About'
-    pageRef = '/about'
-    weight = 30
+enable_site_search = true
+
+# Navbar
+[[menu.navbar]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 100
+
+[[menu.navbar]]
+identifier = "blog"
+name = "Blog"
+url = "/blog/"
+weight = -100
+
+[[menu.navbar]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
+weight = -99
+
+[taxonomies]
+tag = "tags"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
