@@ -1,9 +1,28 @@
 {{- define "content" -}}
+{{- $is_blog_post := .Page.Params.blog_post | default false -}}
+
 
 {{ if and (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") (.Scratch.Get "params").enable_toc }}
 {{ $enable_collapsible_toc := (.Scratch.Get "params").enable_collapsible_toc }}
 {{ partial "collapsible-menu.html" (dict "type" "toc" "context" . "enable" $enable_collapsible_toc) }}
 {{ end }}
+
+{{ if $is_blog_post }}
+
+    <h1>{{ .Title }}</h1>
+
+    <div class="blog-post-meta">
+        {{ if .Params.date }}
+            <span class="date">{{ .Params.date | time.Format ":date_long" }}</span>
+        {{ end }}
+    
+        {{ if .Params.categories }}
+            <span> ◦ </span>
+            {{ partial "categories.html" .Page }}
+        {{ end }}
+    </div>
+{{ end }}
+
 
 {{ if .Content }}
     <div class="content-margin">

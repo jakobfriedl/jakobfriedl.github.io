@@ -1,0 +1,7 @@
+{{ $taxonomy := "categories" }} {{ with .Param $taxonomy }}
+{{ range $index, $category := . }} {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $category) -}}
+<span class="blog-meta-category">
+    <a href="{{ .RelPermalink }}">{{- partial "svg/feather.html" "tag" -}}<span>{{ $category | urlize }}</span></a>
+</span>
+{{- end -}} {{- end -}}
+{{ end }}

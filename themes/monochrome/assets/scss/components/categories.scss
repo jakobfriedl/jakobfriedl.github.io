@@ -1,0 +1,37 @@
+.blog-meta-category {
+
+    border: 2px solid var(--color-link);
+    padding: 0.025rem 0.5rem 0.175rem 0.5rem; 
+    border-radius: 8px;
+    margin-right: 0.3rem; 
+
+    span {
+        color: var(--color-link);
+        transition: color 0.3s;
+    }
+    
+    svg {
+        width: 1rem;
+        height: 1rem;
+        vertical-align: middle;
+    }
+    
+    &:hover {
+        background-color: var(--color-link);
+        span {
+            color: var(--color-background);
+        }
+
+        svg {
+            fill: var(--color-background);
+        }
+
+    }
+
+}
+
+.blog-meta-categories {
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.5rem;
+}

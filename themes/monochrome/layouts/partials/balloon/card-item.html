@@ -6,6 +6,6 @@
     </div>
 
     <div class="balloon-card-item-content" onclick="location.href='{{ .ctx.RelPermalink}}';" style="cursor: pointer;">
-        {{- partial "blog-entry.html" (dict "ctx" .ctx "title" .ctx.Title "tags" .ctx.Params.Tags "summary" .ctx.Summary) -}}
+        {{- partial "blog-entry.html" (dict "ctx" .ctx "title" .ctx.Title "categories" .ctx.Params.Categories "summary" .ctx.Summary) -}}
     </div>
 </div>

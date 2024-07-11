@@ -5,4 +5,8 @@ draft: true
 
 menu: navbar
 search_hidden: true
+
+type: 'blank' 
 ---
+
+

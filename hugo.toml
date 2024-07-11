@@ -31,13 +31,13 @@ url = "/blog/"
 weight = -100
 
 [[menu.navbar]]
-identifier = "tags"
-name = "Tags"
-url = "/tags/"
+identifier = "categories"
+name = "Categories"
+url = "/categories/"
 weight = -99
 
 [taxonomies]
-tag = "tags"
+category = "categories"
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]

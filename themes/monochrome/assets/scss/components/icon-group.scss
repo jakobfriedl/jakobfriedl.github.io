@@ -2,5 +2,6 @@
   @include my-4;
   display: inline-grid;
   grid-auto-flow: column;
-  gap: 0.375rem;
+  width: 100%;
+  justify-content: space-between; 
 }

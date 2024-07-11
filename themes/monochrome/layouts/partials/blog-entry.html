@@ -1,6 +1,6 @@
 {{ $ctx := .ctx }}
 {{ $title := .title }}
-{{ $tags := .tags }}
+{{ $categories := .categories }}
 {{ $summary := .summary }}
 {{ $enable_line_no := ($ctx.Scratch.Get "params").syntax_highlight.prism.enable_line_no | default true }}
 
@@ -15,13 +15,15 @@
         <h1>{{ $title }}</h1>
     {{ end }}
     {{ $summary | safeHTML }}
-
-    {{ if $tags }}
-        <div class="tags">
-            {{ range $tags }}
-                <span class="tag">{{ . }}</span>
-            {{ end }}
-        </div>
+    
+    <div class="blog-meta-categories">
+    {{ if $categories }}
+        {{ range $categories }}
+            <span class="blog-meta-category">
+                <a href="{{ printf "/categories/%s" . | relURL }}" class="tag">{{ partial "svg/feather.html" "tag"}} <span>{{ . }}</span></a>
+            </span>
+        {{ end }}
     {{ end }}
+    </div>
 
 </article>
