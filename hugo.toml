@@ -1,6 +1,6 @@
 baseURL = 'https://example.org/'
 languageCode = 'en-us'
-title = 'Jakob Friedl'
+title = 'Home'
 theme = 'monochrome'
 
 [params]

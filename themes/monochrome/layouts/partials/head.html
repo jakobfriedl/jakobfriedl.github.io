@@ -6,9 +6,9 @@
         {{- if eq .Kind "home" -}}
             {{- print .Site.Title -}}
         {{- else if eq .Kind "section" -}}
-            {{- print .CurrentSection.Title " - " .Site.Title }}
+            {{- print .CurrentSection.Title  }}
         {{- else -}}
-            {{- print .Title " - " .Site.Title -}}
+            {{- print .Title -}}
         {{- end -}}
     </title>
 
