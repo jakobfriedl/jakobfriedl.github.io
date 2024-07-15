@@ -75,7 +75,7 @@
 
       @media screen and (max-width: $md_min_width) {
         justify-content: left;
-        text-align: justify;
+        text-align: left;
       }
     }
   }
@@ -95,7 +95,7 @@
 
       @media screen and (max-width: $md_min_width) {
         justify-content: left;
-        text-align: justify;
+        text-align: left;
       }
     }
   }
@@ -119,6 +119,23 @@
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       background-color: var(--color-background-card);
       padding: 1rem 1.2rem;
+    
+      h1 {
+        color: var(--color-text);
+      }
+
+      @media screen and (max-width: $md_min_width) {
+      
+        // Align heading to the left on mobile 
+        h1 {
+          text-align: left;
+        }
+        justify-content: left;
+        background-color: var(--color-background);
+        padding: 1rem 0; 
+
+        box-shadow: none;
+      }
     }
   }
 

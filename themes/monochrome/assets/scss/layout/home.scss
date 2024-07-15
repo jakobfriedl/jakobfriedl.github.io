@@ -1,0 +1,31 @@
+.home-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; 
+
+    h1 {
+        @include text-home;
+        text-transform: uppercase; 
+        letter-spacing: 0.25rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        padding-bottom: 1rem;        
+        border-bottom: 0.25rem solid var(--color-link);
+    }
+
+    @media screen and (max-width: $md_min_width) {
+        
+        h1 {
+            @include text-5xl;
+            letter-spacing: 0.125rem;
+        }
+
+        .bookcase-layout {
+            flex-direction: column;
+            justify-content: baseline;
+            height: auto;
+        }
+    }
+}

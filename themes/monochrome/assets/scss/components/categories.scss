@@ -3,7 +3,6 @@
     border: 2px solid var(--color-link);
     padding: 0.025rem 0.5rem 0.175rem 0.5rem; 
     border-radius: 8px;
-    margin-right: 0.3rem; 
 
     span {
         color: var(--color-link);
@@ -25,9 +24,10 @@
         svg {
             fill: var(--color-background);
         }
-
     }
 
+    display: inline-block;
+    margin: 0.125rem 0;
 }
 
 .blog-meta-categories {

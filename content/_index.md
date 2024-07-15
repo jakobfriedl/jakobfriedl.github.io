@@ -5,8 +5,9 @@ draft: true
 
 menu: navbar
 search_hidden: true
+header_anchor: false
 
-type: 'blank' 
+type: 'home' 
 ---
 
-
+# Jakob Friedl
