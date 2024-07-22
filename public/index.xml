@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Home</title>
+    <link>https://jakobfriedl.github.io/</link>
+    <description>Recent content on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 17 Feb 2024 12:34:18 +0100</lastBuildDate><atom:link href="https://jakobfriedl.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>State of Metamorphic Malware</title>
+      <link>https://jakobfriedl.github.io/blog/metamorphic-malware/</link>
+      <pubDate>Thu, 11 Jul 2024 17:31:56 +0200</pubDate>
+      
+      <guid>https://jakobfriedl.github.io/blog/metamorphic-malware/</guid>
+      <description>Malware is a constantly evolving threat that is becoming more and more sophisticated. One of the most advanced types of malware is metamorphic malware. Metamorphic malware is a type of malware that is able to change its code and structure every time it is executed, making it extremely difficult to detect and analyze. In this blog post, I will discuss the state of metamorphic malware, how it works, and the challenges it poses to security researchers and analysts.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://jakobfriedl.github.io/about/</link>
+      <pubDate>Sat, 17 Feb 2024 18:33:21 +0100</pubDate>
+      
+      <guid>https://jakobfriedl.github.io/about/</guid>
+      <description>Hello, I&amp;rsquo;m Jakob&amp;hellip;&amp;hellip;and I&amp;rsquo;m a information security master&amp;rsquo;s student and penetration tester based in Austria. Currently, I am particularly interested in network penetration testing, especially Active Directory environments and am currently studying Windows 64-bit malware development. This site is to be used as a platform to document my journey in the field of information security and to write about my research and projects.
+SocialsGitHubLinkedInXHack The BoxTryHackMeCertificationsOSCP - OffSec APTLabs- HackTheBox Cybernetics - HackTheBox Offshore - HackTheBox RastaLabs - HackTheBox Zephyr - HackTheBox Dante - HackTheBox PWST - TCM Security </description>
+    </item>
+    
+    <item>
+      <title>High-Level Red Team Training: Cybernetics &amp; APTLabs Review</title>
+      <link>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</link>
+      <pubDate>Sat, 27 Jan 2024 22:24:39 +0200</pubDate>
+      
+      <guid>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</guid>
+      <description>A few months ago, I published a blog post where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers. In this blog post, I want to share the journey I went through while completing these labs with my good friend and colleague Leo and I&amp;rsquo;m going to give a brief review of the labs themselves and my opinion on them.</description>
+    </item>
+    
+    <item>
+      <title>Intermediary-Level Red Team Training: Offshore, RastaLabs, Zephyr Review</title>
+      <link>https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr/</link>
+      <pubDate>Thu, 07 Sep 2023 22:07:46 +0200</pubDate>
+      
+      <guid>https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr/</guid>
+      <description>During the summer months of July and August of 2023 I had the opportunity to complete three of the six buyable HackTheBox Pro Lab certifications: Offshore, a Penetration Tester Level 3 lab, as well as RastaLabs and Zephyr, both of which are Red Team Operator Level 1 certifications respectively. In this blog post I want to outline my experiences, struggles and learning outcomes of these labs and provide my personal opinion on them.</description>
+    </item>
+    
+  </channel>
+</rss>

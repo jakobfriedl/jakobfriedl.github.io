@@ -1,7 +1,6 @@
 ---
 title: 'High-Level Red Team Training: Cybernetics & APTLabs Review'
 date: 2024-01-27T22:24:39+02:00
-draft: true
 
 footer: 'Jakob Friedl © 2024' 
 
