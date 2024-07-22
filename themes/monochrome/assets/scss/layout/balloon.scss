@@ -39,6 +39,10 @@
     @extend %balloon-item-base;
     width: 100%;
 
+    .balloon-dot {
+      margin-top: 0.5rem; 
+    }
+
     .balloon-head-item-desktop {
       @extend %balloon-item-line-base;
     }
@@ -143,9 +147,8 @@
   .balloon-dot {
     width: .8rem;
     height: .8rem;
-    border-radius: 1rem;
-    margin: 0.25rem 0;
-    border: 2px solid var(--color-text);
+    border-radius: 0.25rem;
+    border: 3px solid var(--color-link);
   }
 
   .balloon-line-container {
@@ -154,7 +157,7 @@
     justify-content: left;
 
     .balloon-line {
-      background-color: var(--color-text);
+      background-color: var(--color-link);
     }
   }
 }

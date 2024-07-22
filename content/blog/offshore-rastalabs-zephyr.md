@@ -1,7 +1,6 @@
 ---
-title: 'Intermediary-Level Red Team Training: Offshore, RastaLabs, Zephyr Review'
+title: 'Intermediary-Level Red Team Training: Offshore, RastaLabs & Zephyr Review'
 date: 2023-09-07T22:07:46+02:00
-draft: false
 
 footer: 'Jakob Friedl © 2023' 
 
