@@ -43,6 +43,10 @@ h6 {
   @include text-sm;
 }
 
+iframe {
+  padding: 0.5rem 0;   
+}
+
 figure {
   margin: 0;
 }
@@ -73,6 +77,11 @@ details[open] > summary {
 
 .content-margin {
   @include my-8;
+    
+  img {
+    margin: 1rem auto; 
+    width: 90%; 
+  }
 }
 
 .hidden {

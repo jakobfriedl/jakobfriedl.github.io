@@ -74,9 +74,20 @@ h1 {
   color: var(--color-link); 
 }
 
+.blog-introduction-header {
+  color: var(--color-text); 
+  margin-bottom: -1rem;  
+}
+
 // Change text-highlight color
 ::-moz-selection,
 ::selection {
     background: var(--color-background-mark);
     color: var(--color-text-mark);
+}
+
+// Italics -> normal style + color 
+em {
+  font-style: normal;
+  color: var(--color-link)
 }

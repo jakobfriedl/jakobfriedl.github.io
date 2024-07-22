@@ -8,17 +8,20 @@ categories: ['hackthebox']
 blog_post: true
 ---
 
+
 During the summer months of July and August of 2023 I had the opportunity to complete three of the six buyable HackTheBox Pro Lab certifications: Offshore, a Penetration Tester Level 3 lab, as well as RastaLabs and Zephyr, both of which are Red Team Operator Level 1 certifications respectively. In this blog post I want to outline my experiences, struggles and learning outcomes of these labs and provide my personal opinion on them.
 
 <!-- more -->
 
 These networks greatly improved my understanding of Active Directory infrastructure, enumeration and exploitation. While I will roughly explain the topics and attack vectors covered in each lab in the following paragraphs, this blog is in no way intended to serve as a walkthrough and will not go into detail regarding the exploitation steps in order to protect the integrity of the certifications. 
 
+![Header](/img/htb-labs-1/labs.png)
+
 ## What are HackTheBox Pro Labs? 
 
 HackTheBox is one of the leading companies in the field of cyber security training and certification. They offer a wide variety of free and paid services, including free penetration testing training machines that can be used to hone enumeration and exploitation skills on Linux or Windows targets. In addition to these standalone boxes, the platform also provides paid access to the so-called HackTheBox Pro Labs for advanced training purposes. Pro Labs are immersive Active Directory networks that are designed to simulate real-world environments and consist of multiple machines that are connected to each other. The overall goal of each lab is to obtain Domain Admin privileges on the entire network and collect all flags along the way that are then submitted as a proof of compromise. While some flags are necessary to progress through the lab, others are acquired by completing additional exploitation on standalone domains or machines in the network. After completion, a certificate is issued that can be used to prove the holder's skills and knowledge in the field of penetration testing Active Directory environments and red team tactics.
 
-The Pro Lab service is subscription based: For 40€ per month, a buyer gets access to all 6 networks with difficulties ranging from suiting beginner penetration testers to APT-level red team operators. The labs can be completed via VPN access in any order and at any time, as long as the subscription is active. 
+The Pro Lab service is subscription paid: For 40€ per month, a buyer gets access to all 6 networks with difficulties ranging from suiting beginner penetration testers to APT-level red team operators. The labs can be completed via VPN access in any order and at any time, as long as the subscription is active. 
 
 ## Offshore: Trust Terror
 

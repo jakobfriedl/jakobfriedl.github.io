@@ -23,11 +23,15 @@
     </div>
 {{ end }}
 
+<div class="blog-body">
 
-{{ if .Content }}
+    <h2 class="blog-introduction-header">Introduction</h2>
+    
+    {{ if .Content }}
     <div class="content-margin">
         {{- partial "content.html" (dict "ctx" . "content" .Content) -}}
     </div>
-{{ end }}
+    {{ end }}
+</div>
 
 {{- end -}}
