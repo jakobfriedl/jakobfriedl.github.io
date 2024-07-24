@@ -3,14 +3,41 @@
   padding: 0.75rem;
 
   display: flex; 
-}
 
-.color-block-icon{
-  vertical-align: middle;
-  margin-right: 0.5rem; 
-  padding-top: 0.1rem; 
+  svg{
+    margin: 0.125rem 1rem 0 0.5rem; 
+  }
 }
 
 .color-block-head{
   text-transform: uppercase;
+}
+
+.color-block-note {
+  background-color: $color-colorblock-note-bg;
+  color: $color-colorblock-note-text;
+}
+
+.color-block-alert {
+  background-color: $color-colorblock-alert-bg;
+  color: $color-colorblock-alert-text; 
+}
+
+.color-block-warning {
+  background-color: $color-colorblock-warning-bg;
+  color: $color-colorblock-warning-text;
+}
+
+.color-block-info {
+  background-color: $color-colorblock-info-bg;
+  color: $color-colorblock-info-text;
+}
+
+.color-block-success {
+  background-color: $color-colorblock-success-bg;
+  color: $color-colorblock-success-text;
+  
+  svg, strong {
+    color: $color-colorblock-success-text;
+  }
 }

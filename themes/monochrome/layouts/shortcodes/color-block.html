@@ -1,32 +1,20 @@
 {{ $style := .Get "style" | default "note" }}
 
-{{ $bg_color := "#f0f0f0" }}
-{{ $color := "#494949" }}
 {{ $icon := "chevrons-right"}}
 
 {{ if eq $style "alert" }}
-    {{ $bg_color = "#f2dede" }}
-    {{ $color = "#a94442" }}
     {{ $icon = "alert-octagon"}}
 {{ else if eq $style "warning" }}
-    {{ $bg_color = "#fcf8e3" }}
-    {{ $color = "#8a6d3b" }}
     {{ $icon = "alert-triangle"}}
 {{ else if eq $style "info" }}
-    {{ $bg_color = "#d9edf7" }}
-    {{ $color = "#31708f" }}
     {{ $icon = "info"}}
 {{ else if eq $style "success" }}
-    {{ $bg_color = "#dff0d8" }}
-    {{ $color = "#3c763d" }}
     {{ $icon = "star"}}
 {{ end }}
 
-<div class="color-block content-margin" style="background-color: {{ $bg_color }}; color: {{ $color }};" >
+<div class="color-block content-margin color-block-{{$style}}">
 
-    <div class="color-block-icon">
-        {{ partial "svg/feather.html" $icon }}
-    </div>
+    {{ partial "svg/feather.html" $icon }}
 
     <div class="color-block-content">
         {{ .Inner | markdownify }}

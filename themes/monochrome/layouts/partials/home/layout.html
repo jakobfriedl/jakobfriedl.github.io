@@ -10,7 +10,7 @@
             {{- partial "content.html" (dict "ctx" $ctx "content" $content) -}}
         {{ end }}
     </div>
-    {{ with $res }}
+    {{/*  {{ with $res }}
         <div class="bookcase-layout content-margin">
             {{ range . }}
                 {{ $hidden := .Params.bookcase_hidden | default false }}
@@ -19,5 +19,5 @@
                 {{- end }}
             {{ end }}
         </div>
-    {{ end }}
+    {{ end }}  */}}
 </div>

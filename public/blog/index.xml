@@ -13,7 +13,16 @@
       <pubDate>Thu, 11 Jul 2024 17:31:56 +0200</pubDate>
       
       <guid>https://jakobfriedl.github.io/blog/metamorphic-malware/</guid>
-      <description>Malware is a constantly evolving threat that is becoming more and more sophisticated. One of the most advanced types of malware is metamorphic malware. Metamorphic malware is a type of malware that is able to change its code and structure every time it is executed, making it extremely difficult to detect and analyze. In this blog post, I will discuss the state of metamorphic malware, how it works, and the challenges it poses to security researchers and analysts.</description>
+      <description>This blog post is a work in progress.
+Thank you for your understanding.
+This blog post is a work in progress.
+Thank you for your understanding.
+This blog post is a work in progress.
+Thank you for your understanding.
+This blog post is a work in progress.
+Thank you for your understanding.
+This blog post is a work in progress.
+Thank you for your understanding.</description>
     </item>
     
     <item>
@@ -23,6 +32,15 @@
       
       <guid>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</guid>
       <description>A few months ago, I published a blog post where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers. In this blog post, I want to share the journey I went through while completing these labs with my good friend and colleague Leo and I&amp;rsquo;m going to give a brief review of the labs themselves and my opinion on them.</description>
+    </item>
+    
+    <item>
+      <title>Kerberos Authentication Protocol</title>
+      <link>https://jakobfriedl.github.io/blog/kerberos/</link>
+      <pubDate>Tue, 10 Oct 2023 20:15:37 +0200</pubDate>
+      
+      <guid>https://jakobfriedl.github.io/blog/kerberos/</guid>
+      <description>The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM.</description>
     </item>
     
     <item>

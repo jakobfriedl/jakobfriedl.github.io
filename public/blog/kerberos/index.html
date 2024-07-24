@@ -1,0 +1,474 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='https://jakobfriedl.github.io/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kerberos Authentication Protocol</title>
+
+    
+
+    
+
+    
+
+    
+        <meta property="og:title" content="Kerberos Authentication Protocol" />
+<meta property="og:description" content="The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jakobfriedl.github.io/blog/kerberos/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2023-10-10T20:15:37+02:00" />
+<meta property="article:modified_time" content="2023-10-10T20:15:37+02:00" />
+
+
+    
+
+    
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Kerberos Authentication Protocol"/>
+<meta name="twitter:description" content="The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM."/>
+
+    <link rel="stylesheet" href="/style.min.ecee263aebf0f25ab9ae92f3b151229eda988bb3cb3da6b9b0fb71ca02ca66b850b3ed9bb18b3503a642f3a852e2e1e42202eb4fe699c51163d93abfef539c97.css" integrity="sha512-7O4mOuvw8lq5rpLzsVEintqYi7PLPaa5sPtxygLKZrhQs&#43;2bsYs1A6ZC86hS4uHkIgLrT&#43;aZxRFj2Tq/71Oclw==">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'dark';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/header.64a5d751579791aca02cca13ec10c056a8bb0de07cc69a70f0ef401bb0f470f2360e07f1f6f4398e0681f9abd2c64b3cb9d167ee471fa2a07bb1943e06e0c02b.js" integrity="sha512-ZKXXUVeXkaygLMoT7BDAVqi7DeB8xppw8O9AG7D0cPI2Dgfx9vQ5jgaB&#43;avSxks8udFn7kcfoqB7sZQ&#43;BuDAKw=="></script>
+
+
+
+    <script defer src="/js/zooming.684b5d075bf94d0adfa21a7e7eb9acec1ddfb2e7b47d6657981617f0db0cf50949f1172801595afa3051f51b28d67f6a2d0c41be677b59b564307d9dbe4a4fd2.js" integrity="sha512-aEtdB1v5TQrfohp&#43;frms7B3fsue0fWZXmBYX8NsM9QlJ8RcoAVla&#43;jBR9Rso1n9qLQxBvmd7WbVkMH2dvkpP0g=="></script>
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    <script defer src="/js/search-en-us.dd2c38d8c5fecd6f4d666beae2c6765cad3399a78d2f323d9ffbc6a9c3e1d313438f398adb8bab67be5d8e3352ee8393235d84aef957f3e5e8b8aa446f71ef70.js" integrity="sha512-3Sw42MX&#43;zW9NZmvq4sZ2XK0zmaeNLzI9n/vGqcPh0xNDjzmK24urZ75djjNS7oOTI12ErvlX8&#43;XouKpEb3HvcA=="></script>
+
+
+
+
+<link rel="stylesheet" href="https://jakobfriedl.github.io/user.css">
+
+    
+</head>
+<body><header>
+    <div id="header_left">
+        <div id="sidebar_btn">
+            <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+            <label id="sidebar_btn_label" for="sidebar_btn_input">
+                <svg id="menu_icon" width="26px" height="26px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</svg>
+            </label>
+            <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                <div id="sidebar_canvas_overlay"></div>
+            </label>
+            <div id="sidebar">
+                <ul><li>
+                            <a href="/blog/">Blog</a></li><li>
+                            <a href="/categories/">Categories</a></li><li>
+                            <a href="/about/">About</a></li><li>
+                            <a href="/"></a></li></ul>
+            </div>
+        </div>
+    
+        <div class="brand">
+            <div>
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbox"><nav id="navbar" class="pure-menu">
+    <ul class="pure-menu-list"><li class="navbar-item pure-menu-item insection">
+                    
+                        <a href="/blog/" class="pure-menu-link">Blog</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/categories/" class="pure-menu-link">Categories</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/" class="pure-menu-link"></a>
+                    
+                </li></ul>
+</nav>
+<div id="theme_tool">
+            <svg id="dark_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</svg>
+            <svg id="light_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</svg>
+        </div>
+
+        
+            <div id="search_tool">
+                <svg id="search_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+
+</svg><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+                <svg width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</svg>
+            </div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+</div>
+        
+
+        
+    </div>
+</header>
+<main>
+            <div id="content" class="content-margin">
+                
+
+<details class="collapsible-menu-wrapper"><summary class="collapsible-menu-type"><span>Table of contents</span></summary><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#components">Components</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+    <li><a href="#attack-vectors">Attack Vectors</a>
+      <ul>
+        <li><a href="#roasting--credential-gathering--hash-gathering">Roasting / Credential gathering / Hash gathering</a></li>
+        <li><a href="#ticket-attacks">Ticket Attacks</a></li>
+        <li><a href="#kerberos-delegation-attacks">Kerberos Delegation Attacks</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+        
+    </div></details>
+
+
+
+
+    <h1>Kerberos Authentication Protocol</h1>
+
+    <div class="blog-post-meta">
+        
+            <span class="date">October 10, 2023</span>
+        
+    
+        
+    </div>
+
+
+<div class="blog-body">
+
+    <h2 class="blog-introduction-header">Introduction</h2>
+    
+    
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+    <p>The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM.</p>
+<p>The name Kerberos stems from the three-headed dog Cerberus, who in Greek mythology guards the gates of the underworld. Similarly, Kerberos is used to guard a network from unwanted and unauthenticated users. It was developed by the Massachusetts Institute of Technology (MIT) in 1988, with it&rsquo;s current version, Kerberos Version 5 having been initially published in 1993 and reworked to meet security standards in 2005. The protocol is open source and has been built into Windows as the default authentication mechanism since Windows 2000.</p>
+
+<h2 id="components" class="header-anchor-wrapper">Components
+  <a href="#components" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>The domain or network where Kerberos is the authentication authority is called a Kerberos realm. Subjects like users or services in a <strong>realm</strong> are called <strong>principals</strong> and have a unique identifier assigned to them. The most important component of a Kerberos realm is the <strong>Key Distribution Center (KDC)</strong> which is usually located on the domain controller in an Active Directory environment. The KDC consists of two servers, the <strong>Authentication Server (AS)</strong>, which is responsible for verifying user&rsquo;s credentials against the Kerberos database which stores the secret symmetric keys of all principals, as well as the <strong>Ticket Granting Server (TGS)</strong>, which is tasked to issue tickets to the authenticated user that allow them to access the desired services. There a two forms of tickets used with Kerberos authentication. A <strong>Ticket Granting Ticket (TGT)</strong> is obtained after successful authentication to the AS and allows for the retrieval of <strong>Service Tickets (ST)</strong> from the TGS, which are then used by the user to access the service they want to use. There is also another message type known as the <strong>Authenticator</strong>, which is used to verify the identity of the user to a service.</p>
+<p><img src="/img/kerberos/components.png" alt="History of Kerberos"></p>
+
+<h2 id="workflow" class="header-anchor-wrapper">Workflow
+  <a href="#workflow" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>The Kerberos authentication process<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> consists of 6 steps that ensure mutual authentication between a client and a resource server and that the user can access the desired service. I have created a diagram that shows the workflow of the authentication process, which I will explain in detail below.</p>
+<ol>
+<li>
+<p><em>AS_REQ (Authentication Server Request)</em>: The user sends an message containing their username or ID and the SPN (Service Principal Name) of the service they want to access to the AS. In this message, the SPN is krbtgt, the service account of the TGS that is responsible for issuing tickets. The requested lifetime of the TGT is also included, as well as a nonce, a random number which helps protect the system against replay attacks. This step is where the actual authentication happens, since the user is required to enter their password to generate their secret key. This secret key is used to encrypt a timestamp in the message, to ensure the authenticity of the user that requests the TGT. This process is known as pre-authentication and is used to prevent replay attacks and verify the user&rsquo;s authenticity to the KDC.</p>
+</li>
+<li>
+<p><em>AS_REP (Authentication Server Response)</em>: Upon receiving the AS_REQ message, the authentication server verifies that the user ID exists in the Kerberos database, encrypting the PA-data (pre-authentication data) of message with the stored secret key afterwards. If the authentication is successful, the AS sends two encrypted messages to the client. The first message contains the TGS&rsquo;s ID, a timestamp, the lifetime of the TGT and a randomly generated symmetric <strong>TGS Session Key</strong>. This message is encrypted with the clients secrets key that was fetched from the Kerberos database. The second message is the Ticket Granting Ticket and again contains the user&rsquo;s and TGS&rsquo;s ID, a timestamp, the TGT lifetime and the same TGS Session Key. However, the TGT is encrypted with the secret key of the TGS instead. More precisely, the TGT is encrypted with a key created from the password hash of the krbtgt account.</p>
+</li>
+<li>
+<p><em>TGS_REQ (Ticket Granting Server Request)</em>: The client again needs their secret key to decrypt the first message, send by the KDC. If valid credentials are supplied, this provides access to the mutual TGS Session Key. Note that the TGT, however, cannot be decrypted, since the user does not have access to the TGS&rsquo;s secret key. Instead, the TGT is forwarded to the TGS along with two new messages. An unencrypted message containing the desired service&rsquo;s SPN and the requested ST lifetime as well as an authenticator message with user ID and timestamp, which is encrypted with the TGS Session Key are sent to the TGS.</p>
+</li>
+<li>
+<p><em>TGS_REP (Ticket Granting Server Response)</em>: The TGS starts with verifying that the requested service exists in the Kerberos database on the KDC. Then, the TGS decrypts the TGT with the TGS secret key to obtain the TGS Session Key, which can in turn be used to decrypt the user authenticator message. The TGS then performs validation on the request by comparing user IDs, timestamps and ticket lifetimes. Additionally, the TGS features a cache that contains recent authenticators to protect against replay attacks, which would allow authentication on behalf of other users. After successful validation, the TGS creates two new messages and sends them back to the user. The first one contains the service ID and a timestamp, as well as a new symmetric <strong>Service Session Key</strong>. This message is encrypted with the TGS Session Key. The second message is the Service Ticket, containing user and service IDs, a timestamp the ST lifetime and the same Service Session Key. This message is encrypted using the desired service&rsquo;s secret key, fetched from the Kerberos database.</p>
+</li>
+<li>
+<p><em>AP_REQ (Application Server Request)</em>: The user can decrypt the first received message using the TGS Session Key and obtains the Service Session Key. Again, the ST cannot be decrypted, since the user does not have access to the service’s secret key. Instead, the ST is forwarded to the service along with a user authenticator message containing user ID and timestamp, which is encrypted using the Service Session Key.</p>
+</li>
+<li>
+<p><em>AP_REP (Application Server Response)</em>: The service now uses it&rsquo;s own secret key to decrypt the Service Ticket and is thus able to obtain the Service Session Key. After this key is used to decrypt the user authenticator message, the service validates the data received like the TGS previously did and checks it&rsquo;s cache for recent authenticators by the same user to provide replay protection. A final service authenticator message containing the service ID and timestamp is encrypted with the Service Session Key and sent to the user. The user decrypts the service authenticator, verifies that data and stores a copy of the Service Ticket in it&rsquo;s own cache for future use.</p>
+</li>
+</ol>
+<p>After step 6, the mutual authentication between a user and service is complete and the user is allowed to access the service. An advantage of Kerberos is that at no point in the workflow, credentials are sent across the network. After the authentication, the user and service use the Service Session Key to encrypt all further communication, which is why Kerberos is also referred to as a session-based authentication protocol.</p>
+<p><img src="/img/kerberos/workflow.png" alt="Kerberos authentication workflow"></p>
+
+<h2 id="attack-vectors" class="header-anchor-wrapper">Attack Vectors
+  <a href="#attack-vectors" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>Due to its role as the authentication authority in a network, Kerberos is a preferred target for threat actors and adversaries, especially when attacking Windows Active Directory environments. In the following, three of the most common and devastating types of Kerberos exploitation techniques are showcased.</p>
+
+<h3 id="roasting--credential-gathering--hash-gathering" class="header-anchor-wrapper">Roasting / Credential gathering / Hash gathering
+  <a href="#roasting--credential-gathering--hash-gathering" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>When talking about Roasting in the context of Kerberos, it is differentiated between so-called Kerberoasting<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and ASREP-Roasting. <strong>Kerberoasting</strong>, on one hand, aims to exploit accounts that have a Service Principal Name (SPN) configured, which are usually web or database service users. If a user account has a SPN set, an adversary can request a ST to that user and through this obtain the krb5tgs hash of the user. If the password is weak enough, this hash can be easily cracked or brute-forced offline and the attacker compromises the account.</p>
+<p>The other variant, <strong>ASREP-Roasting</strong> exploits principals that do not require Kerberos pre-authentication or have pre-authentication disabled. This feature was present in older Kerberos versions and basically enables an attacker to send a fake AS_REQ request to KDC without the users password and obtain the TGT and the message, which is encrypted with the target users secret key. The krb5asrep hash can be extracted from this data and can then be attempted to be cracked using brute-force methodology or a dictionary attack. Kerberos 5 requires a password to be used for the Authentication Server Request, but misconfigurations allow this to be disabled.</p>
+
+<h3 id="ticket-attacks" class="header-anchor-wrapper">Ticket Attacks
+  <a href="#ticket-attacks" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>Ticket attacks are amongst the most popular attack techniques for exploiting Active Directory and Kerberos authentication. It is differentiated between Golden and Silver Ticket attacks. For a <strong>Silver Ticket</strong> attack, a threat actor has compromised the password hash of a service account and is therefore able to forge Service Tickets and access restricted resources for this specific service.</p>
+<p>To conduct a <strong>Golden Ticket</strong> attack, an attacker has to obtain the password hash of the krbtgt service account which allows them to forge TGTs, effectively granting unrestricted access to any service and allowing full domain or realm takeover. The krbtgt account works as the KDC to issue Kerberos tickets to clients and it’s password is usually not changed, meaning golden tickets can be used for long-term persistence if the attack is not detected. A high-privileged account, e.g. a Domain Admin or local administrator on the DC is needed to initially compromise the krbtgt hash via credential dumping.</p>
+
+<h3 id="kerberos-delegation-attacks" class="header-anchor-wrapper">Kerberos Delegation Attacks
+  <a href="#kerberos-delegation-attacks" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>Kerberos delegation<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> comes into play, when a service is configured to act in behalf of another principal. Following is an easy example to demonstrate a use-case for delegation. The subjects are a user, a website hosted on a webserver, as well as a SQL database on a different server. When the user authenticates to the webserver, delegation makes it possible that the web service user requests access to the SQL server on behalf of the user, impersonating them instead of authenticating as the service account itself. This allows the user to only access database resources that they are allowed to access. There are three types of Kerberos delegation that can be exploited by threat actors.</p>
+<p>When** Unconstrained Delegation** is configured on a host, a TGT for each account authenticating to that host is stored in-memory to allow the host to impersonate that principal later. This is a severe security concern, since tickets can be easily extracted from memory using tools like mimikatz or Rubeus, allowing for the compromise of potentially privileged accounts that connected to that host. In combination with other exploits, it is also possible to force for example the domain controller to authenticate to the host with constrained delegation to obtain the TGT.</p>
+<p>On the other hand, <strong>Constrained Delegation</strong> allows the configuration of what services an account can be delegated to, making it less risky than its unconstrained sibling. If a user account or a computer (machine account) that has constrained delegation enabled is compromised, it&rsquo;s possible to impersonate any domain user (including administrator) and authenticate to a service that the user account is trusted to delegate to. Constrained delegation abuses the S4U2self and S4U2proxy protocol extensions (S4U = Service For User), which allow an service to retrieve a TGS for itself on behalf of other users.</p>
+<p>Finally, <strong>Resource-based Constrained Delegation (RBCD)</strong> is even more secure than the other two variations, but can still be abused to obtain access to restricted resources. In contrast to unconstrained and constrained delegation where a computer/user object is told what resources it can delegate authentications to, resource-based constrained delegation allows computer objects to specify who they trust and who can delegate to them. RBCD is controlled by the msDS-AllowedToActOnBehalfOfOtherIdentity attribute of an account object. If an attacker can edit this property for example a domain controller, they can essentially create a new computer account in the domain, allow the domain controller to act on behalf of this created account and then exploit the S4Uslef and S4Uproxy with Rubeus like with constrained delegation.</p>
+
+<h2 id="conclusion" class="header-anchor-wrapper">Conclusion
+  <a href="#conclusion" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>Kerberos is a network authentication protocol designed to provide strong authentication for client/server applications. Using secret-key cryptography, it allows a client to prove its identity to a server (and vice versa) across an insecure network connection. Central to the protocol is the Key Distribution Center (KDC), which consists of the Authentication Server (AS) and the Ticket-Granting Server (TGS). Clients first authenticate with the AS to obtain a Ticket-Granting Ticket (TGT), which is then used to request service-specific tickets from the TGS. The protocol ensures both authentication and confidentiality and relies on time-sensitive tickets to prevent replay attacks. Kerberos has become an attractive target for threat actors when targeting Active Directory environments, due to its role as an authentication authority and the quantity of effective attack vectors.</p>
+<table class="mc-table">
+<thead>
+<tr>
+<th><em>Advantages</em></th>
+<th><em>Disadvantages</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single sign-on is one of the biggest direct benefits of Kerberos, allowing a user to enter their credentials once, and continue to renew their ticket without intervention</td>
+<td>Single point of failure: If the KDC is compromised, the whole authentication system is compromised and all passwords can be dumped and extracted</td>
+</tr>
+<tr>
+<td>Mutual client-server authentication without sending passwords over the insecure network</td>
+<td>Only symmetric key cryptography is supported ⇒ key scaling and distribution issues</td>
+</tr>
+<tr>
+<td>Default authentication mechanism in Windows since Windows 2000 and built into macOS, Red Hat and other Linux distributions</td>
+<td>Knowledge based authentication only ⇒ weak passwords lead to easy compromise</td>
+</tr>
+<tr>
+<td>Both ends of the communication chain must be authenticated</td>
+<td>Misconfiguration can lead to tickets being active for a long time</td>
+</tr>
+<tr>
+<td>If properly configured, tickets are only viable for a limited amount of time</td>
+<td>Time-synchronization between KDC and all clients is necessary for the system to function properly</td>
+</tr>
+<tr>
+<td>The protocol is open source and based on open internet standards</td>
+<td>Client-side storage of tickets in memory is unsafe, since tickets can be dumped with tools like mimikatz and reused by other users</td>
+</tr>
+</tbody>
+</table>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Must-watch  videos about the topic:</p>
+<p><a href="https://www.youtube.com/watch?v=5N242XcKAsM">https://www.youtube.com/watch?v=5N242XcKAsM</a></p>
+<p><a href="https://www.youtube.com/watch?v=qW361k3-BtU">https://www.youtube.com/watch?v=qW361k3-BtU</a></p>
+<p><a href="https://www.youtube.com/watch?v=snGeZlDQL2Q">https://www.youtube.com/watch?v=snGeZlDQL2Q</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.crowdstrike.com/cybersecurity-101/kerberoasting/">https://www.crowdstrike.com/cybersecurity-101/kerberoasting/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://blog.netwrix.com/2021/11/30/what-is-kerberos-delegation-an-overview-of-kerberos-delegation/">https://blog.netwrix.com/2021/11/30/what-is-kerberos-delegation-an-overview-of-kerberos-delegation/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+</article></div>
+    
+</div>
+
+                
+                    
+                
+            </div>
+        </main>
+<footer>
+    <article>Jakob Friedl © 2023</article>
+</footer>
+
+</body>
+</html>

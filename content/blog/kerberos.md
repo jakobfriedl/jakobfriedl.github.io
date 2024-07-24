@@ -8,12 +8,6 @@ categories: []
 blog_post: true
 ---
 
-I decided to publish this blog post after completing an assignment for university, where I had to explain the Kerberos authentication protocol in detail, as well as implement a working example on a Linux Slackware virtual machine. Since I gathered a lot of information about this topic and I feel like it is a very interesting topic, I decided to share my knowledge with you and attempt to explain the workings of the protocol in a graspable manner. Since I am a passionate penetration tester, I will also cover some attack vectors that can be used to exploit Kerberos, especially in regard to Active Directory environments. A detailed explanation of these attack vectors is, however, out of scope of this blog post. 
-
-<!--more-->
-
-## Overview 
-
 The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM.
 
 The name Kerberos stems from the three-headed dog Cerberus, who in Greek mythology guards the gates of the underworld. Similarly, Kerberos is used to guard a network from unwanted and unauthenticated users. It was developed by the Massachusetts Institute of Technology (MIT) in 1988, with it's current version, Kerberos Version 5 having been initially published in 1993 and reworked to meet security standards in 2005. The protocol is open source and has been built into Windows as the default authentication mechanism since Windows 2000.

@@ -51,11 +51,24 @@ html[data-theme="dark"] {
   --color-background-inline-code: #{$gray-600};
   --color-background-card: #{$gray-700};
   --color-background-mark: #E8DDB5;
-  --color-link: #E08C7B;
+  --color-link: #009688;
   --color-navbar-item-inactive: #{$gray-400};
   --color-navbar-item-active: #{$gray-100};
   --color-navbar-item-in-section: #{$gray-250};
 }
+
+// Color block settings
+$color-colorblock-note-bg: #f0f0f0;
+$color-colorblock-note-text: #494949; 
+$color-colorblock-alert-bg: #f25f5c;
+$color-colorblock-alert-text: #a51c30;
+$color-colorblock-warning-bg: #ffd23f;
+$color-colorblock-warning-text: #805b10;
+$color-colorblock-info-bg: #00b2ca;
+$color-colorblock-info-text: #274c77;
+$color-colorblock-success-bg: #0ead69;
+$color-colorblock-success-text: #245501;
+
 
 // Default color settings
 
@@ -79,8 +92,7 @@ h1 {
   margin-bottom: -1rem;  
 }
 
-// Change text-highlight color
-::-moz-selection,
+// Change text-highlight color 
 ::selection {
     background: var(--color-background-mark);
     color: var(--color-text-mark);
@@ -90,4 +102,10 @@ h1 {
 em {
   font-style: normal;
   color: var(--color-link)
+}
+
+// Scrollbar style
+* {
+  scrollbar-width: thin; 
+  scrollbar-color: var(--color-background) var(--color-background-overlay);
 }

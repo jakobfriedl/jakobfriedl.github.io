@@ -2,8 +2,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: 80vh; 
+    align-items: center; 
+    height:75vh; 
 
     h1 {
         @include text-home;
@@ -17,6 +17,8 @@
 
     @media screen and (max-width: $md_min_width) {
         
+        justify-content: normal;
+
         h1 {
             @include text-5xl;
             letter-spacing: 0.125rem;

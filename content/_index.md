@@ -10,3 +10,6 @@ type: 'home'
 ---
 
 # Jakob Friedl
+
+## Latest Posts
+{{< recent-posts sortby="publishDate" limit="4" >}}
