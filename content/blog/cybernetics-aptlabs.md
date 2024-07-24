@@ -8,7 +8,7 @@ categories: ['hackthebox']
 blog_post: true
 ---
 
-A few months ago, I published a [blog post](/blog/offshore-rastalabs-zephyr) where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers. In this blog post, I want to share the journey I went through while completing these labs with my good friend and colleague [Leo](https://leosmith.wtf/) and I'm going to give a brief review of the labs themselves and my opinion on them.
+A few months ago, I published a [blog post](/blog/offshore-rastalabs-zephyr) where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers. <!--more-->In this blog post, I want to share the journey I went through while completing these labs with my good friend and colleague [Leo](https://leosmith.wtf/) and I'm going to give a brief review of the labs themselves and my opinion on them.
 
 ![Header](/img/htb-labs-2/labs.png)
 
