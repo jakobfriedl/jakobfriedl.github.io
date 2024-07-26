@@ -14,8 +14,9 @@
 }
 
 .color-block-note {
-  background-color: $color-colorblock-note-bg;
-  color: $color-colorblock-note-text;
+  // The 'Note' color block is the only one that uses colors based on the theme
+  background-color: var(--color-colorblock-note-bg);
+  color: var(--color-colorblock-note-text);
 }
 
 .color-block-alert {
