@@ -43,7 +43,7 @@
         <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Kerberos Authentication Protocol"/>
 <meta name="twitter:description" content="The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM."/>
 
-    <link rel="stylesheet" href="/style.min.84aa5c24185947595a3135f6ad01a7e3beee095c50eca1eee2e71f9ccba5b1e281e5bb854988f7c682e66a45af520b786ab49c2a4666c21f1a4e96fdc481bb92.css" integrity="sha512-hKpcJBhZR1laMTX2rQGn477uCVxQ7KHu4ucfnMulseKB5buFSYj3xoLmakWvUgt4arScKkZmwh8aTpb9xIG7kg==">
+    <link rel="stylesheet" href="/style.min.cd3e4c3fe3e1b4a0d7bd41883e7657879c52d02e23c044b8aad0831433f6c657d0ff8f8a6be9c86b9ec320ad28ed7a3cc89aaa70f27587cf872278e0c435c164.css" integrity="sha512-zT5MP&#43;PhtKDXvUGIPnZXh5xS0C4jwES4qtCDFDP2xlfQ/4&#43;Ka&#43;nIa57DIK0o7Xo8yJqqcPJ1h8&#43;HInjgxDXBZA==">
 
 
 
@@ -272,7 +272,22 @@
 </h2>
 
 <p>The domain or network where Kerberos is the authentication authority is called a Kerberos realm. Subjects like users or services in a <strong>realm</strong> are called <strong>principals</strong> and have a unique identifier assigned to them. The most important component of a Kerberos realm is the <strong>Key Distribution Center (KDC)</strong> which is usually located on the domain controller in an Active Directory environment. The KDC consists of two servers, the <strong>Authentication Server (AS)</strong>, which is responsible for verifying user&rsquo;s credentials against the Kerberos database which stores the secret symmetric keys of all principals, as well as the <strong>Ticket Granting Server (TGS)</strong>, which is tasked to issue tickets to the authenticated user that allow them to access the desired services. There a two forms of tickets used with Kerberos authentication. A <strong>Ticket Granting Ticket (TGT)</strong> is obtained after successful authentication to the AS and allows for the retrieval of <strong>Service Tickets (ST)</strong> from the TGS, which are then used by the user to access the service they want to use. There is also another message type known as the <strong>Authenticator</strong>, which is used to verify the identity of the user to a service.</p>
-<p><img src="/img/kerberos/components.png" alt="History of Kerberos"></p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="History of Kerberos" src=" /img/kerberos/components.png">
+    </div>
+    
+</figure></p>
 
 <h2 id="workflow" class="header-anchor-wrapper">Workflow
   <a href="#workflow" class="header-anchor-link">
@@ -311,7 +326,22 @@
 </li>
 </ol>
 <p>After step 6, the mutual authentication between a user and service is complete and the user is allowed to access the service. An advantage of Kerberos is that at no point in the workflow, credentials are sent across the network. After the authentication, the user and service use the Service Session Key to encrypt all further communication, which is why Kerberos is also referred to as a session-based authentication protocol.</p>
-<p><img src="/img/kerberos/workflow.png" alt="Kerberos authentication workflow"></p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Kerberos authentication workflow" src=" /img/kerberos/workflow.png">
+    </div>
+    
+</figure></p>
 
 <h2 id="attack-vectors" class="header-anchor-wrapper">Attack Vectors
   <a href="#attack-vectors" class="header-anchor-link">
@@ -405,8 +435,8 @@
 <table class="mc-table">
 <thead>
 <tr>
-<th><em>Advantages</em></th>
-<th><em>Disadvantages</em></th>
+<th><em><strong>Advantages</strong></em></th>
+<th><em><strong>Disadvantages</strong></em></th>
 </tr>
 </thead>
 <tbody>
