@@ -68,7 +68,7 @@ Finally, **Resource-based Constrained Delegation (RBCD)** is even more secure th
 
 Kerberos is a network authentication protocol designed to provide strong authentication for client/server applications. Using secret-key cryptography, it allows a client to prove its identity to a server (and vice versa) across an insecure network connection. Central to the protocol is the Key Distribution Center (KDC), which consists of the Authentication Server (AS) and the Ticket-Granting Server (TGS). Clients first authenticate with the AS to obtain a Ticket-Granting Ticket (TGT), which is then used to request service-specific tickets from the TGS. The protocol ensures both authentication and confidentiality and relies on time-sensitive tickets to prevent replay attacks. Kerberos has become an attractive target for threat actors when targeting Active Directory environments, due to its role as an authentication authority and the quantity of effective attack vectors. 
 
-| *Advantages* | *Disadvantages* | 
+| ***Advantages*** | ***Disadvantages*** | 
 |--- | --- |
 | Single sign-on is one of the biggest direct benefits of Kerberos, allowing a user to enter their credentials once, and continue to renew their ticket without intervention | Single point of failure: If the KDC is compromised, the whole authentication system is compromised and all passwords can be dumped and extracted |
 | Mutual client-server authentication without sending passwords over the insecure network | Only symmetric key cryptography is supported ⇒ key scaling and distribution issues |
