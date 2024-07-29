@@ -1,0 +1,2 @@
+[golmark.renderer]
+unsafe = true

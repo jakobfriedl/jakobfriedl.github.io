@@ -41,8 +41,3 @@ category = "categories"
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]
-
-# Heading anchors
-[markup]
-    [golmark.renderer]
-    unsafe = true
