@@ -16,7 +16,6 @@ enable_collapsible_changelogs = true
 # footer = "Jakob Friedl © 2024"
 
 enable_site_search = true
-enable_math = true
 
 # Navbar
 [[menu.navbar]]
@@ -43,6 +42,7 @@ category = "categories"
 [outputs]
 home = ["HTML", "RSS", "JSON"]
 
+# Heading anchors
 [markup]
     [golmark.renderer]
     unsafe = true
