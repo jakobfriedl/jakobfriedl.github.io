@@ -16,6 +16,7 @@ enable_collapsible_changelogs = true
 # footer = "Jakob Friedl © 2024"
 
 enable_site_search = true
+enable_header_anchor = true
 
 # Navbar
 [[menu.navbar]]
