@@ -7,6 +7,8 @@ theme = 'monochrome'
 defaultContentLanguage = "en"
 color_scheme = "dark"
 
+enable_header_anchor = true
+
 # Table of contents
 enable_toc = true
 enable_collapsible_toc = true
@@ -16,8 +18,6 @@ enable_collapsible_changelogs = true
 # footer = "Jakob Friedl © 2024"
 
 enable_site_search = true
-enable_header_anchor = true
-enable_math = true
 
 # Navbar
 [[menu.navbar]]
