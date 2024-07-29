@@ -17,6 +17,7 @@ enable_collapsible_changelogs = true
 
 enable_site_search = true
 enable_header_anchor = true
+enable_math = true
 
 # Navbar
 [[menu.navbar]]
