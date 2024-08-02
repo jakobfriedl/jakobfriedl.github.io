@@ -3,41 +3,24 @@ languageCode = 'en-us'
 title = 'Home'
 theme = 'monochrome'
 
-[params]
-defaultContentLanguage = "en"
-color_scheme = "dark"
-
-enable_header_anchor = true
-
-# Table of contents
-enable_toc = true
-enable_collapsible_toc = true
-enable_collapsible_changelogs = true
-
-# Footer
-# footer = "Jakob Friedl © 2024"
-
-enable_site_search = true
-
 # Navbar
 [[menu.navbar]]
 identifier = "about"
 name = "About"
 url = "/about/"
 weight = 100
-
 [[menu.navbar]]
 identifier = "blog"
 name = "Blog"
 url = "/blog/"
 weight = -100
-
 [[menu.navbar]]
 identifier = "categories"
 name = "Categories"
 url = "/categories/"
 weight = -99
 
+# Tags and Categories
 [taxonomies]
 category = "categories"
 

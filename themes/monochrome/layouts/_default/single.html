@@ -34,4 +34,8 @@
     {{ end }}
 </div>
 
+{{ if $is_blog_post }}
+    {{ partial "blog-post-footer.html" . }}
+{{ end }}
+
 {{- end -}}

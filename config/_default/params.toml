@@ -1,0 +1,22 @@
+defaultContentLanguage = "en"
+color_scheme = "dark"
+capitalizeListTitles = false
+
+enable_header_anchor = true
+
+enable_toc = true
+enable_collapsible_toc = true
+enable_collapsible_changelogs = true
+
+enable_site_search = true
+
+# Global Footer
+# footer = "Jakob Friedl © 2024"
+
+# Variables
+[social]
+github = "https://github.com/jakobfriedl/"
+linkedin = "https://www.linkedin.com/in/jakobfriedl/"
+twitter = "https://twitter.com/ziphertext"
+hackthebox = "https://app.hackthebox.com/profile/591548"
+tryhackme = "https://tryhackme.com/p/ziphertext"

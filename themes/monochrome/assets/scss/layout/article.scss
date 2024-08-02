@@ -222,3 +222,15 @@ html[data-theme="light"] {
     display: none; 
   }
 }
+
+.blog-footer {
+
+  border-top: 2px solid var(--color-border);
+  padding-top: 2rem; 
+  display: flex; 
+  justify-content: space-around;
+
+  svg {
+    height: 20px;
+  }
+}
