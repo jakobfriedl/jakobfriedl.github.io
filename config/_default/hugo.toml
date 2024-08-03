@@ -3,6 +3,22 @@ languageCode = 'en-us'
 title = 'Home'
 theme = 'monochrome'
 
+[params]
+defaultContentLanguage = "en"
+color_scheme = "dark"
+capitalizeListTitles = false
+
+enable_header_anchor = true
+
+enable_toc = true
+enable_collapsible_toc = true
+enable_collapsible_changelogs = true
+
+enable_site_search = true
+
+# Global Footer
+# footer = "Jakob Friedl © 2024"
+
 # Navbar
 [[menu.navbar]]
 identifier = "about"
