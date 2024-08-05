@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
+
 {{ $ctx := .ctx }}
 {{ $title := .title }}
 {{ $content := .content }}
@@ -6,6 +8,12 @@
 <div class="home-layout content-margin">
     
     <div class="my-8">
+
+        <div class="home-title">
+            <h1>Jakob Friedl</h1>
+            <p class="typewriter"></p>
+        </div>
+
         {{ if $content }}
             {{- partial "content.html" (dict "ctx" $ctx "content" $content) -}}
         {{ end }}
@@ -21,3 +29,14 @@
         </div>
     {{ end }}  */}}
 </div>
+
+<script>
+    let instance = new TypeIt(".typewriter", {
+        strings: ["Penetration Tester", "Cybersecurity Student", "Programming Enthusiast", "Security Researcher"],
+        breakLines: false,
+        loop: true,
+        speed: 100
+    })
+
+    instance.go();
+</script>
