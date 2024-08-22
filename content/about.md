@@ -26,10 +26,11 @@ bookcase_cover_src_dark: 'cover/catalogue_dark.png'
 ## Certifications
 
 - [**OSCP**](https://www.credential.net/8db1869a-e535-4a32-bbdd-7d3352f2fef4#gs.c19803) - OffSec
-- **APTLabs**- HackTheBox
-- **Cybernetics** - HackTheBox
-- **Offshore** - HackTheBox
-- **RastaLabs** - HackTheBox
-- **Zephyr** - HackTheBox
-- **Dante** - HackTheBox
-- **PWST** - TCM Security
+- [**Malware Development**](/certs/MalDevAcademy.pdf) - MalDev Academy
+- [**APTLabs**](/certs/APTLabs.pdf) - HackTheBox
+- [**Cybernetics**](/certs/Cybernetics.pdf) - HackTheBox
+- [**Offshore**](/certs/Offshore.pdf) - HackTheBox
+- [**RastaLabs**](/certs/RastaLabs.pdf) - HackTheBox
+- [**Zephyr**](/certs/Zephyr.pdf) - HackTheBox
+- [**Dante**](/certs/Dante.pdf) - HackTheBox
+- [**PWST**](/certs/PWST.pdf) - TCM Security
