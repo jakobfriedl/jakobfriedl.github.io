@@ -18,9 +18,9 @@ bookcase_cover_src_dark: 'cover/catalogue_dark.png'
 {{< icon-group >}}
 {{< icon vendor="simple" name="github" link="https://github.com/jakobfriedl/" >}}
 {{< icon vendor="simple" name="linkedin" link="https://www.linkedin.com/in/jakobfriedl/" >}}
-{{< icon vendor="simple" name="x" link="https://twitter.com/ziphertext" >}}
+{{< icon vendor="simple" name="x" link="https://x.com/virtualloc" >}}
 {{< icon vendor="simple" name="hackthebox" link="https://app.hackthebox.com/profile/591548" >}}
-{{< icon vendor="simple" name="tryhackme" link="https://tryhackme.com/p/ziphertext" >}}
+{{< icon vendor="simple" name="tryhackme" link="https://tryhackme.com/p/virtualloc" >}}
 {{< /icon-group >}}
 
 ## Certifications
