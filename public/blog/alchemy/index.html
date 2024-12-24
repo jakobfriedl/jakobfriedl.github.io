@@ -1,0 +1,562 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='http://localhost:1313/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stepping into the world of OT Penetration Testing with Alchemy</title>
+
+    
+
+    
+
+    
+
+    
+        <meta property="og:url" content="http://localhost:1313/blog/alchemy/">
+  <meta property="og:site_name" content="Home">
+  <meta property="og:title" content="Stepping into the world of OT Penetration Testing with Alchemy">
+  <meta property="og:description" content="After having completed all the previous Pro Labs, I was extraordinarily exited when HackTheBox announced their newest training lab Alchemy. Although originally being exclusive to enterprise users, the lab was released to the public a few months later. This blog post contains an introduction into the world of operational technology, a review of the Alchemy Pro Lab and an overview of the things I learned while solving it.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2024-12-24T10:54:32+01:00">
+    <meta property="article:modified_time" content="2024-12-24T10:54:32+01:00">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Stepping into the world of OT Penetration Testing with Alchemy">
+  <meta name="twitter:description" content="After having completed all the previous Pro Labs, I was extraordinarily exited when HackTheBox announced their newest training lab Alchemy. Although originally being exclusive to enterprise users, the lab was released to the public a few months later. This blog post contains an introduction into the world of operational technology, a review of the Alchemy Pro Lab and an overview of the things I learned while solving it.">
+
+    <link rel="stylesheet" href="/style.css" integrity="">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'dark';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/header.js" integrity=""></script>
+
+
+
+    <script defer src="/js/zooming.js" integrity=""></script>
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    <script defer src="/js/search-en-us.js" integrity=""></script>
+
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/user.css">
+
+    
+</head>
+<body><header>
+    <div id="header_left">
+        <div id="sidebar_btn">
+            <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+            <label id="sidebar_btn_label" for="sidebar_btn_input">
+                <svg id="menu_icon" width="26px" height="26px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</svg>
+            </label>
+            <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                <div id="sidebar_canvas_overlay"></div>
+            </label>
+            <div id="sidebar">
+                <ul><li>
+                            <a href="/blog/">Blog</a></li><li>
+                            <a href="/categories/">Categories</a></li><li>
+                            <a href="/about/">About</a></li><li>
+                            <a href="/"></a></li></ul>
+            </div>
+        </div>
+    
+        <div class="brand">
+            <div>
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbox"><nav id="navbar" class="pure-menu">
+    <ul class="pure-menu-list"><li class="navbar-item pure-menu-item insection">
+                    
+                        <a href="/blog/" class="pure-menu-link">Blog</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/categories/" class="pure-menu-link">Categories</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/" class="pure-menu-link"></a>
+                    
+                </li></ul>
+</nav>
+<div id="theme_tool">
+            <svg id="dark_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</svg>
+            <svg id="light_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</svg>
+        </div>
+
+        
+            <div id="search_tool">
+                <svg id="search_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+
+</svg><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+                <svg width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</svg>
+            </div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+</div>
+        
+ 
+    </div>
+</header>
+<main>
+            <div id="content" class="content-margin">
+                
+
+<details class="collapsible-menu-wrapper"><summary class="collapsible-menu-type"><span>Table of contents</span></summary><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-operational-technology">What is Operational Technology?</a>
+      <ul>
+        <li><a href="#modbus">Modbus</a></li>
+      </ul>
+    </li>
+    <li><a href="#alchemy-pro-lab-review">Alchemy Pro Lab Review</a></li>
+    <li><a href="#lessons-learned">Lessons Learned</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+        
+    </div></details>
+
+
+
+
+    <h1>Stepping into the world of OT Penetration Testing with Alchemy</h1>
+
+    <div class="blog-post-meta">
+        
+            <span class="date">December 24, 2024</span>
+        
+    
+        
+            <span> • </span>
+             
+ <span class="blog-meta-category">
+    <a href="/categories/hackthebox/">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+
+<span>hackthebox</span></a>
+</span>
+        
+    </div>
+
+
+<div class="blog-body">
+
+    
+        <h2 class="blog-introduction-header">Introduction</h2>
+    
+    
+    
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+    <p>After having completed all the previous Pro Labs, I was extraordinarily exited when HackTheBox announced their newest training lab Alchemy. Although originally being exclusive to enterprise users, the lab was released to the public a few months later.  This blog post contains an introduction into the world of operational technology, a review of the Alchemy Pro Lab and an overview of the things I learned while solving it.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Alchemy" src=" /img/htb-labs-3/alchemy.svg">
+    </div>
+    
+</figure></p>
+<p>In contrast to the labs I previously wrote about in <a href="/blog/offshore-rastalabs-zephyr">this</a> and <a href="/blog/cybernetics-aptlabs">that</a> blog post, Alchemy not only focuses on vulnerabilities and misconfigurations in IT systems, but also encompasses OT security concepts, which make the whole engagement feel a lot more involving and impactful.</p>
+<p>Among others, Alchemy covers the following areas:</p>
+<ul>
+<li>Enumeration of IT and OT networks</li>
+<li>Identifying &amp; exploiting misconfigurations</li>
+<li>Web application attacks</li>
+<li>Lateral movement &amp; privilege escalation techniques</li>
+<li>Tunneling &amp; pivoting</li>
+<li>Documentation analysis</li>
+<li>Network traffic analysis</li>
+<li>In-depth understanding of the Modbus protocol</li>
+<li>Structured text (.st) PLC code review</li>
+</ul>
+
+<h2 id="what-is-operational-technology" class="header-anchor-wrapper">What is Operational Technology?
+  <a href="#what-is-operational-technology" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>In contrast to information technology (IT), which deals with data systems, operational technology (OT) mainly revolves around the control of physical or industrial equipment. OT is made up of software and hardware used to manage, secure and control industrial control systems (ICS) systems, devices and processes in the OT environment. OT devices are physical components or systems used to monitor, control, or automate industrial processes. These devices interact directly with machinery, infrastructure, and physical systems, enabling real-time operations in sectors like manufacturing, energy, utilities, and transportation. In the following, some of the most common OT devices are introduced<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<ul>
+<li><em>Programmable Logic Controllers (PLCs)</em>: PLCs are specialized industrial computers designed to monitor, control, and automate processes or machinery in real-time. PLCs use ladder logic, structured text, or function block diagrams to define how inputs should be processed and what outputs should be generated. They communicate with other systems via industrial communication protocols like <em>Modbus</em></li>
+<li><em>Human Machine Interfaces (HMIs)</em>: A HMI is a user interface or dashboard that allows operators to interact with machines, systems, or processes in industrial environments. HMIs provide real-time information about the status, performance, and control of machines or systems, enabling users to monitor and manage operations effectively.</li>
+<li><em>Supervisory Control and Data Acquisition (SCADA)</em>: SCADA systems are  used in industrial and infrastructure environments to monitor, control, and collect data from equipment and processes, often across geographically dispersed locations.</li>
+</ul>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Structure of IT/OT environments" src=" /img/htb-labs-3/ot-architecture.png">
+    </div>
+    
+</figure></p>
+
+<h3 id="modbus" class="header-anchor-wrapper">Modbus
+  <a href="#modbus" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>Modbus is a serial communication protocol from 1979 for use with programmable logic controllers (PLCs). In simple terms, it is a method used for transmitting information over serial lines between electronic devices. The device requesting the information is called the Modbus Master and the devices supplying information are Modbus Slaves<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<p>In Modbus, there are <em>coils</em> and <em>holding registers</em>. Coils are used to handle binary (on/off) states while holding registers handle data which controls settings or outputs. There are also input registers, which are read-only and hold sensor data or other inputs. Modbus supports a series of function codes that can be used to interact with coils and registers. The function code in the request tells the addressed slave device what kind of action to perform. The data bytes contains any additional information that the slave will need to perform the function. For example, function code <code>0x03</code> will request the slave to read holding registers and respond with their contents. The data field must contain the information telling the slave which register to start at and how many registers to read.<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<table class="mc-table">
+  <thead>
+      <tr>
+          <th><strong>Function Code</strong></th>
+          <th><strong>Function Name</strong></th>
+          <th><strong>Description</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>0x01</code></td>
+          <td>Read Coils</td>
+          <td>Reads the status of a block of coils (on/off).</td>
+      </tr>
+      <tr>
+          <td><code>0x02</code></td>
+          <td>Read Discrete Inputs</td>
+          <td>Reads the status of a block of discrete input bits (on/off).</td>
+      </tr>
+      <tr>
+          <td><code>0x03</code></td>
+          <td>Read Holding Registers</td>
+          <td>Reads the contents of a block of holding registers.</td>
+      </tr>
+      <tr>
+          <td><code>0x04</code></td>
+          <td>Read Input Registers</td>
+          <td>Reads the contents of a block of input registers.</td>
+      </tr>
+      <tr>
+          <td><code>0x05</code></td>
+          <td>Write Single Coil</td>
+          <td>Sets the status of a single coil (on/off).</td>
+      </tr>
+      <tr>
+          <td><code>0x06</code></td>
+          <td>Write Single Register</td>
+          <td>Writes a single value into a holding register.</td>
+      </tr>
+      <tr>
+          <td><code>0x0F</code></td>
+          <td>Write Multiple Coils</td>
+          <td>Sets the status of multiple coils (on/off).</td>
+      </tr>
+      <tr>
+          <td><code>0x10</code></td>
+          <td>Write Multiple Registers</td>
+          <td>Writes multiple values into holding registers.</td>
+      </tr>
+      <tr>
+          <td><code>0x17</code></td>
+          <td>Read/Write Multiple Registers</td>
+          <td>Performs a combination of read and write operations on registers.</td>
+      </tr>
+  </tbody>
+</table>
+<p>The OT section in Alchemy revolved around understanding und interacting with the Modbus communication process between HMIs and PLCs to make the devices behave in unpredictable ways. More about the Pro Lab itself is discussed in the subsequent sections.</p>
+
+<h2 id="alchemy-pro-lab-review" class="header-anchor-wrapper">Alchemy Pro Lab Review
+  <a href="#alchemy-pro-lab-review" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>The Alchemy Pro Lab simulates a external security assessment of the <em>Sogard Brewing Co.</em> in form of a red team engagement. The overall objective of the engagement was to determine whether brewery operations can be disrupted based on the current architecture. The attacker was tasked with assessing the company&rsquo;s public interface (i.e., the IT network) and emphasize the weaknesses allowing an adversary to impact the physical process or steal the brewery&rsquo;s Intellectual Property.</p>
+<p>The only information disclosed at the start of the engagement was the IP-address of the entry point web application of the brewery. From there, the lab environment was basically divided into three sections. An IT section containing the office network and corporate Active Directory, a smaller and segmented OT control section and a third network segment, housing the <em>HMI</em>&rsquo;s and <em>PLC</em> devices. Like all the other Pro Labs, Alchemy had a total of 21 flags to be collected. In the IT network, those flags were usually found on compromised hosts but to get the OT flags, the attacker was required to either obtain sensitive information about the brewing recipe or make the device behave unexpectedly or unsafely.</p>
+<p>While the IT section was very straightforward and simple, the exploitation of PLC logic proved to be much more complex. To recreate a realistic OT environment, HackTheBox created a fictional manufacturer of the different types of PLC devices. Throughout the lab, I was able to amass a variety of documentation about these devices in the form of datasheets, release notes and source code, which helped developing my understanding of the inner workings of the technology. I really appreciated to amount of effort that was put into creating the custom documents which made the lab feel a lot more immersive and fun rather than having only the most relevant information in a simple text file. Due to this, I was essentially forced to read and understand the technical aspects like the Modbus protocol and uncover ways to mess with the intended functionality.</p>
+<p>Even though there were multiple PLC&rsquo;s, they all felt unique and each offered distinct misconfigurations, from outdated software with known vulnerabilities to access control restrictions or even IT-typical vulnerabilities on the HMI websites. All in all, the Alchemy Pro Lab taught me that I enjoy exploiting weaknesses more when they require in-depth understanding of the technical processes and thorough research in associated documentation or the internet, rather than simply copying and executing a public exploit from GitHub. While the later is fun too, building a successful exploit chain tailored to the target after getting how it works just feels a lot more rewarding.</p>
+
+<h2 id="lessons-learned" class="header-anchor-wrapper">Lessons Learned
+  <a href="#lessons-learned" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>As with all Pro Labs, Alchemy again provided me with an opportunity to discover new tools and techniques. One of the most interesting tools I found useful during the engagement was the Printer Exploitation Toolkit (<a href="https://github.com/RUB-NDS/PRET">PRET</a>). This framework allowed for easy interaction with network printers, allowing for instance the retrieval of sensitive information. PRET will be a go-to tool when discovering printers on future penetration tests or red team engagements.</p>
+<p>Another huge focus point of the OT area was understanding and interaction with the Modbus protocol. I personally used a combination of tools for this purpose:</p>
+<ul>
+<li><a href="https://github.com/tallakt/modbus-cli">modbus-cli</a>: A useful command line tool for enumerating and querying coils and registers</li>
+<li><a href="https://github.com/pymodbus-dev/pymodbus">pymodbus</a>: A Python library for interacting with PLC devices that communicate via the Modbus protocol. Especially useful for creating scripts for more complex exploits that require multiple steps. It is also very well <a href="https://pymodbus.readthedocs.io/en/latest/">documented</a> which made picking it up and using it very straightforward.</li>
+</ul>
+<p>Finally, the biggest lesson I took away from the Alchemy Pro Lab was the importance of securing ICS/OT environments. Systems in these environments have mostly not been designed with security in mind. The combination of outdated operating systems and legacy software with known vulnerabilities and misconfigurations and the fact that these systems are used to control multi-million euro machinery leads to OT networks being an attractive target for threat actors and nation-state hackers. Downtime of those machines can lead to immense loss of revenue and and threat actors might even be able to steal sensitive intellectual property like blueprints and secret recipes. In critical sectors like energy, transportation and water supply, exploitation of OT devices can lead to catastrophic consequences in both security as well as safety.</p>
+<p>The importance lies in properly segmenting OT networks from IT networks to prevent unauthorized access to HMI&rsquo;s and PLC&rsquo;s that could compromise the availability, integrity and confidentiality of OT systems, as well as testing PLC devices for misconfigurations that could lead to malicious modifications or information disclosure.</p>
+
+<h2 id="conclusion" class="header-anchor-wrapper">Conclusion
+  <a href="#conclusion" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>All in all, I personally consider Alchemy to be the most fun Pro Lab that HackTheBox offers. While the difficulty of the IT section compares to the Dante, the OT challenges provide a lot of learning opportunities for new technologies and out-of-the-box thinking. The scenario and custom documents were incredibly well crafted and made the whole experience feel a lot more immersive and captivating. I recommend checking out Alchemy to anyone interesting in learning about OT penetration testing, as it provides a good learning opportunity for key concepts in this field.</p>
+<p>That all being said, I wish you a <em><strong>Merry Christmas</strong></em> and an insightful 2025!</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.checkpoint.com/cyber-hub/network-security/what-is-operational-technology-ot-security/">https://www.checkpoint.com/cyber-hub/network-security/what-is-operational-technology-ot-security/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.simplymodbus.ca/FAQ.htm">https://www.simplymodbus.ca/FAQ.htm</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://www.modbustools.com/modbus.html">https://www.modbustools.com/modbus.html</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article></div>
+    
+</div>
+
+
+    
+<div class="blog-footer">
+    <div class="icon">
+        <a href="https://github.com/jakobfriedl" target="_blank">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">
+        <a href="https://linkedin.com/in/jakobfriedl" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="https://x.com/virtualloc" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="/index.xml" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>RSS</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/>
+</svg>
+
+
+        </a>
+    </div>
+</div>
+
+
+
+                
+                    
+                
+            </div>
+        </main>
+<footer>
+    <article>Jakob Friedl © 2024</article>
+</footer>
+
+</body>
+</html>

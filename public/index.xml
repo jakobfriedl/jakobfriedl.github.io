@@ -2,17 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Home</title>
-    <link>https://jakobfriedl.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Feb 2024 12:34:18 +0100</lastBuildDate><atom:link href="https://jakobfriedl.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Feb 2024 12:34:18 +0100</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Stepping into the world of OT Penetration Testing with Alchemy</title>
+      <link>http://localhost:1313/blog/alchemy/</link>
+      <pubDate>Tue, 24 Dec 2024 10:54:32 +0100</pubDate>
+      
+      <guid>http://localhost:1313/blog/alchemy/</guid>
+      <description>&lt;p&gt;After having completed all the previous Pro Labs, I was extraordinarily exited when HackTheBox announced their newest training lab Alchemy. Although originally being exclusive to enterprise users, the lab was released to the public a few months later.  This blog post contains an introduction into the world of operational technology, a review of the Alchemy Pro Lab and an overview of the things I learned while solving it.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Metamorphic Malware</title>
-      <link>https://jakobfriedl.github.io/blog/metamorphic-malware/</link>
-      <pubDate>Thu, 11 Jul 2024 17:31:56 +0200</pubDate>
+      <link>http://localhost:1313/blog/metamorphic-malware/</link>
+      <pubDate>Mon, 29 Jul 2024 17:31:56 +0200</pubDate>
       
-      <guid>https://jakobfriedl.github.io/blog/metamorphic-malware/</guid>
+      <guid>http://localhost:1313/blog/metamorphic-malware/</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;Metamorphic or self-modifying code is an advanced technique used by virus and malware authors which enables their malicious program to rewrite itself in a way that the code remains functionally equivalent but looks different each time it is executed. This characteristic prevents antivirus software from detecting the malware using static signatures and makes reverse engineering more difficult.&lt;/p&gt;</description>
@@ -20,39 +29,158 @@
     
     <item>
       <title>High-Level Red Team Training: Cybernetics &amp; APTLabs Review</title>
-      <link>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</link>
+      <link>http://localhost:1313/blog/cybernetics-aptlabs/</link>
       <pubDate>Sat, 27 Jan 2024 22:24:39 +0200</pubDate>
       
-      <guid>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</guid>
-      <description>&lt;p&gt;A few months ago, I published a &lt;a href=&#34;https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr&#34;&gt;blog post&lt;/a&gt; where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers.&lt;/p&gt;</description>
+      <guid>http://localhost:1313/blog/cybernetics-aptlabs/</guid>
+      <description>&lt;p&gt;A few months ago, I published a &lt;a href=&#34;http://localhost:1313/blog/offshore-rastalabs-zephyr&#34;&gt;blog post&lt;/a&gt; where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Kerberos Authentication Protocol</title>
-      <link>https://jakobfriedl.github.io/blog/kerberos/</link>
+      <link>http://localhost:1313/blog/kerberos/</link>
       <pubDate>Tue, 10 Oct 2023 20:15:37 +0200</pubDate>
       
-      <guid>https://jakobfriedl.github.io/blog/kerberos/</guid>
-      <description>The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM.</description>
+      <guid>http://localhost:1313/blog/kerberos/</guid>
+      <description>&lt;p&gt;The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Intermediary-Level Red Team Training: Offshore, RastaLabs &amp; Zephyr Review</title>
-      <link>https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr/</link>
+      <link>http://localhost:1313/blog/offshore-rastalabs-zephyr/</link>
       <pubDate>Thu, 07 Sep 2023 22:07:46 +0200</pubDate>
       
-      <guid>https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr/</guid>
+      <guid>http://localhost:1313/blog/offshore-rastalabs-zephyr/</guid>
       <description>&lt;p&gt;During the summer months of July and August of 2023 I had the opportunity to complete three of the six buyable HackTheBox Pro Lab certifications: Offshore, a Penetration Tester Level 3 lab, as well as RastaLabs and Zephyr, both of which are Red Team Operator Level 1 certifications respectively.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>https://jakobfriedl.github.io/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://jakobfriedl.github.io/about/</guid>
-      <description>Hello, I&amp;rsquo;m Jakob&amp;hellip;&amp;hellip;and I&amp;rsquo;m a information security master&amp;rsquo;s student and penetration tester based in Austria. Currently, I am particularly interested in network penetration testing, especially Active Directory environments and am currently studying Windows 64-bit malware development. This site is to be used as a platform to document my journey in the field of information security and to write about my research and projects.
-SocialsGitHubLinkedInXHack The BoxTryHackMeCertificationsOSCP - OffSec APTLabs- HackTheBox Cybernetics - HackTheBox Offshore - HackTheBox RastaLabs - HackTheBox Zephyr - HackTheBox Dante - HackTheBox PWST - TCM Security </description>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;h1&gt;Hello, I&amp;rsquo;m &lt;strong&gt;Jakob&lt;/strong&gt;&amp;hellip;&lt;/h1&gt;
+
+&lt;p&gt;&amp;hellip;and I&amp;rsquo;m a information security master&amp;rsquo;s student and penetration tester based in Austria. Currently, I am particularly interested in network penetration testing, especially Active Directory environments and am currently studying Windows 64-bit malware development. This site is to be used as a platform to document my journey in the field of information security and to write about my research and projects.&lt;/p&gt;
+
+&lt;h2&gt;Socials&lt;/h2&gt;
+
+&lt;div class=&#34;icon-group&#34;&gt;
+    
+&lt;div class=&#34;icon&#34;&gt;
+    
+        &lt;a rel=&#34;noopener&#34; target=&#34;_blank&#34; href=&#34;https://github.com/jakobfriedl/&#34; aria-label=&#34;github&#34;&gt;
+    
+        
+            
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    role=&#34;img&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;currentColor&#34;&gt;
+    &lt;title&gt;GitHub&lt;/title&gt;&lt;path d=&#34;M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12&#34;/&gt;
+&lt;/svg&gt;
+
+
+        
+    
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;icon&#34;&gt;
+    
+        &lt;a rel=&#34;noopener&#34; target=&#34;_blank&#34; href=&#34;https://www.linkedin.com/in/jakobfriedl/&#34; aria-label=&#34;linkedin&#34;&gt;
+    
+        
+            
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    role=&#34;img&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;currentColor&#34;&gt;
+    &lt;title&gt;LinkedIn&lt;/title&gt;&lt;path d=&#34;M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z&#34;/&gt;
+&lt;/svg&gt;
+
+
+        
+    
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;icon&#34;&gt;
+    
+        &lt;a rel=&#34;noopener&#34; target=&#34;_blank&#34; href=&#34;https://x.com/virtualloc&#34; aria-label=&#34;x&#34;&gt;
+    
+        
+            
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    role=&#34;img&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;currentColor&#34;&gt;
+    &lt;title&gt;X&lt;/title&gt;&lt;path d=&#34;M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z&#34;/&gt;
+&lt;/svg&gt;
+
+
+        
+    
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;icon&#34;&gt;
+    
+        &lt;a rel=&#34;noopener&#34; target=&#34;_blank&#34; href=&#34;https://app.hackthebox.com/profile/591548&#34; aria-label=&#34;hackthebox&#34;&gt;
+    
+        
+            
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    role=&#34;img&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;currentColor&#34;&gt;
+    &lt;title&gt;Hack The Box&lt;/title&gt;&lt;path d=&#34;m22.5106 6.4566.0008-.0123a.888.888 0 0 0-.2717-.6384c-.0084-.0084-.018-.0155-.0267-.0235-.0186-.0166-.0371-.0333-.0572-.0484-.0193-.0147-.04-.0276-.0607-.0406-.0096-.006-.0182-.0131-.0281-.0188L12.4576.1266a.891.891 0 0 0-.9223.0043L1.933 5.6744c-.0107.0062-.0203.014-.0307.0205-.0073.0047-.015.008-.0223.0128-.007.0047-.013.0106-.02.0155a.8769.8769 0 0 0-.147.1333l-.0026.003a.8872.8872 0 0 0-.2218.5847l.0009.014c-.0002.0088-.0015.0176-.0015.0264v11.0708c0 .3277.1802.6288.469.7836l9.5986 5.5417c.0076.0044.0158.0075.0236.0117a.8754.8754 0 0 0 .166.0687c.0134.004.0266.0083.0401.0117a.8793.8793 0 0 0 .072.0142c.0117.0019.0232.0045.0349.006a.835.835 0 0 0 .2157 0c.0117-.0015.0232-.0041.0348-.006a.9.9 0 0 0 .072-.0142c.0135-.0034.0267-.0077.04-.0117a.895.895 0 0 0 .0646-.0217.9134.9134 0 0 0 .1015-.047c.0078-.0042.016-.0072.0236-.0117l9.5986-5.5417a.8888.8888 0 0 0 .469-.7836V6.4779c0-.0071-.0012-.0142-.0014-.0213zM5.2543 6.0822l6.5367-3.774a.4182.4182 0 0 1 .4182 0l6.5366 3.774a.4182.4182 0 0 1 0 .7243l-6.5367 3.774a.4182.4182 0 0 1-.4182 0l-6.5366-3.774a.4182.4182 0 0 1 0-.7243zm5.6134 14.3449a.4172.4172 0 0 1-.626.3613L3.718 17.0218a.4173.4173 0 0 1-.2086-.3613V9.1279a.4172.4172 0 0 1 .6258-.3613l6.524 3.7666a.4172.4172 0 0 1 .2086.3614v7.5325zm9.623-3.7666a.4173.4173 0 0 1-.2086.3613l-6.5239 3.7666a.4172.4172 0 0 1-.6259-.3613v-7.5325c0-.149.0796-.2868.2087-.3614l6.5239-3.7666a.4172.4172 0 0 1 .6258.3613v7.5326z&#34;/&gt;
+&lt;/svg&gt;
+
+
+        
+    
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;icon&#34;&gt;
+    
+        &lt;a rel=&#34;noopener&#34; target=&#34;_blank&#34; href=&#34;https://tryhackme.com/p/virtualloc&#34; aria-label=&#34;tryhackme&#34;&gt;
+    
+        
+            
+&lt;svg
+    xmlns=&#34;http://www.w3.org/2000/svg&#34;
+    role=&#34;img&#34; width=&#34;24&#34; height=&#34;24&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;currentColor&#34;&gt;
+    &lt;title&gt;TryHackMe&lt;/title&gt;&lt;path d=&#34;M10.705 0C7.54 0 4.902 2.285 4.349 5.291a4.525 4.525 0 0 0-4.107 4.5 4.525 4.525 0 0 0 4.52 4.52h6.761a.625.625 0 1 0 0-1.25H4.761a3.273 3.273 0 0 1-3.27-3.27A3.273 3.273 0 0 1 6.59 7.08a.625.625 0 0 0 .7-1.035 4.488 4.488 0 0 0-1.68-.69 5.223 5.223 0 0 1 5.096-4.104 5.221 5.221 0 0 1 5.174 4.57 4.489 4.489 0 0 0-.488.305.625.625 0 1 0 .731 1.013 3.245 3.245 0 0 1 1.912-.616 3.278 3.278 0 0 1 3.203 2.61.625.625 0 0 0 1.225-.251 4.533 4.533 0 0 0-4.428-3.61 4.54 4.54 0 0 0-.958.105C16.556 2.328 13.9 0 10.705 0zm5.192 10.64a.925.925 0 0 0-.462.108.913.913 0 0 0-.313.29 1.27 1.27 0 0 0-.175.427 2.39 2.39 0 0 0-.054.514c0 .181.018.353.054.517.036.164.095.307.175.43a.899.899 0 0 0 .313.297c.127.073.281.11.462.11.18 0 .334-.037.46-.11a.897.897 0 0 0 .309-.296c.08-.124.137-.267.173-.431.036-.164.054-.336.054-.517 0-.18-.018-.352-.054-.514a1.271 1.271 0 0 0-.173-.426.901.901 0 0 0-.309-.291.917.917 0 0 0-.46-.108zm6.486 0a.925.925 0 0 0-.462.108.913.913 0 0 0-.313.29 1.27 1.27 0 0 0-.175.427 2.39 2.39 0 0 0-.053.514c0 .181.017.353.053.517.036.164.095.307.175.43a.899.899 0 0 0 .313.297c.127.073.281.11.462.11.18 0 .334-.037.46-.11a.897.897 0 0 0 .31-.296c.078-.124.136-.267.172-.431.036-.164.054-.336.054-.517 0-.18-.018-.352-.054-.514a1.271 1.271 0 0 0-.173-.426.901.901 0 0 0-.308-.291.916.916 0 0 0-.461-.108zm-8.537.068l-.84.618.313.43.476-.368v1.877h.603v-2.557zm6.486 0l-.841.618.314.43.477-.368v1.877h.603v-2.557zm-4.435.445c.08 0 .143.028.193.084.05.057.087.127.114.21.026.083.044.173.054.269a2.541 2.541 0 0 1 0 .533c-.01.097-.028.187-.054.27a.584.584 0 0 1-.114.21.243.243 0 0 1-.193.085.248.248 0 0 1-.195-.086.584.584 0 0 1-.118-.209 1.245 1.245 0 0 1-.056-.27 2.645 2.645 0 0 1 0-.533c.01-.096.029-.186.056-.27a.583.583 0 0 1 .118-.209.25.25 0 0 1 .195-.084zm6.486 0c.08 0 .144.028.193.084.05.057.087.127.114.21.027.083.044.173.054.269a2.541 2.541 0 0 1 0 .533c-.01.097-.027.187-.054.27a.584.584 0 0 1-.114.21.243.243 0 0 1-.193.085.249.249 0 0 1-.195-.086.581.581 0 0 1-.117-.209 1.245 1.245 0 0 1-.056-.27 2.642 2.642 0 0 1 0-.533c.01-.096.028-.186.056-.27a.58.58 0 0 1 .117-.209.25.25 0 0 1 .195-.084zm-2.191 3.51a.93.93 0 0 0-.463.109.908.908 0 0 0-.312.291c-.08.122-.139.263-.175.426a2.383 2.383 0 0 0-.054.514c0 .18.018.353.054.516.036.164.094.308.175.432a.91.91 0 0 0 .312.296.92.92 0 0 0 .463.11c.18 0 .333-.037.46-.11a.892.892 0 0 0 .308-.296 1.32 1.32 0 0 0 .174-.432c.036-.163.054-.335.054-.516 0-.18-.018-.352-.054-.514a1.274 1.274 0 0 0-.174-.426.89.89 0 0 0-.309-.291.918.918 0 0 0-.46-.108zm-6.402.07l-.841.617.314.43.476-.369v1.878h.604v-2.557zm2.125 0l-.841.617.314.43.477-.369v1.878h.603v-2.557zm2.116 0l-.84.617.313.43.477-.369v1.878h.603v-2.557zm2.16.443c.08 0 .144.028.194.085a.605.605 0 0 1 .114.21c.026.083.044.172.053.269a2.639 2.639 0 0 1 0 .532 1.28 1.28 0 0 1-.053.27.585.585 0 0 1-.114.21.244.244 0 0 1-.193.085.25.25 0 0 1-.196-.085.589.589 0 0 1-.117-.21 1.245 1.245 0 0 1-.056-.27 2.597 2.597 0 0 1 0-.532c.01-.097.028-.186.056-.27a.589.589 0 0 1 .117-.209.249.249 0 0 1 .196-.085zm-6.729 3.073a.676.676 0 0 0-.335.078.661.661 0 0 0-.227.211.91.91 0 0 0-.127.31c-.027.118-.04.242-.04.373s.013.256.04.375a.93.93 0 0 0 .127.313.65.65 0 0 0 .227.215c.092.053.204.08.335.08a.655.655 0 0 0 .334-.08.65.65 0 0 0 .225-.215c.057-.09.1-.194.125-.313a1.75 1.75 0 0 0 .04-.375c0-.13-.014-.255-.04-.373a.931.931 0 0 0-.125-.31.658.658 0 0 0-.225-.21.667.667 0 0 0-.334-.08zm3.086 0a.675.675 0 0 0-.336.078.661.661 0 0 0-.226.211.907.907 0 0 0-.127.31 1.69 1.69 0 0 0-.04.373c0 .131.013.256.04.375a.928.928 0 0 0 .127.313c.058.09.134.162.226.215.093.053.205.08.336.08a.655.655 0 0 0 .334-.08.65.65 0 0 0 .224-.215c.058-.09.1-.194.126-.313a1.752 1.752 0 0 0 0-.748.94.94 0 0 0-.126-.31.657.657 0 0 0-.224-.21.667.667 0 0 0-.334-.08zm5.108 0a.675.675 0 0 0-.336.078.661.661 0 0 0-.226.211.91.91 0 0 0-.127.31c-.027.118-.04.242-.04.373s.013.256.04.375a.931.931 0 0 0 .127.313c.058.09.134.162.226.215.093.053.205.08.336.08.13 0 .243-.027.334-.08a.65.65 0 0 0 .224-.215c.058-.09.1-.194.126-.313a1.75 1.75 0 0 0 .04-.375c0-.13-.014-.255-.04-.373a.943.943 0 0 0-.126-.31.657.657 0 0 0-.224-.21.668.668 0 0 0-.334-.08zm-6.658.05l-.61.448.227.311.346-.266v1.362h.438v-1.856zm3.068 0l-.61.448.227.311.346-.266v1.362h.438v-1.856zm5.108 0l-.611.448.228.311.346-.266v1.362h.438v-1.856zm-9.712.322c.058 0 .105.02.14.062a.421.421 0 0 1 .083.151.96.96 0 0 1 .04.196 1.932 1.932 0 0 1 0 .386.954.954 0 0 1-.04.197.421.421 0 0 1-.083.152.176.176 0 0 1-.14.061.18.18 0 0 1-.141-.06.427.427 0 0 1-.085-.153.887.887 0 0 1-.041-.197 1.96 1.96 0 0 1 0-.386.893.893 0 0 1 .04-.196.42.42 0 0 1 .086-.151.181.181 0 0 1 .141-.062zm3.086 0c.058 0 .104.02.14.062a.421.421 0 0 1 .082.151.94.94 0 0 1 .04.196 1.906 1.906 0 0 1 0 .386.93.93 0 0 1-.04.197.421.421 0 0 1-.082.152.176.176 0 0 1-.14.061.18.18 0 0 1-.141-.06.42.42 0 0 1-.086-.153.846.846 0 0 1-.04-.197 1.965 1.965 0 0 1-.011-.195c0-.057.004-.121.01-.191a.849.849 0 0 1 .041-.196.42.42 0 0 1 .086-.151.182.182 0 0 1 .141-.062zm5.108 0c.058 0 .104.02.14.062a.421.421 0 0 1 .082.151.92.92 0 0 1 .04.196 1.963 1.963 0 0 1 0 .386.943.943 0 0 1-.04.197.421.421 0 0 1-.082.152.177.177 0 0 1-.14.061.18.18 0 0 1-.142-.06.437.437 0 0 1-.085-.153.95.95 0 0 1-.04-.197 1.965 1.965 0 0 1-.011-.195c0-.057.004-.121.01-.191a.959.959 0 0 1 .04-.196.47.47 0 0 1 .086-.151.181.181 0 0 1 .142-.062zm-1.684 1.814a.675.675 0 0 0-.336.079.66.66 0 0 0-.227.21.91.91 0 0 0-.127.31 1.731 1.731 0 0 0 0 .748.939.939 0 0 0 .127.314c.059.09.134.162.227.215.093.053.205.08.336.08a.66.66 0 0 0 .334-.08.648.648 0 0 0 .224-.215c.058-.09.1-.195.126-.314a1.737 1.737 0 0 0-.001-.747.928.928 0 0 0-.125-.31.65.65 0 0 0-.224-.211.668.668 0 0 0-.334-.079zm3.063 0a.676.676 0 0 0-.336.079.664.664 0 0 0-.227.21.906.906 0 0 0-.127.31 1.74 1.74 0 0 0 0 .748.936.936 0 0 0 .127.314.66.66 0 0 0 .227.215c.092.053.204.08.336.08a.654.654 0 0 0 .334-.08.648.648 0 0 0 .223-.215c.058-.09.1-.195.126-.314a1.74 1.74 0 0 0 0-.747.928.928 0 0 0-.126-.31.65.65 0 0 0-.223-.211.666.666 0 0 0-.334-.079zm-1.545.05l-.611.448.228.312.346-.267v1.363h.438v-1.856zm-1.518.323c.057 0 .104.02.14.061a.42.42 0 0 1 .082.152.91.91 0 0 1 .04.195 1.966 1.966 0 0 1 0 .387.951.951 0 0 1-.04.197.421.421 0 0 1-.082.152.177.177 0 0 1-.14.06.18.18 0 0 1-.142-.06.428.428 0 0 1-.085-.152.914.914 0 0 1-.04-.197 1.96 1.96 0 0 1-.011-.195c0-.058.003-.122.01-.192a.923.923 0 0 1 .041-.195c.02-.06.048-.11.085-.152a.181.181 0 0 1 .142-.061zm3.063 0c.057 0 .104.02.14.061a.42.42 0 0 1 .082.152.94.94 0 0 1 .04.195 1.91 1.91 0 0 1 0 .387.93.93 0 0 1-.04.197.422.422 0 0 1-.083.152.175.175 0 0 1-.14.06.18.18 0 0 1-.141-.06.423.423 0 0 1-.085-.152.907.907 0 0 1-.04-.197 1.95 1.95 0 0 1 0-.387.915.915 0 0 1 .04-.195c.02-.06.048-.11.085-.152a.182.182 0 0 1 .142-.061zm-9.713.185a.465.465 0 0 0-.232.055.456.456 0 0 0-.157.146.627.627 0 0 0-.089.215 1.168 1.168 0 0 0-.027.259c0 .09.009.177.027.26a.648.648 0 0 0 .089.216c.04.063.093.112.157.149a.459.459 0 0 0 .232.056c.09 0 .168-.02.231-.056a.45.45 0 0 0 .156-.149.67.67 0 0 0 .087-.217 1.218 1.218 0 0 0 0-.518.647.647 0 0 0-.087-.215.448.448 0 0 0-.156-.146.458.458 0 0 0-.23-.055zm1.052.035l-.423.31.158.217.24-.185v.944h.303v-1.286zm-1.052.224c.04 0 .073.014.097.042a.284.284 0 0 1 .057.105.69.69 0 0 1 .028.136c.004.049.007.092.007.133 0 .04-.003.086-.007.135a.684.684 0 0 1-.028.136.285.285 0 0 1-.057.105.123.123 0 0 1-.097.043.125.125 0 0 1-.098-.043.298.298 0 0 1-.059-.105.612.612 0 0 1-.028-.136 1.39 1.39 0 0 1 0-.268.62.62 0 0 1 .028-.136.297.297 0 0 1 .06-.105.125.125 0 0 1 .097-.042zm3.775 1.394a.463.463 0 0 0-.232.054.452.452 0 0 0-.157.146.621.621 0 0 0-.088.214 1.19 1.19 0 0 0 0 .519.641.641 0 0 0 .088.217.46.46 0 0 0 .157.15.458.458 0 0 0 .232.054.454.454 0 0 0 .232-.055.45.45 0 0 0 .155-.149.664.664 0 0 0 .087-.217 1.189 1.189 0 0 0 0-.519.642.642 0 0 0-.087-.214.446.446 0 0 0-.155-.146.459.459 0 0 0-.232-.054zm1.052.034l-.423.31.158.216.24-.185v.945h.303V22.68zm-1.052.223c.04 0 .073.014.098.043a.3.3 0 0 1 .057.105.643.643 0 0 1 .027.135 1.31 1.31 0 0 1 0 .268.654.654 0 0 1-.027.137.307.307 0 0 1-.057.105.124.124 0 0 1-.098.042.125.125 0 0 1-.098-.042.293.293 0 0 1-.059-.105.618.618 0 0 1-.028-.137 1.364 1.364 0 0 1 0-.268.612.612 0 0 1 .028-.135.287.287 0 0 1 .06-.105.123.123 0 0 1 .097-.043z&#34;/&gt;
+&lt;/svg&gt;
+
+
+        
+    
+        &lt;/a&gt;
+    
+&lt;/div&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2&gt;Certifications&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.credential.net/6b6045cd-be9b-460b-bcb8-746d2aa1e13e#gs.hjw4eh&#34;&gt;&lt;strong&gt;OSEP&lt;/strong&gt;&lt;/a&gt; - OffSec&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.credential.net/8db1869a-e535-4a32-bbdd-7d3352f2fef4#gs.c19803&#34;&gt;&lt;strong&gt;OSCP&lt;/strong&gt;&lt;/a&gt; - OffSec&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/MalDevAcademy.pdf&#34;&gt;&lt;strong&gt;Malware Development&lt;/strong&gt;&lt;/a&gt; - MalDev Academy&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/APTLabs.pdf&#34;&gt;&lt;strong&gt;APTLabs&lt;/strong&gt;&lt;/a&gt; - HackTheBox&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/Cybernetics.pdf&#34;&gt;&lt;strong&gt;Cybernetics&lt;/strong&gt;&lt;/a&gt; - HackTheBox&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/Alchemy.pdf&#34;&gt;&lt;strong&gt;Alchemy&lt;/strong&gt;&lt;/a&gt; - HackTheBox&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/Offshore.pdf&#34;&gt;&lt;strong&gt;Offshore&lt;/strong&gt;&lt;/a&gt; - HackTheBox&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/RastaLabs.pdf&#34;&gt;&lt;strong&gt;RastaLabs&lt;/strong&gt;&lt;/a&gt; - HackTheBox&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/Zephyr.pdf&#34;&gt;&lt;strong&gt;Zephyr&lt;/strong&gt;&lt;/a&gt; - HackTheBox&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/Dante.pdf&#34;&gt;&lt;strong&gt;Dante&lt;/strong&gt;&lt;/a&gt; - HackTheBox&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/certs/PWST.pdf&#34;&gt;&lt;strong&gt;PWST&lt;/strong&gt;&lt;/a&gt; - TCM Security&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
   </channel>

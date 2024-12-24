@@ -30,6 +30,7 @@ bookcase_cover_src_dark: 'cover/catalogue_dark.png'
 - [**Malware Development**](/certs/MalDevAcademy.pdf) - MalDev Academy
 - [**APTLabs**](/certs/APTLabs.pdf) - HackTheBox
 - [**Cybernetics**](/certs/Cybernetics.pdf) - HackTheBox
+- [**Alchemy**](/certs/Alchemy.pdf) - HackTheBox
 - [**Offshore**](/certs/Offshore.pdf) - HackTheBox
 - [**RastaLabs**](/certs/RastaLabs.pdf) - HackTheBox
 - [**Zephyr**](/certs/Zephyr.pdf) - HackTheBox

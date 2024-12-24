@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>hackthebox on Home</title>
-    <link>https://jakobfriedl.github.io/categories/hackthebox/</link>
-    <description>Recent content in hackthebox on Home</description>
+    <title>Hackthebox on Home</title>
+    <link>http://localhost:1313/categories/hackthebox/</link>
+    <description>Recent content in Hackthebox on Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jan 2024 22:24:39 +0200</lastBuildDate><atom:link href="https://jakobfriedl.github.io/categories/hackthebox/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Dec 2024 13:54:32 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/hackthebox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Stepping into the world of OT Penetration Testing with Alchemy</title>
+      <link>http://localhost:1313/blog/alchemy/</link>
+      <pubDate>Mon, 23 Dec 2024 13:54:32 +0100</pubDate>
+      
+      <guid>http://localhost:1313/blog/alchemy/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>High-Level Red Team Training: Cybernetics &amp; APTLabs Review</title>
-      <link>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</link>
+      <link>http://localhost:1313/blog/cybernetics-aptlabs/</link>
       <pubDate>Sat, 27 Jan 2024 22:24:39 +0200</pubDate>
       
-      <guid>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</guid>
-      <description>&lt;p&gt;A few months ago, I published a &lt;a href=&#34;https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr&#34;&gt;blog post&lt;/a&gt; where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers.&lt;/p&gt;</description>
+      <guid>http://localhost:1313/blog/cybernetics-aptlabs/</guid>
+      <description>&lt;p&gt;A few months ago, I published a &lt;a href=&#34;http://localhost:1313/blog/offshore-rastalabs-zephyr&#34;&gt;blog post&lt;/a&gt; where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Intermediary-Level Red Team Training: Offshore, RastaLabs &amp; Zephyr Review</title>
-      <link>https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr/</link>
+      <link>http://localhost:1313/blog/offshore-rastalabs-zephyr/</link>
       <pubDate>Thu, 07 Sep 2023 22:07:46 +0200</pubDate>
       
-      <guid>https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr/</guid>
+      <guid>http://localhost:1313/blog/offshore-rastalabs-zephyr/</guid>
       <description>&lt;p&gt;During the summer months of July and August of 2023 I had the opportunity to complete three of the six buyable HackTheBox Pro Lab certifications: Offshore, a Penetration Tester Level 3 lab, as well as RastaLabs and Zephyr, both of which are Red Team Operator Level 1 certifications respectively.&lt;/p&gt;</description>
     </item>
     

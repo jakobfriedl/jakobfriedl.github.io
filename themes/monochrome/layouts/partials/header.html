@@ -62,27 +62,6 @@
                 {{- partial "search-menu.html" -}}
             </div>
         {{ end }}
-
-        {{ if .Site.IsMultiLingual }}
-            <div id="translation_tool" class="dropdown-wrapper pure-menu pure-menu-horizontal toolbox-btn" onclick="void(0)">
-                <ul class="pure-menu-list">
-                    <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                        <div class="dropdown-btn pure-menu-link">
-                            <svg width="18px" height="18px" viewBox="0 0 24 24">
-                                {{- partial "svg/feather.html" "globe" -}}
-                            </svg>
-                            <span class="dropdown-desc">{{ .Site.Language.LanguageName }}</span>
-                        </div>
-                        <ul class="pure-menu-children">
-                            {{ range .Site.Home.AllTranslations }}
-                            <li class="pure-menu-item">
-                                <a href="{{ .Permalink }}" class="pure-menu-link">{{ .Language.LanguageName }}</a>
-                            </li>
-                            {{ end }}
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        {{ end }}
+ 
     </div>
 </header>

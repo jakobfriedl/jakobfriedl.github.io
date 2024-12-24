@@ -2,33 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jakobfriedl.github.io/blog/</loc>
-    <lastmod>2024-07-11T17:31:56+02:00</lastmod>
+    <loc>http://localhost:1313/blog/</loc>
+    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/categories/</loc>
-    <lastmod>2024-07-11T17:31:56+02:00</lastmod>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/categories/malware-development/</loc>
-    <lastmod>2024-07-11T17:31:56+02:00</lastmod>
+    <loc>http://localhost:1313/categories/hackthebox/</loc>
+    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/blog/metamorphic-malware/</loc>
-    <lastmod>2024-07-11T17:31:56+02:00</lastmod>
+    <loc>http://localhost:1313/blog/alchemy/</loc>
+    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/</loc>
+    <loc>http://localhost:1313/categories/malware-development/</loc>
+    <lastmod>2024-07-29T17:31:56+02:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/metamorphic-malware/</loc>
+    <lastmod>2024-07-29T17:31:56+02:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2024-02-17T12:34:18+01:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/categories/hackthebox/</loc>
+    <loc>http://localhost:1313/blog/cybernetics-aptlabs/</loc>
     <lastmod>2024-01-27T22:24:39+02:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/blog/cybernetics-aptlabs/</loc>
-    <lastmod>2024-01-27T22:24:39+02:00</lastmod>
-  </url><url>
-    <loc>https://jakobfriedl.github.io/blog/kerberos/</loc>
+    <loc>http://localhost:1313/blog/kerberos/</loc>
     <lastmod>2023-10-10T20:15:37+02:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/blog/offshore-rastalabs-zephyr/</loc>
+    <loc>http://localhost:1313/blog/offshore-rastalabs-zephyr/</loc>
     <lastmod>2023-09-07T22:07:46+02:00</lastmod>
   </url><url>
-    <loc>https://jakobfriedl.github.io/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
   </url>
 </urlset>
