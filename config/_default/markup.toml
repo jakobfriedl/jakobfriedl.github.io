@@ -1,2 +1,6 @@
 [golmark.renderer]
 unsafe = true
+
+[highlight]
+# noClasses=false
+style="evergarden"

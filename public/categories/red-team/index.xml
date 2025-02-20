@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Red-Team on Home</title>
+    <link>http://localhost:1313/categories/red-team/</link>
+    <description>Recent content in Red-Team on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 20 Feb 2025 17:01:14 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/red-team/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building a Penetration Testing Dropbox with Raspberry Pi and OpenVPN</title>
+      <link>http://localhost:1313/blog/penetration-testing-dropbox/</link>
+      <pubDate>Thu, 20 Feb 2025 17:01:14 +0100</pubDate>
+      
+      <guid>http://localhost:1313/blog/penetration-testing-dropbox/</guid>
+      <description>&lt;p&gt;As an internal penetration tester, one of the most important aspects of the job is to be able to set up testing infrastructure for remote penetration tests without requiring too much effort from your clients or local IT department.  There seem to be thousands of approaches and an unlimited amount of blog posts online talking about different ways to achieve this objective. The one that seemed the most useful to me was using a public VPN server to connect the attacker laptop with a so-called &amp;ldquo;dropbox&amp;rdquo; in the target&amp;rsquo;s network.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -11,7 +11,6 @@ balloon_circle: true
 
 header_anchor: false
 
-#
 bookcase_cover_src: 'cover/list.png'
 bookcase_cover_src_dark: 'cover/list_dark.png'
 ---

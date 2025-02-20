@@ -3,18 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/blog/</loc>
-    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
+    <lastmod>2025-02-20T17:01:14+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/penetration-testing-dropbox/</loc>
+    <lastmod>2025-02-20T17:01:14+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
+    <lastmod>2025-02-20T17:01:14+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/red-team/</loc>
+    <lastmod>2025-02-20T17:01:14+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/hackthebox/</loc>
-    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
+    <lastmod>2024-12-24T10:54:32+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/alchemy/</loc>
-    <lastmod>2024-12-23T13:54:32+01:00</lastmod>
+    <lastmod>2024-12-24T10:54:32+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/malware-development/</loc>
+    <loc>http://localhost:1313/categories/malware/</loc>
     <lastmod>2024-07-29T17:31:56+02:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/metamorphic-malware/</loc>

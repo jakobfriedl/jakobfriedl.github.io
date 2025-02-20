@@ -80,7 +80,7 @@ details[open] > summary {
     
   img {
     margin: 1rem auto; 
-    width: 90%; 
+    width: 100%; 
   }
 }
 
@@ -114,6 +114,6 @@ details[open] > summary {
 
 @media screen and (min-width: $xxl_min_width) {
   body {
-    width: $xxl_body_width;
+    width: $xxl_body_width; 
   }
 }

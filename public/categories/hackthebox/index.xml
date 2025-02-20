@@ -6,14 +6,14 @@
     <description>Recent content in Hackthebox on Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Dec 2024 13:54:32 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/hackthebox/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 Dec 2024 10:54:32 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/hackthebox/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Stepping into the world of OT Penetration Testing with Alchemy</title>
       <link>http://localhost:1313/blog/alchemy/</link>
-      <pubDate>Mon, 23 Dec 2024 13:54:32 +0100</pubDate>
+      <pubDate>Tue, 24 Dec 2024 10:54:32 +0100</pubDate>
       
       <guid>http://localhost:1313/blog/alchemy/</guid>
-      <description></description>
+      <description>&lt;p&gt;After having completed all the previous Pro Labs, I was extraordinarily exited when HackTheBox announced their newest training lab Alchemy. Although originally being exclusive to enterprise users, the lab was released to the public a few months later.  This blog post contains an introduction into the world of operational technology, a review of the Alchemy Pro Lab and an overview of the things I learned while solving it.&lt;/p&gt;</description>
     </item>
     
     <item>

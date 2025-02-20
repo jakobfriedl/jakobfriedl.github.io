@@ -8,7 +8,6 @@ categories: ['hackthebox']
 blog_post: true
 ---
 
-
 During the summer months of July and August of 2023 I had the opportunity to complete three of the six buyable HackTheBox Pro Lab certifications: Offshore, a Penetration Tester Level 3 lab, as well as RastaLabs and Zephyr, both of which are Red Team Operator Level 1 certifications respectively. <!--more--> In this blog post I want to outline my experiences, struggles and learning outcomes of these labs and provide my personal opinion on them.
 
 <!--more-->

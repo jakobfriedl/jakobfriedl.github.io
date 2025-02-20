@@ -1,0 +1,1419 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='http://localhost:1313/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Building a Penetration Testing Dropbox with Raspberry Pi and OpenVPN</title>
+
+    
+
+    
+
+    
+
+    
+        <meta property="og:url" content="http://localhost:1313/blog/penetration-testing-dropbox/">
+  <meta property="og:site_name" content="Home">
+  <meta property="og:title" content="Building a Penetration Testing Dropbox with Raspberry Pi and OpenVPN">
+  <meta property="og:description" content="As an internal penetration tester, one of the most important aspects of the job is to be able to set up testing infrastructure for remote penetration tests without requiring too much effort from your clients or local IT department. There seem to be thousands of approaches and an unlimited amount of blog posts online talking about different ways to achieve this objective. The one that seemed the most useful to me was using a public VPN server to connect my workstation with a so-called “dropbox” in the target’s internal network.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2025-02-20T17:01:14+01:00">
+    <meta property="article:modified_time" content="2025-02-20T17:01:14+01:00">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Building a Penetration Testing Dropbox with Raspberry Pi and OpenVPN">
+  <meta name="twitter:description" content="As an internal penetration tester, one of the most important aspects of the job is to be able to set up testing infrastructure for remote penetration tests without requiring too much effort from your clients or local IT department. There seem to be thousands of approaches and an unlimited amount of blog posts online talking about different ways to achieve this objective. The one that seemed the most useful to me was using a public VPN server to connect my workstation with a so-called “dropbox” in the target’s internal network.">
+
+    <link rel="stylesheet" href="/style.css" integrity="">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'dark';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/header.js" integrity=""></script>
+
+
+
+    <script defer src="/js/zooming.js" integrity=""></script>
+
+
+
+
+
+
+
+    
+        
+        
+            <script defer src="/js/builtin-copy.js" integrity=""></script>
+        
+    
+
+
+
+    
+    
+    
+    <script defer src="/js/search-en-us.js" integrity=""></script>
+
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/user.css">
+
+    
+</head>
+<body><header>
+    <div id="header_left">
+        <div id="sidebar_btn">
+            <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+            <label id="sidebar_btn_label" for="sidebar_btn_input">
+                <svg id="menu_icon" width="26px" height="26px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</svg>
+            </label>
+            <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                <div id="sidebar_canvas_overlay"></div>
+            </label>
+            <div id="sidebar">
+                <ul><li>
+                            <a href="/blog/">Blog</a></li><li>
+                            <a href="/categories/">Categories</a></li><li>
+                            <a href="/about/">About</a></li><li>
+                            <a href="/"></a></li></ul>
+            </div>
+        </div>
+    
+        <div class="brand">
+            <div>
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbox"><nav id="navbar" class="pure-menu">
+    <ul class="pure-menu-list"><li class="navbar-item pure-menu-item insection">
+                    
+                        <a href="/blog/" class="pure-menu-link">Blog</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/categories/" class="pure-menu-link">Categories</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/" class="pure-menu-link"></a>
+                    
+                </li></ul>
+</nav>
+<div id="theme_tool">
+            <svg id="dark_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</svg>
+            <svg id="light_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</svg>
+        </div>
+
+        
+            <div id="search_tool">
+                <svg id="search_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+
+</svg><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+                <svg width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</svg>
+            </div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+</div>
+        
+ 
+    </div>
+</header>
+<main>
+            <div id="content" class="content-margin">
+                
+
+<h1>Building a Penetration Testing Dropbox with Raspberry Pi and OpenVPN</h1>
+
+<div class="blog-post-meta">
+    
+    <span class="date">February 20, 2025</span>
+    
+    
+    
+    <span> • </span>
+     
+ <span class="blog-meta-category">
+    <a href="/categories/red-team/">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+
+<span>red-team</span></a>
+</span>
+    
+</div>
+
+
+
+
+<details class="collapsible-menu-wrapper"><summary class="collapsible-menu-type"><span>Table of contents</span></summary><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#the-idea">The Idea</a></li>
+    <li><a href="#the-server">The Server</a>
+      <ul>
+        <li><a href="#setting-up-the-server">Setting up the server</a></li>
+        <li><a href="#setting-up-stunnel">Setting up stunnel</a></li>
+        <li><a href="#setting-up-openvpn">Setting up OpenVPN</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-dropbox">The Dropbox</a>
+      <ul>
+        <li><a href="#hardware">Hardware</a></li>
+        <li><a href="#setting-up-the-connection">Setting up the connection</a></li>
+        <li><a href="#automatic-check-in">Automatic check-in</a></li>
+      </ul>
+    </li>
+    <li><a href="#next-steps">Next Steps</a>
+      <ul>
+        <li><a href="#network-attacks">Network Attacks</a></li>
+        <li><a href="#wireless-attacks">Wireless Attacks</a></li>
+        <li><a href="#improvements">Improvements</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        
+    </div></details>
+
+
+<div class="blog-body">
+
+    
+        <h2 class="blog-introduction-header">Introduction</h2>
+      
+    
+    
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+    <p>As an internal penetration tester, one of the most important aspects of the job is to be able to set up testing infrastructure for remote penetration tests without requiring too much effort from your clients or local IT department.  There seem to be thousands of approaches and an unlimited amount of blog posts online talking about different ways to achieve this objective. The one that seemed the most useful to me was using a public VPN server to connect my workstation with a so-called &ldquo;dropbox&rdquo; in the target&rsquo;s internal network.</p>
+<p>After deploying and testing the setup with a virtual machine, I decided to also configure a Raspberry Pi in the same way. The advantage of a Raspberry Pi compared to a virtual machine is that it can be used during physical red team engagements and dropped of at the location in order to get internal network access.</p>
+<p>This blog post explains how to set up red team or penetration testing infrastructure with a Raspberry Pi and OpenVPN. Furthermore, it shows how to bypass restrictive firewalls and deep packet inspection, as well as having the dropbox send check-in requests to a webserver.</p>
+
+<h2 id="requirements" class="header-anchor-wrapper">Requirements
+  <a href="#requirements" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>The infrastructure should check the following boxes:</p>
+<ul>
+<li>Small, portable and concealable for red team engagements</li>
+<li>Fully automatic, without a lot of on-site effort</li>
+<li>Able to withstand restrictive firewalls</li>
+<li>Fully tested and stable</li>
+<li>Secure by design</li>
+</ul>
+
+<h2 id="the-idea" class="header-anchor-wrapper">The Idea
+  <a href="#the-idea" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>My approach to this project involves a public droplet hosted on DigitalOcean which acts as the OpenVPN server for the attacker machine and the attacker dropbox. The dropbox is a Raspberry Pi with the Kali Linux OS. For internal penetration tests, where stealth is not a requirement, a simple laptop with a virtual machine does the trick here as well. Both of these devices connect to the VPN server, allowing them to communicate and reach each other via SSH. The OpenVPN traffic is encapsulated within a TLS tunnel using <code>stunnel</code>. Port 443 is used for the connection to the VPN server, as this port is usually allowed in outbound firewall rules. Due to the encryption, packet inspection firewalls are not able to inspect and block the traffic.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/Diagram.png">
+    </div>
+    
+</figure></p>
+
+<h2 id="the-server" class="header-anchor-wrapper">The Server
+  <a href="#the-server" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+
+<h3 id="setting-up-the-server" class="header-anchor-wrapper">Setting up the server
+  <a href="#setting-up-the-server" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>Cheapest, most basic ubuntu server, since that is enough for our purpose. The instance shown below will cost around 4€ a month, which is an expendable amount for the provided functionality.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220102341.png">
+    </div>
+    
+</figure></p>
+<p>We onnect to the server via SSH or the DigitalOcean Console and start configuring stunnel and OpenVPN. For the setup, this blog post mainly follows <a href="https://docs.edisglobal.com/advanced-setup-guides/openvpn-over-stunnel">this</a> resource.</p>
+
+<h3 id="setting-up-stunnel" class="header-anchor-wrapper">Setting up stunnel
+  <a href="#setting-up-stunnel" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt upgrade
+</span></span><span style="display:flex;"><span>sudo apt install stunnel -y
+</span></span></code></pre></div><p>After installing stunnel, we first generate the self-signed SSL certificates which enable us to hide the OpenVPN traffic with TLS encryption. The following commands will be prompted for information about the certificate, such as Country or State, but we will leave them blank for our purpose.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">cd</span> /etc/stunnel
+</span></span><span style="display:flex;"><span>openssl genrsa -out key.pem <span style="color:#ff0;font-weight:bold">2048</span> 
+</span></span><span style="display:flex;"><span>openssl req -new -x509 -key key.pem -out cert.pem -days <span style="color:#ff0;font-weight:bold">3650</span>
+</span></span><span style="display:flex;"><span>cat key.pem cert.pem &gt;&gt; stunnel.pem 
+</span></span><span style="display:flex;"><span>openssl pkcs12 -export -out stunnel.p12 -inkey key.pem -in cert.pem
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220104057.png">
+    </div>
+    
+</figure></p>
+<p>Fix permissions on the certificate.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod <span style="color:#ff0;font-weight:bold">600</span> /etc/stunnel/stunnel.pem
+</span></span></code></pre></div><p>We further create a directory for stunnel logs.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mkdir -p /var/log/stunnel 
+</span></span><span style="display:flex;"><span>sudo touch /var/log/stunnel/stunnel.log 
+</span></span><span style="display:flex;"><span>sudo chown stunnel4:stunnel4 /var/log/stunnel/stunnel.log
+</span></span></code></pre></div><p>The main configuration of stunnel is done in <code>/etc/stunnel/stunnel.conf</code>. The important service-level options are defined under <code>[openvpn]</code>.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>output = /var/log/stunnel/stunnel.log 
+</span></span><span style="display:flex;"><span>pid = /var/run/stunnel4/stunnel.pid 
+</span></span><span style="display:flex;"><span>setuid = stunnel4 
+</span></span><span style="display:flex;"><span>setgid = stunnel4 
+</span></span><span style="display:flex;"><span>socket = l:TCP_NODELAY=1 
+</span></span><span style="display:flex;"><span>cert = /etc/stunnel/stunnel.pem 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[openvpn] 
+</span></span><span style="display:flex;"><span>client = no
+</span></span><span style="display:flex;"><span>accept = 443 
+</span></span><span style="display:flex;"><span>connect = 127.0.0.1:1194 
+</span></span><span style="display:flex;"><span>cert = /etc/stunnel/stunnel.pem
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>client = no</code> : Stunnel is running in server mode</li>
+<li><code>accept = 443</code>: Stunnel listens on port 443, which is usually allowed through firewalls</li>
+<li><code>connect = 127.0.0.1:1194</code>: Incoming connections to the stunnel port are forwarded to the locally running OpenVPN server on port 1194</li>
+</ul>
+<p>After the configuration, we start the stunnel service.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl <span style="color:#fff;font-weight:bold">enable</span> stunnel4
+</span></span><span style="display:flex;"><span>sudo systemctl restart stunnel4
+</span></span></code></pre></div><p>We verify that the stunnel service is running on port 443 on our VPN server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo netstat -tulnp
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220104731.png">
+    </div>
+    
+</figure></p>
+
+<h3 id="setting-up-openvpn" class="header-anchor-wrapper">Setting up OpenVPN
+  <a href="#setting-up-openvpn" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>We use the OpenVPN install script to set up the VPN server with the following options.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://git.io/vpn -O openvpn-install.sh 
+</span></span><span style="display:flex;"><span>chmod +x openvpn-install.sh 
+</span></span><span style="display:flex;"><span>sudo ./openvpn-install.sh
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220105238.png">
+    </div>
+    
+</figure></p>
+<p>It is important to note that stunnel requires us to use the TCP protocol to work, even though OpenVPN uses UDP by default.</p>
+<p>We now change the OpenVPN server configuration to listen on all interfaces by setting the value of <code>local</code> to <code>0.0.0.0</code> in <code>/etc/openvpn/server/server.conf</code>, as seen below.
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220105629.png">
+    </div>
+    
+</figure></p>
+<p>We now start the OpenVPN service as we did with stunnel.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl <span style="color:#fff;font-weight:bold">enable</span> openvpn-server@server.service
+</span></span><span style="display:flex;"><span>sudo systemctl restart openvpn-server@server.service
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo netstat -tulnp
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220110012.png">
+    </div>
+    
+</figure></p>
+<p>We are done setting up the VPN server, so the next step is to configure the Dropbox and other VPN clients to be able to communicate with the server.</p>
+
+<h2 id="the-dropbox" class="header-anchor-wrapper">The Dropbox
+  <a href="#the-dropbox" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+
+<h3 id="hardware" class="header-anchor-wrapper">Hardware
+  <a href="#hardware" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>The following hardware is used:</p>
+<ul>
+<li>Raspberry Pi 4 with Case</li>
+<li>Micro SD card (64GB)</li>
+<li>Power source, e.g. USB-C charger or powerbank</li>
+<li>Ethernet cable to connect to a LAN network</li>
+<li>MK7AC Wi-Fi-Adapter or any other USB Wireless Adapter (optional)</li>
+</ul>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220163146.png">
+    </div>
+    
+</figure></p>
+<p>This post will not get into detail on how to install Kali Linux on a Raspberry Pi. In basic steps, the following is necessary for the initial setup:</p>
+<ul>
+<li>Download Kali for Raspberry Pi from <a href="https://www.kali.org/get-kali/#kali-arm">https://www.kali.org/get-kali/#kali-arm</a></li>
+<li>Download Raspberry Pi Imager from <a href="https://www.raspberrypi.com/software/">https://www.raspberrypi.com/software/</a></li>
+<li>Install the Kali OS on the Raspberry Pi&rsquo;s SD card (<a href="https://www.themakerlab.io/en/blog/raspberry-pi-headless-setup">https://www.themakerlab.io/en/blog/raspberry-pi-headless-setup</a>)</li>
+<li>Connect the Raspberry Pi to a power source and to a Ethernet port (e.g. on a router)</li>
+<li>Connect to the Raspberry Pi via SSH</li>
+</ul>
+
+<h3 id="setting-up-the-connection" class="header-anchor-wrapper">Setting up the connection
+  <a href="#setting-up-the-connection" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>Like on the DigitalOcean droplet, we first install stunnel.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt upgrade
+</span></span><span style="display:flex;"><span>sudo apt install stunnel4 -y 
+</span></span></code></pre></div><p>We again create the configuration file <code>/etc/stunnel/stunnel.conf</code>, however this time, <code>client</code> is set to yes, as we are working on the dropbox and not on the server.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>[openvpn]
+</span></span><span style="display:flex;"><span>client = yes 
+</span></span><span style="display:flex;"><span>accept = 127.0.0.1:1194 
+</span></span><span style="display:flex;"><span>connect = &lt;public-vpnserver-ip&gt;:443
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl <span style="color:#fff;font-weight:bold">enable</span> stunnel4
+</span></span><span style="display:flex;"><span>sudo systemctl start stunnel4
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220124847.png">
+    </div>
+    
+</figure></p>
+<p>We then take the <code>pi.ovpn</code> file that was generated on the OpenVPN server and modify it to connect to the locally running OpenVPN instance instead. All traffic to this VPN will be forwarded to the droplet on port 443.</p>
+<p>The file is saved as <code>/etc/openvpn/openvpn.conf</code> to be executed on system startup.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>client
+</span></span><span style="display:flex;"><span>dev tun
+</span></span><span style="display:flex;"><span>proto tcp
+</span></span><span style="display:flex;"><span>remote 127.0.0.1 1194 
+</span></span><span style="display:flex;"><span>route-nopull 
+</span></span><span style="display:flex;"><span>script-security 2 
+</span></span><span style="display:flex;"><span>route-up /etc/openvpn/routing.sh
+</span></span><span style="display:flex;"><span>resolv-retry infinite
+</span></span><span style="display:flex;"><span>nobind
+</span></span><span style="display:flex;"><span>persist-key
+</span></span><span style="display:flex;"><span>persist-tun
+</span></span><span style="display:flex;"><span>remote-cert-tls server
+</span></span><span style="display:flex;"><span>auth SHA512
+</span></span><span style="display:flex;"><span>ignore-unknown-option block-outside-dns
+</span></span><span style="display:flex;"><span>verb 3
+</span></span><span style="display:flex;"><span>&lt;ca&gt;
+</span></span><span style="display:flex;"><span>-----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>... SNIP ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>&lt;/ca&gt;
+</span></span><span style="display:flex;"><span>&lt;cert&gt;
+</span></span><span style="display:flex;"><span>-----BEGIN CERTIFICATE-----
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>... SNIP ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-----END CERTIFICATE-----
+</span></span><span style="display:flex;"><span>&lt;/cert&gt;
+</span></span><span style="display:flex;"><span>&lt;key&gt;
+</span></span><span style="display:flex;"><span>-----BEGIN PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>... SNIP ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-----END PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>&lt;/key&gt;
+</span></span><span style="display:flex;"><span>&lt;tls-crypt&gt;
+</span></span><span style="display:flex;"><span>-----BEGIN OpenVPN Static key V1-----
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>... SNIP ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-----END OpenVPN Static key V1-----
+</span></span><span style="display:flex;"><span>&lt;/tls-crypt&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The added/modified values are:</p>
+<ul>
+<li><code>remote 127.0.0.1 1194</code> pointing to the local address instead of the VPN server</li>
+<li><code>route-nooull</code></li>
+<li><code>script-security 2</code></li>
+<li><code>route-up /etc/openvpn/routing.sh</code></li>
+</ul>
+<p>The <code>routing.sh</code> script needs to be created.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">#!/bin/bash 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold"></span>SERVER_IP=<span style="color:#0ff;font-weight:bold">&#34;public-vpnserver-ip&#34;</span> 
+</span></span><span style="display:flex;"><span>GATEWAY=<span style="color:#fff;font-weight:bold">$(</span>ip route get 8.8.8.8 | grep -oP <span style="color:#0ff;font-weight:bold">&#39;via \K\S+&#39;</span><span style="color:#fff;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span>sudo ip route add $SERVER_IP/32 via $GATEWAY 
+</span></span><span style="display:flex;"><span>sudo ip route add 0.0.0.0/1 via 10.8.0.1 
+</span></span><span style="display:flex;"><span>sudo ip route add 128.0.0.0/1 via 10.8.0.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chmod +x /etc/openvpn/routing.sh
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl <span style="color:#fff;font-weight:bold">enable</span> openvpn 
+</span></span><span style="display:flex;"><span>sudo systemctl restart openvpn 
+</span></span><span style="display:flex;"><span>sudo systemctl status openvpn
+</span></span></code></pre></div><p>In order to test the configuration, we reboot the Raspberry Pi.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo reboot
+</span></span></code></pre></div><p>After the reboot, we find that our Raspberry Pi is connected to the private VPN network and has the IP 10.8.0.2.
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220130209.png">
+    </div>
+    
+</figure></p>
+<p>On the server, we create a second VPN client for the attacker machine.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./openvpn-install.sh
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220130637.png">
+    </div>
+    
+</figure></p>
+<p>In a Kali virtual machine, we connect to the VPN server. In this case, there is no need for us to install stunnel, since we are in our personal network where we are able to control the firewall rules. Upon being connected, we are assigned a new internal IP address, <code>10.8.0.3</code> and are able to communicate with the Raspberry Pi.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo openvpn attacker.ovpn
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220132714.png">
+    </div>
+    
+</figure></p>
+<p>If the Ethernet cable on the Raspberry Pi is disconnected for some reason, the connection will obviously break. However, once the cable is reattached, the dropbox is instantly reconnected to the VPN network and can be accessed via SSH.</p>
+
+<h3 id="automatic-check-in" class="header-anchor-wrapper">Automatic check-in
+  <a href="#automatic-check-in" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>One goal of mine was to configure the Raspberry Pi to send a check-in request to a server periodically so that during a red team engagement, I can see which dropboxes connected back to me and in which parts of the target network they are located. The simplest way to do that would be to install a webserver on the DigitalOcean droplet where the VPN server is running and have a cronjob send a curl request every few minutes.</p>
+
+<h4 id="webserver-setup" class="header-anchor-wrapper">Webserver Setup
+  <a href="#webserver-setup" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h4>
+
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install python3-venv
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p /var/www/html/app
+</span></span></code></pre></div><p>Create app.py, which has the source code for the application. A</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">93
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">from</span> flask <span style="color:#fff;font-weight:bold">import</span> Flask, request, render_template_string, jsonify, make_response
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">from</span> flask_httpauth <span style="color:#fff;font-weight:bold">import</span> HTTPBasicAuth
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">from</span> datetime <span style="color:#fff;font-weight:bold">import</span> datetime
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app = Flask(__name__)
+</span></span><span style="display:flex;"><span>auth = HTTPBasicAuth()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>users = {<span style="color:#0ff;font-weight:bold">&#34;[REDACTED]&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;[REDACTED]&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@auth.verify_password
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">def</span> verify_password(username, password):
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> username in users and users[username] == password:
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> username
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># Store the latest received data and timestamp</span>
+</span></span><span style="display:flex;"><span>latest_data = {<span style="color:#0ff;font-weight:bold">&#34;hostname&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Unknown&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;interfaces&#34;</span>: [], <span style="color:#0ff;font-weight:bold">&#34;timestamp&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Never&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#0ff;font-weight:bold">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span>@auth.login_required
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">def</span> index():
+</span></span><span style="display:flex;"><span>    current_time = datetime.now()
+</span></span><span style="display:flex;"><span>    last_checkin = datetime.strptime(latest_data[<span style="color:#0ff;font-weight:bold">&#34;timestamp&#34;</span>], <span style="color:#0ff;font-weight:bold">&#34;%Y-%m-</span><span style="color:#0ff;font-weight:bold">%d</span><span style="color:#0ff;font-weight:bold"> %H:%M:%S&#34;</span>) <span style="color:#fff;font-weight:bold">if</span> latest_data[<span style="color:#0ff;font-weight:bold">&#34;timestamp&#34;</span>] != <span style="color:#0ff;font-weight:bold">&#34;Never&#34;</span> <span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Calculate border color based on check-in time</span>
+</span></span><span style="display:flex;"><span>    border_color = <span style="color:#0ff;font-weight:bold">&#34;green&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> last_checkin and (current_time - last_checkin).total_seconds() &gt; <span style="color:#ff0;font-weight:bold">60</span>:
+</span></span><span style="display:flex;"><span>        border_color = <span style="color:#0ff;font-weight:bold">&#34;red&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    formatted_data = <span style="color:#0ff;font-weight:bold">f</span><span style="color:#0ff;font-weight:bold">&#34;Hostname: </span><span style="color:#0ff;font-weight:bold">{</span>latest_data[<span style="color:#0ff;font-weight:bold">&#39;hostname&#39;</span>]<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">\n</span><span style="color:#0ff;font-weight:bold">Last Check-in: </span><span style="color:#0ff;font-weight:bold">{</span>latest_data[<span style="color:#0ff;font-weight:bold">&#39;timestamp&#39;</span>]<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">\n\n</span><span style="color:#0ff;font-weight:bold">Network Interfaces:</span><span style="color:#0ff;font-weight:bold">\n</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> iface in latest_data[<span style="color:#0ff;font-weight:bold">&#34;interfaces&#34;</span>]:
+</span></span><span style="display:flex;"><span>        formatted_data += <span style="color:#0ff;font-weight:bold">f</span><span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">{</span>iface[<span style="color:#0ff;font-weight:bold">&#39;interface&#39;</span>]<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">:</span><span style="color:#0ff;font-weight:bold">\n</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> addr in iface[<span style="color:#0ff;font-weight:bold">&#34;addresses&#34;</span>]:
+</span></span><span style="display:flex;"><span>            formatted_data += <span style="color:#0ff;font-weight:bold">f</span><span style="color:#0ff;font-weight:bold">&#34;  </span><span style="color:#0ff;font-weight:bold">{</span>addr[<span style="color:#0ff;font-weight:bold">&#39;family&#39;</span>]<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">: </span><span style="color:#0ff;font-weight:bold">{</span>addr[<span style="color:#0ff;font-weight:bold">&#39;address&#39;</span>]<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">\n</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    response = make_response(render_template_string(<span style="color:#0ff;font-weight:bold">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">        &lt;!DOCTYPE html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">        &lt;html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">        &lt;head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">            &lt;title&gt;System Info&lt;/title&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">            &lt;style&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                body {
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    font-family: Arial, sans-serif;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    display: flex;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    justify-content: center;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    align-items: center;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    height: 100vh;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    background-color: #f4f4f4;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                }
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                pre {
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    background: #fff;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    padding: 20px;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    border-radius: 10px;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    font-size: 14px;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    white-space: pre-wrap;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    border: 2px solid {{ border_color }};
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                    transition: border-color 0.5s ease-in-out;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">                }
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">            &lt;/style&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">        &lt;/head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">        &lt;body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">            &lt;pre id=&#34;data-box&#34;&gt;{{ formatted_data }}&lt;/pre&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">        &lt;/body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">        &lt;/html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">    &#34;&#34;&#34;</span>, formatted_data=formatted_data, border_color=border_color))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Prevent caching</span>
+</span></span><span style="display:flex;"><span>    response.headers[<span style="color:#0ff;font-weight:bold">&#34;Cache-Control&#34;</span>] = <span style="color:#0ff;font-weight:bold">&#34;no-cache, no-store, must-revalidate&#34;</span>
+</span></span><span style="display:flex;"><span>    response.headers[<span style="color:#0ff;font-weight:bold">&#34;Pragma&#34;</span>] = <span style="color:#0ff;font-weight:bold">&#34;no-cache&#34;</span>
+</span></span><span style="display:flex;"><span>    response.headers[<span style="color:#0ff;font-weight:bold">&#34;Expires&#34;</span>] = <span style="color:#0ff;font-weight:bold">&#34;0&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> response
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#0ff;font-weight:bold">&#39;/data&#39;</span>, methods=[<span style="color:#0ff;font-weight:bold">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">def</span> receive_data():
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">global</span> latest_data
+</span></span><span style="display:flex;"><span>    data = request.get_json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> not data or <span style="color:#0ff;font-weight:bold">&#34;hostname&#34;</span> not in data or <span style="color:#0ff;font-weight:bold">&#34;interfaces&#34;</span> not in data:
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> jsonify({<span style="color:#0ff;font-weight:bold">&#34;error&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Invalid JSON format&#34;</span>}), <span style="color:#ff0;font-weight:bold">400</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    latest_data = {
+</span></span><span style="display:flex;"><span>        <span style="color:#0ff;font-weight:bold">&#34;hostname&#34;</span>: data[<span style="color:#0ff;font-weight:bold">&#34;hostname&#34;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#0ff;font-weight:bold">&#34;interfaces&#34;</span>: data[<span style="color:#0ff;font-weight:bold">&#34;interfaces&#34;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#0ff;font-weight:bold">&#34;timestamp&#34;</span>: datetime.now().strftime(<span style="color:#0ff;font-weight:bold">&#34;%Y-%m-</span><span style="color:#0ff;font-weight:bold">%d</span><span style="color:#0ff;font-weight:bold"> %H:%M:%S&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> jsonify({<span style="color:#0ff;font-weight:bold">&#34;message&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;OK&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;timestamp&#34;</span>: latest_data[<span style="color:#0ff;font-weight:bold">&#34;timestamp&#34;</span>]}), <span style="color:#ff0;font-weight:bold">200</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> __name__ == <span style="color:#0ff;font-weight:bold">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    app.run(host=<span style="color:#0ff;font-weight:bold">&#39;0.0.0.0&#39;</span>, port=<span style="color:#ff0;font-weight:bold">8080</span>, debug=<span style="color:#fff;font-weight:bold">False</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">cd</span> /var/www/html/app
+</span></span><span style="display:flex;"><span>python3 -m venv venv
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">source</span> venv/bin/activate 
+</span></span><span style="display:flex;"><span>pip install flask flask-httpauth
+</span></span></code></pre></div><p>Create a service for the Flask webserver.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim /etc/systemd/system/app.service
+</span></span></code></pre></div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>[Unit]
+</span></span><span style="display:flex;"><span>Description=App
+</span></span><span style="display:flex;"><span>After=network.target
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[Service]
+</span></span><span style="display:flex;"><span>User=www-data
+</span></span><span style="display:flex;"><span>Group=www-data
+</span></span><span style="display:flex;"><span>WorkingDirectory=/var/www/html/app
+</span></span><span style="display:flex;"><span>Environment=&#34;PATH=/var/www/html/app/venv/bin&#34;
+</span></span><span style="display:flex;"><span>ExecStart=/var/www/html/app/venv/bin/python3 app.py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[Install]
+</span></span><span style="display:flex;"><span>WantedBy=multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl daemon-reload
+</span></span><span style="display:flex;"><span>sudo systemctl start app
+</span></span><span style="display:flex;"><span>sudo systemctl <span style="color:#fff;font-weight:bold">enable</span> app
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220144821.png">
+    </div>
+    
+</figure></p>
+
+<h4 id="cronjob" class="header-anchor-wrapper">Cronjob
+  <a href="#cronjob" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h4>
+
+<p>On the Raspberry Pi dropbox, after installing the necessary dependencies, we first create a simple bash script that sends the relevant data to the webserver.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install jq -y
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim /root/checkin.sh
+</span></span></code></pre></div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold"></span>SERVER_URL=<span style="color:#0ff;font-weight:bold">&#34;http://&lt;public-vpnserver-ip&gt;:8080/data&#34;</span>
+</span></span><span style="display:flex;"><span>HOSTNAME=<span style="color:#fff;font-weight:bold">$(</span>hostname<span style="color:#fff;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>INTERFACES=<span style="color:#fff;font-weight:bold">$(</span>ip -json addr show | jq <span style="color:#0ff;font-weight:bold">&#39;[.[] | {interface: .ifname, addresses: [.addr_info[] | {family: .family, address: .local}]}]&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>JSON_PAYLOAD=<span style="color:#fff;font-weight:bold">$(</span>jq -n --arg hostname <span style="color:#0ff;font-weight:bold">&#34;</span>$HOSTNAME<span style="color:#0ff;font-weight:bold">&#34;</span> --argjson interfaces <span style="color:#0ff;font-weight:bold">&#34;</span>$INTERFACES<span style="color:#0ff;font-weight:bold">&#34;</span> <span style="color:#0ff;font-weight:bold">&#39;{hostname: $hostname, interfaces: $interfaces}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>curl -X POST <span style="color:#0ff;font-weight:bold">&#34;</span>$SERVER_URL<span style="color:#0ff;font-weight:bold">&#34;</span> -H <span style="color:#0ff;font-weight:bold">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#0ff;font-weight:bold">&#34;</span>$JSON_PAYLOAD<span style="color:#0ff;font-weight:bold">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x /root/checkin.sh
+</span></span></code></pre></div><p>After making the script executable, we finally create a new cronjob that runs the script every minute.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>crontab -e
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>*/1 * * * * /root/checkin.sh
+</span></span></code></pre></div><p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220150019.png">
+    </div>
+    
+</figure></p>
+<p>Now, every minute, the Raspberry Pi sends a POST request with its hostname and network interfaces to the webserver. This allows the operator to see whether or not the OpenVPN connection was successful and which IP address is assigned to the dropbox.  The webpage is protected with HTTP Basic Authentication in order to protect sensitive information from unauthorized visitors.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220155626.png">
+    </div>
+    
+</figure></p>
+<p>If the Raspberry Pi is offline, meaning that the script could reach the server, the websites displays the last check-in with a red border.
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220155746.png">
+    </div>
+    
+</figure></p>
+
+<h2 id="next-steps" class="header-anchor-wrapper">Next Steps
+  <a href="#next-steps" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+
+<h3 id="network-attacks" class="header-anchor-wrapper">Network Attacks
+  <a href="#network-attacks" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>The main purpose of the dropbox in this blog post is to provide access to a target&rsquo;s internal network for the purpose of a red team engagement or internal penetration test. Since the dropbox itself is running on the Kali Linux operating system, an operator has plenty of built-in tools available to perform reconnaissance and exploitation techniques in the network. Commonly used are the following:</p>
+<ul>
+<li><code>nmap</code> for port scanning and service discovery</li>
+<li><code>nxc</code> for checking access with credentials and interacting with certain services (<a href="https://www.netexec.wiki/">https://www.netexec.wiki/</a>)</li>
+<li><code>responder</code> for performing man-in-the-middle and relaying attacks (<a href="https://github.com/lgandx/Responder">https://github.com/lgandx/Responder</a>)</li>
+<li><code>impacket</code> for attacks against Active Directory</li>
+<li><code>PRET</code> for gaining information from network printers (<a href="https://github.com/RUB-NDS/PRET">https://github.com/RUB-NDS/PRET</a>)</li>
+</ul>
+<p>It is further possible to establish a tunnel to the dropbox with tools like <code>ligolo-ng</code> to use tools that are not installed on the device.</p>
+
+<h3 id="wireless-attacks" class="header-anchor-wrapper">Wireless Attacks
+  <a href="#wireless-attacks" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>With the Wireless Adaptar taken from the Wi-Fi Pinapple, the dropbox can be used to perform wireless attacks against access points in vicinity. During an engagement, this would be used to capture WPA/WPA2 handshakes, crack the pre-shared key and authenticate to the wireless network. The screenshot below shows the output of the <code>airodump-ng</code> tool from the <code>aircrack-ng</code> suite, which comes with Kali per default.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220160858.png">
+    </div>
+    
+</figure></p>
+
+<h3 id="improvements" class="header-anchor-wrapper">Improvements
+  <a href="#improvements" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>Of course, there are several improvements to be made in this projects to make it more usable and efficient. Since I would probably need more than just one dropbox when doing a red team engagement, the first step would be to create a setup script that automates the installation and configuration of a Raspberry Pi to turn it into a penetration testing dropbox. The webserver would then also need to be overhauled to be able to show and manage multiple dropboxes, with the hostname being the unique identifier.</p>
+<p>Additionally, there are plenty of improvements to be made regarding security, including encryption of the check-in requests and exfiltrated data on the Raspberry Pi. For now, I am very happy with this working proof-of-concept, especially since it is easy to build on and contains a lot of functionality that I originally wanted to implement.</p>
+</article></div>
+    
+</div>
+
+
+    
+<div class="blog-footer">
+    <div class="icon">
+        <a href="https://github.com/jakobfriedl" target="_blank">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">
+        <a href="https://linkedin.com/in/jakobfriedl" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="https://x.com/virtualloc" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="/index.xml" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>RSS</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/>
+</svg>
+
+
+        </a>
+    </div>
+</div>
+
+
+
+                
+                    
+                
+            </div>
+        </main>
+<footer>
+    <article>Jakob Friedl © 2025</article>
+</footer>
+
+</body>
+</html>

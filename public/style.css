@@ -473,7 +473,7 @@ details[open] > summary {
   margin-bottom: 2rem; }
   .content-margin img {
     margin: 1rem auto;
-    width: 90%; }
+    width: 100%; }
 
 .hidden {
   display: none; }
@@ -488,15 +488,15 @@ details[open] > summary {
 
 @media screen and (min-width: 64rem) {
   body {
-    width: 55%; } }
+    width: 60%; } }
 
 @media screen and (min-width: 80rem) {
   body {
-    width: 55%; } }
+    width: 45%; } }
 
 @media screen and (min-width: 120rem) {
   body {
-    width: 55%; } }
+    width: 33%; } }
 
 .home-layout {
   display: flex;
