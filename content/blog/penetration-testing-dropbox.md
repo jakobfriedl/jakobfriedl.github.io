@@ -14,7 +14,7 @@ As an internal penetration tester, one of the most important aspects of the job 
 
 After deploying and testing the setup with a virtual machine, I decided to also configure a Raspberry Pi in the same way. The advantage of a Raspberry Pi compared to a virtual machine is that it can be used during physical red team engagements and dropped of at the location in order to get internal network access. 
 
-This blog post explains how to set up red team or penetration testing infrastructure with a Raspberry Pi and OpenVPN. Furthermore, it shows how to bypass restrictive firewalls and deep packet inspection, as well as having the dropbox send check-in requests to a webserver.
+This blog post explains how to set up red team or penetration testing infrastructure with a Raspberry Pi and OpenVPN. Furthermore, it shows how to bypass restrictive firewalls and deep packet inspection, as well as how to have the dropbox send check-in requests to a webserver.
 
 ## Requirements
 
@@ -30,14 +30,14 @@ The infrastructure should check the following boxes:
 
 My approach to this project involves a public droplet hosted on DigitalOcean which acts as the OpenVPN server for the attacker machine and the attacker dropbox. The dropbox is a Raspberry Pi with the Kali Linux OS. For internal penetration tests, where stealth is not a requirement, a simple laptop with a virtual machine does the trick here as well. Both of these devices connect to the VPN server, allowing them to communicate and reach each other via SSH. The OpenVPN traffic is encapsulated within a TLS tunnel using `stunnel`. Port 443 is used for the connection to the VPN server, as this port is usually allowed in outbound firewall rules. Due to the encryption, packet inspection firewalls are not able to inspect and block the traffic.  
 
-![CAPTION](/img/pentesting-dropbox/Diagram.png)
+![Architecture](/img/pentesting-dropbox/Diagram.png)
 
 ## The Server
 ### Setting up the server
 
 Cheapest, most basic ubuntu server, since that is enough for our purpose. The instance shown below will cost around 4€ a month, which is an expendable amount for the provided functionality. 
 
-![CAPTION](/img/pentesting-dropbox/20250220102341.png)
+![DigitalOcean droplet](/img/pentesting-dropbox/20250220102341.png)
 
 We onnect to the server via SSH or the DigitalOcean Console and start configuring stunnel and OpenVPN. For the setup, this blog post mainly follows [this](https://docs.edisglobal.com/advanced-setup-guides/openvpn-over-stunnel) resource.
 
@@ -58,7 +58,7 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 3650
 cat key.pem cert.pem >> stunnel.pem 
 openssl pkcs12 -export -out stunnel.p12 -inkey key.pem -in cert.pem
 ```
-![CAPTION](/img/pentesting-dropbox/20250220104057.png)
+![Stunnel setup](/img/pentesting-dropbox/20250220104057.png)
 
 Fix permissions on the certificate.
 
@@ -107,7 +107,7 @@ We verify that the stunnel service is running on port 443 on our VPN server.
 sudo netstat -tulnp
 ```
 
-![CAPTION](/img/pentesting-dropbox/20250220104731.png)
+![Stunnel running](/img/pentesting-dropbox/20250220104731.png)
 
 ### Setting up OpenVPN
 
@@ -118,12 +118,12 @@ chmod +x openvpn-install.sh
 sudo ./openvpn-install.sh
 ```
 
-![CAPTION](/img/pentesting-dropbox/20250220105238.png)
+![OpenVPN configuration](/img/pentesting-dropbox/20250220105238.png)
 
 It is important to note that stunnel requires us to use the TCP protocol to work, even though OpenVPN uses UDP by default. 
 
 We now change the OpenVPN server configuration to listen on all interfaces by setting the value of `local` to `0.0.0.0` in `/etc/openvpn/server/server.conf`, as seen below.
-![CAPTION](/img/pentesting-dropbox/20250220105629.png)
+![OpenVPN server.conf](/img/pentesting-dropbox/20250220105629.png)
 
 We now start the OpenVPN service as we did with stunnel.
 ```bash
@@ -134,7 +134,7 @@ sudo systemctl restart openvpn-server@server.service
 ```bash
 sudo netstat -tulnp
 ```
-![CAPTION](/img/pentesting-dropbox/20250220110012.png)
+![OpenVPN running](/img/pentesting-dropbox/20250220110012.png)
 
 We are done setting up the VPN server, so the next step is to configure the Dropbox and other VPN clients to be able to communicate with the server.
 
@@ -147,7 +147,7 @@ The following hardware is used:
 - Ethernet cable to connect to a LAN network
 - MK7AC Wi-Fi-Adapter or any other USB Wireless Adapter (optional)
 
-![CAPTION](/img/pentesting-dropbox/20250220163146.png)
+![Dropbox](/img/pentesting-dropbox/20250220163146.png)
 
 This post will not get into detail on how to install Kali Linux on a Raspberry Pi. In basic steps, the following is necessary for the initial setup:
 
@@ -179,7 +179,7 @@ sudo systemctl enable stunnel4
 sudo systemctl start stunnel4
 ```
 
-![CAPTION](/img/pentesting-dropbox/20250220124847.png)
+![Stunnel running on dropbox](/img/pentesting-dropbox/20250220124847.png)
 
 We then take the `pi.ovpn` file that was generated on the OpenVPN server and modify it to connect to the locally running OpenVPN instance instead. All traffic to this VPN will be forwarded to the droplet on port 443. 
 
@@ -265,7 +265,7 @@ sudo reboot
 ```
 
 After the reboot, we find that our Raspberry Pi is connected to the private VPN network and has the IP 10.8.0.2.
-![CAPTION](/img/pentesting-dropbox/20250220130209.png)
+![Dropbox connected to VPN](/img/pentesting-dropbox/20250220130209.png)
 
 On the server, we create a second VPN client for the attacker machine.
 
@@ -273,7 +273,7 @@ On the server, we create a second VPN client for the attacker machine.
 ./openvpn-install.sh
 ```
 
-![CAPTION](/img/pentesting-dropbox/20250220130637.png)
+![New OpenVPN client](/img/pentesting-dropbox/20250220130637.png)
 
 In a Kali virtual machine, we connect to the VPN server. In this case, there is no need for us to install stunnel, since we are in our personal network where we are able to control the firewall rules. Upon being connected, we are assigned a new internal IP address, `10.8.0.3` and are able to communicate with the Raspberry Pi.
 
@@ -281,7 +281,7 @@ In a Kali virtual machine, we connect to the VPN server. In this case, there is 
 sudo openvpn attacker.ovpn
 ```
 
-![CAPTION](/img/pentesting-dropbox/20250220132714.png)
+![Testing with other client](/img/pentesting-dropbox/20250220132714.png)
 
 If the Ethernet cable on the Raspberry Pi is disconnected for some reason, the connection will obviously break. However, once the cable is reattached, the dropbox is instantly reconnected to the VPN network and can be accessed via SSH. 
 
@@ -430,7 +430,7 @@ sudo systemctl start app
 sudo systemctl enable app
 ```
 
-![CAPTION](/img/pentesting-dropbox/20250220144821.png)
+![Webserver running as service](/img/pentesting-dropbox/20250220144821.png)
 
 #### Cronjob
 
@@ -466,14 +466,14 @@ crontab -e
 */1 * * * * /root/checkin.sh
 ```
 
-![CAPTION](/img/pentesting-dropbox/20250220150019.png)
+![Cronjobs](/img/pentesting-dropbox/20250220150019.png)
 
 Now, every minute, the Raspberry Pi sends a POST request with its hostname and network interfaces to the webserver. This allows the operator to see whether or not the OpenVPN connection was successful and which IP address is assigned to the dropbox.  The webpage is protected with HTTP Basic Authentication in order to protect sensitive information from unauthorized visitors.
 
-![CAPTION](/img/pentesting-dropbox/20250220155626.png)
+![Successful check-in](/img/pentesting-dropbox/20250220155626.png)
 
 If the Raspberry Pi is offline, meaning that the script could reach the server, the websites displays the last check-in with a red border. 
-![CAPTION](/img/pentesting-dropbox/20250220155746.png)
+![Failed check-in](/img/pentesting-dropbox/20250220155746.png)
 
 ## Next Steps
 ### Network Attacks
@@ -492,11 +492,10 @@ It is further possible to establish a tunnel to the dropbox with tools like `lig
 
 With the Wireless Adaptar taken from the Wi-Fi Pinapple, the dropbox can be used to perform wireless attacks against access points in vicinity. During an engagement, this would be used to capture WPA/WPA2 handshakes, crack the pre-shared key and authenticate to the wireless network. The screenshot below shows the output of the `airodump-ng` tool from the `aircrack-ng` suite, which comes with Kali per default. 
 
-![CAPTION](/img/pentesting-dropbox/20250220160858.png)
+![Airomon-ng](/img/pentesting-dropbox/20250220160858.png)
 
 ### Improvements
 
 Of course, there are several improvements to be made in this projects to make it more usable and efficient. Since I would probably need more than just one dropbox when doing a red team engagement, the first step would be to create a setup script that automates the installation and configuration of a Raspberry Pi to turn it into a penetration testing dropbox. The webserver would then also need to be overhauled to be able to show and manage multiple dropboxes, with the hostname being the unique identifier.
 
 Additionally, there are plenty of improvements to be made regarding security, including encryption of the check-in requests and exfiltrated data on the Raspberry Pi. For now, I am very happy with this working proof-of-concept, especially since it is easy to build on and contains a lot of functionality that I originally wanted to implement.
-
