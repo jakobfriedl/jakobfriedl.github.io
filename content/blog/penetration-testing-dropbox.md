@@ -35,11 +35,11 @@ My approach to this project involves a public droplet hosted on DigitalOcean whi
 ## The Server
 ### Setting up the server
 
-Cheapest, most basic ubuntu server, since that is enough for our purpose. The instance shown below will cost around 4€ a month, which is an expendable amount for the provided functionality. 
+For the central VPN server instance, we use the cheapest, most basic ubuntu server that DigitalOcean has to offer, since that is enough for our purpose. The instance shown below will cost around 4€ a month, which is an expendable amount for the provided functionality. 
 
 ![DigitalOcean droplet](/img/pentesting-dropbox/20250220102341.png)
 
-We onnect to the server via SSH or the DigitalOcean Console and start configuring stunnel and OpenVPN. For the setup, this blog post mainly follows [this](https://docs.edisglobal.com/advanced-setup-guides/openvpn-over-stunnel) resource.
+We connect to the server via SSH or the DigitalOcean Console and start configuring stunnel and OpenVPN. For the setup, this blog post mainly follows [this](https://docs.edisglobal.com/advanced-setup-guides/openvpn-over-stunnel) resource.
 
 ### Setting up stunnel 
 
@@ -185,7 +185,7 @@ We then take the `pi.ovpn` file that was generated on the OpenVPN server and mod
 
 The file is saved as `/etc/openvpn/openvpn.conf` to be executed on system startup.
 
-```yaml {lineNos=table}
+{{< highlight yaml "lineNos=table,hl_lines=4-7" >}}
 client
 dev tun
 proto tcp
@@ -229,7 +229,7 @@ verb 3
 
 -----END OpenVPN Static key V1-----
 </tls-crypt>
-```
+{{< / highlight >}}
 
 The added/modified values are: 
 - `remote 127.0.0.1 1194` pointing to the local address instead of the VPN server

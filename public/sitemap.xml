@@ -14,6 +14,12 @@
     <loc>http://localhost:1313/categories/red-team/</loc>
     <lastmod>2025-02-20T17:01:14+01:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/categories/exploitation/</loc>
+    <lastmod>2025-01-28T17:48:35+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/windows-buffer-overflow/</loc>
+    <lastmod>2025-01-28T17:48:35+01:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/categories/hackthebox/</loc>
     <lastmod>2024-12-24T10:54:32+01:00</lastmod>
   </url><url>

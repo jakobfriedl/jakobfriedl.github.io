@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>Windows Binary Exploitation with Space Constraints</title>
+      <link>http://localhost:1313/blog/windows-buffer-overflow/</link>
+      <pubDate>Tue, 28 Jan 2025 17:48:35 +0100</pubDate>
+      
+      <guid>http://localhost:1313/blog/windows-buffer-overflow/</guid>
+      <description>&lt;p&gt;A buffer overflow is a flaw that allows an attacker to write more data to a buffer located on the stack than it can hold, which introduces security vulnerabilities due to the ability to overwrite adjacent memory addresses. In this post, I showcase the exploitation of a stack-based buffer overflow on Windows, where constraints of the target program required me to tweak my payload buffer to achieve code execution.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Stepping into the world of OT Penetration Testing with Alchemy</title>
       <link>http://localhost:1313/blog/alchemy/</link>
       <pubDate>Tue, 24 Dec 2024 10:54:32 +0100</pubDate>

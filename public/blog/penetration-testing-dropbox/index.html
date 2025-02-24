@@ -295,7 +295,7 @@
     
     <p>As an internal penetration tester, one of the most important aspects of the job is to be able to set up testing infrastructure for remote penetration tests without requiring too much effort from your clients or local IT department.  There seem to be thousands of approaches and an unlimited amount of blog posts online talking about different ways to achieve this objective. The one that seemed the most useful to me was using a public VPN server to connect my workstation with a so-called &ldquo;dropbox&rdquo; in the target&rsquo;s internal network.</p>
 <p>After deploying and testing the setup with a virtual machine, I decided to also configure a Raspberry Pi in the same way. The advantage of a Raspberry Pi compared to a virtual machine is that it can be used during physical red team engagements and dropped of at the location in order to get internal network access.</p>
-<p>This blog post explains how to set up red team or penetration testing infrastructure with a Raspberry Pi and OpenVPN. Furthermore, it shows how to bypass restrictive firewalls and deep packet inspection, as well as having the dropbox send check-in requests to a webserver.</p>
+<p>This blog post explains how to set up red team or penetration testing infrastructure with a Raspberry Pi and OpenVPN. Furthermore, it shows how to bypass restrictive firewalls and deep packet inspection, as well as how to have the dropbox send check-in requests to a webserver.</p>
 
 <h2 id="requirements" class="header-anchor-wrapper">Requirements
   <a href="#requirements" class="header-anchor-link">
@@ -349,7 +349,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/Diagram.png">
+        <img loading="lazy" alt="Architecture" src=" /img/pentesting-dropbox/Diagram.png">
     </div>
     
 </figure></p>
@@ -385,7 +385,7 @@
   </a>
 </h3>
 
-<p>Cheapest, most basic ubuntu server, since that is enough for our purpose. The instance shown below will cost around 4€ a month, which is an expendable amount for the provided functionality.</p>
+<p>For the central VPN server instance, we use the cheapest, most basic ubuntu server that DigitalOcean has to offer, since that is enough for our purpose. The instance shown below will cost around 4€ a month, which is an expendable amount for the provided functionality.</p>
 <p>
 
 
@@ -398,11 +398,11 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220102341.png">
+        <img loading="lazy" alt="DigitalOcean droplet" src=" /img/pentesting-dropbox/20250220102341.png">
     </div>
     
 </figure></p>
-<p>We onnect to the server via SSH or the DigitalOcean Console and start configuring stunnel and OpenVPN. For the setup, this blog post mainly follows <a href="https://docs.edisglobal.com/advanced-setup-guides/openvpn-over-stunnel">this</a> resource.</p>
+<p>We connect to the server via SSH or the DigitalOcean Console and start configuring stunnel and OpenVPN. For the setup, this blog post mainly follows <a href="https://docs.edisglobal.com/advanced-setup-guides/openvpn-over-stunnel">this</a> resource.</p>
 
 <h3 id="setting-up-stunnel" class="header-anchor-wrapper">Setting up stunnel
   <a href="#setting-up-stunnel" class="header-anchor-link">
@@ -440,7 +440,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220104057.png">
+        <img loading="lazy" alt="Stunnel setup" src=" /img/pentesting-dropbox/20250220104057.png">
     </div>
     
 </figure></p>
@@ -503,7 +503,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220104731.png">
+        <img loading="lazy" alt="Stunnel running" src=" /img/pentesting-dropbox/20250220104731.png">
     </div>
     
 </figure></p>
@@ -539,7 +539,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220105238.png">
+        <img loading="lazy" alt="OpenVPN configuration" src=" /img/pentesting-dropbox/20250220105238.png">
     </div>
     
 </figure></p>
@@ -557,7 +557,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220105629.png">
+        <img loading="lazy" alt="OpenVPN server.conf" src=" /img/pentesting-dropbox/20250220105629.png">
     </div>
     
 </figure></p>
@@ -577,7 +577,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220110012.png">
+        <img loading="lazy" alt="OpenVPN running" src=" /img/pentesting-dropbox/20250220110012.png">
     </div>
     
 </figure></p>
@@ -634,7 +634,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220163146.png">
+        <img loading="lazy" alt="Dropbox" src=" /img/pentesting-dropbox/20250220163146.png">
     </div>
     
 </figure></p>
@@ -695,22 +695,22 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220124847.png">
+        <img loading="lazy" alt="Stunnel running on dropbox" src=" /img/pentesting-dropbox/20250220124847.png">
     </div>
     
 </figure></p>
 <p>We then take the <code>pi.ovpn</code> file that was generated on the OpenVPN server and modify it to connect to the locally running OpenVPN instance instead. All traffic to this VPN will be forwarded to the droplet on port 443.</p>
 <p>The file is saved as <code>/etc/openvpn/openvpn.conf</code> to be executed on system startup.</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="background-color:#191919"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span></span><span style="background-color:#191919"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span></span><span style="background-color:#191919"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span></span><span style="background-color:#191919"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span></span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
@@ -748,13 +748,13 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>client
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>client
 </span></span><span style="display:flex;"><span>dev tun
 </span></span><span style="display:flex;"><span>proto tcp
-</span></span><span style="display:flex;"><span>remote 127.0.0.1 1194 
-</span></span><span style="display:flex;"><span>route-nopull 
-</span></span><span style="display:flex;"><span>script-security 2 
-</span></span><span style="display:flex;"><span>route-up /etc/openvpn/routing.sh
+</span></span><span style="display:flex; background-color:#191919"><span>remote 127.0.0.1 1194 
+</span></span><span style="display:flex; background-color:#191919"><span>route-nopull 
+</span></span><span style="display:flex; background-color:#191919"><span>script-security 2 
+</span></span><span style="display:flex; background-color:#191919"><span>route-up /etc/openvpn/routing.sh
 </span></span><span style="display:flex;"><span>resolv-retry infinite
 </span></span><span style="display:flex;"><span>nobind
 </span></span><span style="display:flex;"><span>persist-key
@@ -790,10 +790,10 @@
 </span></span><span style="display:flex;"><span>... SNIP ...
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>-----END OpenVPN Static key V1-----
-</span></span><span style="display:flex;"><span>&lt;/tls-crypt&gt;
-</span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span>&lt;/tls-crypt&gt;</span></span></code></pre></td></tr></table>
 </div>
-</div><p>The added/modified values are:</p>
+</div>
+<p>The added/modified values are:</p>
 <ul>
 <li><code>remote 127.0.0.1 1194</code> pointing to the local address instead of the VPN server</li>
 <li><code>route-nooull</code></li>
@@ -838,7 +838,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220130209.png">
+        <img loading="lazy" alt="Dropbox connected to VPN" src=" /img/pentesting-dropbox/20250220130209.png">
     </div>
     
 </figure></p>
@@ -856,7 +856,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220130637.png">
+        <img loading="lazy" alt="New OpenVPN client" src=" /img/pentesting-dropbox/20250220130637.png">
     </div>
     
 </figure></p>
@@ -874,7 +874,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220132714.png">
+        <img loading="lazy" alt="Testing with other client" src=" /img/pentesting-dropbox/20250220132714.png">
     </div>
     
 </figure></p>
@@ -1160,7 +1160,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220144821.png">
+        <img loading="lazy" alt="Webserver running as service" src=" /img/pentesting-dropbox/20250220144821.png">
     </div>
     
 </figure></p>
@@ -1217,7 +1217,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220150019.png">
+        <img loading="lazy" alt="Cronjobs" src=" /img/pentesting-dropbox/20250220150019.png">
     </div>
     
 </figure></p>
@@ -1234,7 +1234,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220155626.png">
+        <img loading="lazy" alt="Successful check-in" src=" /img/pentesting-dropbox/20250220155626.png">
     </div>
     
 </figure></p>
@@ -1251,7 +1251,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220155746.png">
+        <img loading="lazy" alt="Failed check-in" src=" /img/pentesting-dropbox/20250220155746.png">
     </div>
     
 </figure></p>
@@ -1325,7 +1325,7 @@
 
 <figure class="">
     <div>
-        <img loading="lazy" alt="CAPTION" src=" /img/pentesting-dropbox/20250220160858.png">
+        <img loading="lazy" alt="Airomon-ng" src=" /img/pentesting-dropbox/20250220160858.png">
     </div>
     
 </figure></p>

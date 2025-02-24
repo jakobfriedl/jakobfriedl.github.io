@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>Exploitation</title>
+      <link>http://localhost:1313/categories/exploitation/</link>
+      <pubDate>Tue, 28 Jan 2025 17:48:35 +0100</pubDate>
+      
+      <guid>http://localhost:1313/categories/exploitation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Hackthebox</title>
       <link>http://localhost:1313/categories/hackthebox/</link>
       <pubDate>Tue, 24 Dec 2024 10:54:32 +0100</pubDate>
