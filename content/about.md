@@ -27,6 +27,8 @@ bookcase_cover_src_dark: 'cover/catalogue_dark.png'
 
 - [**OSEP**](https://www.credential.net/6b6045cd-be9b-460b-bcb8-746d2aa1e13e#gs.hjw4eh) - OffSec
 - [**OSCP**](https://www.credential.net/8db1869a-e535-4a32-bbdd-7d3352f2fef4#gs.c19803) - OffSec
+- [**OSWP**](https://credentials.offsec.com/a330ba43-0c88-4821-be4a-800a86a594d2) - OffSec
+- [**CRTO**](https://certs.zeropointsecurity.co.uk/fe4f999f-47c7-47f4-83be-c874ccddf6fa) - Zero-Point Security
 - [**Malware Development**](/certs/MalDevAcademy.pdf) - MalDev Academy
 - [**APTLabs**](/certs/APTLabs.pdf) - HackTheBox
 - [**Cybernetics**](/certs/Cybernetics.pdf) - HackTheBox

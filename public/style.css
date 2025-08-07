@@ -100,12 +100,6 @@ b, strong {
  * 1. Correct the inheritance and scaling of font size in all browsers.
  * 2. Correct the odd `em` font sizing in all browsers.
  */
-code, kbd, samp {
-  font-family: monospace, monospace;
-  /* 1 */
-  font-size: 1em;
-  /* 2 */ }
-
 /**
  * Add the correct font size in all browsers.
  */
@@ -396,6 +390,9 @@ html, button, input, select, textarea,
 
 code, kbd, pre {
   font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,liberation mono,courier new,monospace; }
+
+.highlight {
+  font-size: 0.8em; }
 
 body {
   margin-left: auto;

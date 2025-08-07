@@ -1,0 +1,939 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='http://localhost:1313/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Protecting C2 Traffic in Nim</title>
+
+    
+
+    
+
+    
+
+    
+        <meta property="og:url" content="http://localhost:1313/blog/nim-c2-traffic/">
+  <meta property="og:site_name" content="Home">
+  <meta property="og:title" content="Protecting C2 Traffic in Nim">
+  <meta property="og:description" content="For the last couple of months, I have been working on building a command and control framework using the Nim programming language called Conquest. While the development of the tool is still actively ongoing, I am pretty happy with the design of the C2 communication between the team server and the framework’s agents. This blog post outlines how I am combining symmetric and asymmetric cryptography to secure C2 traffic, ensuring that both the confidentiality and integrity of the network packets are guaranteed.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2025-08-06T12:55:49+02:00">
+    <meta property="article:modified_time" content="2025-08-06T12:55:49+02:00">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Protecting C2 Traffic in Nim">
+  <meta name="twitter:description" content="For the last couple of months, I have been working on building a command and control framework using the Nim programming language called Conquest. While the development of the tool is still actively ongoing, I am pretty happy with the design of the C2 communication between the team server and the framework’s agents. This blog post outlines how I am combining symmetric and asymmetric cryptography to secure C2 traffic, ensuring that both the confidentiality and integrity of the network packets are guaranteed.">
+
+    <link rel="stylesheet" href="/style.css" integrity="">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'dark';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/header.js" integrity=""></script>
+
+
+
+    <script defer src="/js/zooming.js" integrity=""></script>
+
+
+
+
+
+
+
+    
+        
+        
+            <script defer src="/js/builtin-copy.js" integrity=""></script>
+        
+    
+
+
+
+    
+    
+    
+    <script defer src="/js/search-en-us.js" integrity=""></script>
+
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/user.css">
+
+    
+</head>
+<body><header>
+    <div id="header_left">
+        <div id="sidebar_btn">
+            <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+            <label id="sidebar_btn_label" for="sidebar_btn_input">
+                <svg id="menu_icon" width="26px" height="26px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</svg>
+            </label>
+            <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                <div id="sidebar_canvas_overlay"></div>
+            </label>
+            <div id="sidebar">
+                <ul><li>
+                            <a href="/blog/">Blog</a></li><li>
+                            <a href="/categories/">Categories</a></li><li>
+                            <a href="/about/">About</a></li><li>
+                            <a href="/"></a></li></ul>
+            </div>
+        </div>
+    
+        <div class="brand">
+            <div>
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbox"><nav id="navbar" class="pure-menu">
+    <ul class="pure-menu-list"><li class="navbar-item pure-menu-item insection">
+                    
+                        <a href="/blog/" class="pure-menu-link">Blog</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/categories/" class="pure-menu-link">Categories</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/" class="pure-menu-link"></a>
+                    
+                </li></ul>
+</nav>
+<div id="theme_tool">
+            <svg id="dark_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</svg>
+            <svg id="light_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</svg>
+        </div>
+
+        
+            <div id="search_tool">
+                <svg id="search_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+
+</svg><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+                <svg width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</svg>
+            </div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+</div>
+        
+ 
+    </div>
+</header>
+<main>
+            <div id="content" class="content-margin">
+                
+
+<h1>Protecting C2 Traffic in Nim</h1>
+
+<div class="blog-post-meta">
+    
+    <span class="date">August 6, 2025</span>
+    
+    
+    
+    <span> • </span>
+     
+ <span class="blog-meta-category">
+    <a href="/categories/c2-dev/">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+
+<span>c2-dev</span></a>
+</span>
+    
+</div>
+
+
+
+
+<details class="collapsible-menu-wrapper"><summary class="collapsible-menu-type"><span>Table of contents</span></summary><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#packet-structure">Packet Structure</a>
+      <ul>
+        <li><a href="#header">Header</a></li>
+        <li><a href="#task-packet">Task Packet</a></li>
+        <li><a href="#result-packet">Result Packet</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-exchange">Key Exchange</a></li>
+    <li><a href="#packet-encryption">Packet Encryption</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#closing-remarks">Closing Remarks</a></li>
+  </ul>
+</nav>
+        
+    </div></details>
+
+
+<div class="blog-body">
+
+    
+        <h2 class="blog-introduction-header" id="introduction">Introduction</h2>
+      
+    
+    
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+    <p>For the last couple of months, I have been working on building a command and control framework using the <em>Nim</em> programming language called <em>Conquest</em>. While the development of the tool is still actively ongoing, I am pretty happy with the design of the C2 communication between the team server and the framework’s agents. This blog post outlines how I am combining symmetric and asymmetric cryptography to secure C2 traffic, ensuring that both the confidentiality and integrity of the network packets are guaranteed.</p>
+<p>Similar to many other C2 frameworks, Conquest consists of a team server, which currently functions as the main user interface, and an agent, which periodically checks in to a listener to poll for new tasks or to post the results of a completed task, such as the output of a console command. The communication between agent and server occurs over HTTP, with the agent sending HTTP POST requests to specific endpoints on the listener. The major problem with HTTP traffic is that any data included in the request is sent in cleartext, which is catastrophic for a tool designed to extract and exfiltrate sensitive data, such as system information, files or credentials from a target system. It is imperative to implement strong encryption, which ensures that only authorized parties can decrypt and read the contents of the network packets.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Conquest" src=" /img/c2-traffic-nim/0.png">
+    </div>
+    
+</figure></p>
+
+<h2 id="packet-structure" class="header-anchor-wrapper">Packet Structure
+  <a href="#packet-structure" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>Conquest&rsquo;s C2 communication uses 4 distinct types of packets:</p>
+<ul>
+<li><strong>Registration</strong>: The first message that a new agent sends to the team server to register itself to it. Contains metadata to identify the agent and the system it is running on, such as the IP-address, hostname and current username.</li>
+<li><strong>Heartbeat</strong>: Small check-in requests that tell the team server that the agent is still alive and waiting for tasks.</li>
+<li><strong>Task</strong>: When an operator interacts with an agents and executes a command, a task packet is dispatched that contains the command to be executed and all arguments.</li>
+<li><strong>Result</strong>: After an agent completes a task, it sends a packet containing the command output to the team server, which displays the result to the operator.</li>
+</ul>
+<p>Originally, I chose the JSON format for the network communication, due to it being easy to implement and simple to parse. However, I soon realized that I would need a more flexible approach to support optional and differently typed arguments, as well as to implement features such as payload encryption properly. As seen in the Wireshark screenshot below, strings in JSON are clearly visible, allowing analysts to effortlessly classify the network traffic as C2 communication. Encrypting sensitive contents would lead to large base64-encoded strings being transmitted, which would look extremely suspicious as well.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="C2 Taffic using JSON" src=" /img/c2-traffic-nim/1.png">
+    </div>
+    
+</figure></p>
+
+<h3 id="header" class="header-anchor-wrapper">Header
+  <a href="#header" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>To address these limitations, I decided to ditch the JSON approach and focused on essentially designing a binary protocol from scratch instead. Each packet consists of a fixed-size header and a variable-length body, with the header containing important unencrypted metadata that helps the recipient process the rest of the packet. Among other fields, it contains the 4-byte hex-identifier of the agent, which tells the team server which agent is polling for tasks or posting results. The variable-length payload body is encrypted using AES-256 GCM using a asymmetrically shared session key and a randomly generated initialization vector (IV), which is included in the header for every message. The GCM mode of operation creates the 16-byte Galois Message Authentication Code (GMAC), which is used to verify that the message has not been tampered with. The cryptographic implementations are more thoroughly explained in sections <a href="#key-exchange">Key Exchange</a> and <a href="#packet-encryption">Packet Encryption</a></p>
+<pre tabindex="0"><code>   0               1               2               3               4
+   ├───────────────┴───────────────┴───────────────┴───────────────┤
+4  │                          Magic Value                          │
+   ├───────────────┬───────────────┬───────────────────────────────┤
+8  │    Version    │  Packet Type  │         Packet Flags          │
+   ├───────────────┴───────────────┴───────────────────────────────┤
+12 │                         Payload Size                          │
+   ├───────────────────────────────────────────────────────────────┤
+16 │                           Agent ID                            │
+   ├───────────────────────────────────────────────────────────────┤
+20 │                       Sequence Number                         │
+   ├───────────────────────────────────────────────────────────────┤
+24 │                                                               │
+28 │                        IV (12 bytes)                          │
+32 │                                                               │
+   ├───────────────────────────────────────────────────────────────┤
+36 │                                                               │
+40 │                   GMAC Authentication Tag                     │
+44 │                          (16 bytes)                           │
+48 │                                                               │
+   └───────────────────────────────────────────────────────────────┘
+                               [Header]
+</code></pre>
+<h3 id="task-packet" class="header-anchor-wrapper">Task Packet
+  <a href="#task-packet" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>While the structure of the header stays the same across all packet types, it is the encrypted payload body that changes. When a new task is dispatched and fetched by an agent, a packet with the structure below is created. It contains the ID of the task, listener and command to be executed, as well as a list of arguments that have been passed to the command.</p>
+<pre tabindex="0"><code>   0               2               4               6               8
+   ├───────────────┴───────────────┴───────────────┴───────────────┤
+0  │                                                               |
+   |                       Header (48 bytes)                       |
+   |                                                               |
+   ├───────────────────────────────┬───────────────────────────────┤
+48 │            Task ID            │           Listener ID         │
+   ├───────────────────────────────┼───────────────┬────────┬──────┤
+56 |           Timestamp           │      CMD      │  ARGC  │      │
+   ├───────────────────────────────┴───────────────┴────────┘      │
+   │                                                               │
+   │                           Argument 1                          │
+   │                                                               │
+   ├───────────────────────────────────────────────────────────────┤
+   │                                                               │
+   │                           Argument X                          │
+   │                              ...                              │
+?? │                                                               │
+   └───────────────────────────────────────────────────────────────┘
+                                [Task]
+</code></pre><p>The number of arguments the agent needs to process is indicated by the argument count (argc) field. The first byte of an argument defines the argument&rsquo;s type, such as <em>INT</em>, <em>STRING</em> or <em>BINARY</em>. While some argument types have fixed sized (boolean = 1 byte, integers = 4 bytes, &hellip;), variable-length arguments, such as strings or binary data are further prefixed with a 4-byte data length field that tells the recipient how many bytes they have to read until the next argument is defined. For example, the command <code>shell whoami /all</code> would produce the following packet body, before it would be encrypted.</p>
+<pre tabindex="0"><code>DE AD BE EF DE AD BE EF 12 34 56 78 01 00 02 00 06 00 00 00 77 68 6F 61 6D 69 00 04 00 00 00 2F 61 6C 6C  
+└────┬────┘ └────┬────┘ └────┬────┘ └─┬─┘ └┤ └┤ └────┬────┘ └───────┬───────┘ └┤ └────┬────┘ └────┬────┘
+   Task       Listener   Timestamp    │    │  │  Length: 6      &#39;whoami&#39;       │  Length: 4     &#39;/all&#39;
+                                      │    │  │                                │
+                       Command ID: &#39;shell&#39; │ Arg Type: String          Arg Type: String
+                                           │
+                                      Arg Count: 2
+</code></pre>
+<h3 id="result-packet" class="header-anchor-wrapper">Result Packet
+  <a href="#result-packet" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h3>
+
+<p>For each task that an agent executes, a result packet is sent to the team server. This packet is structured similarly to the task, with the difference being that it contains the task output instead of the arguments. The <em>Status</em> field indicates whether the task was completed successfully or if an error was encountered during the execution. The <em>Type</em> field informs the team server of the data type of the task output, with the options being <em>STRING</em>, <em>BINARY</em> or <em>NO_OUTPUT</em>. While string data would be displayed in the user interface to the operator, binary data could be written directly to a file.</p>
+<pre tabindex="0"><code>   0               2               4               6               8
+   ├───────────────┴───────────────┴───────────────┴───────────────┤
+0  │                                                               |
+   |                       Header (48 bytes)                       |
+   |                                                               |
+   ├───────────────────────────────┬───────────────────────────────┤
+48 │            Task ID            │           Listener ID         │
+   ├───────────────────────────────┼───────────────┬────────┬──────┤
+56 |           Timestamp           │      CMD      │ Status │ Type │
+   ├───────────────────────────────┼───────────────┴────────┴──────┤
+64 │            Length             │                               │
+   ├───────────────────────────────┘                               │
+   │                                                               │
+   │                         Result Data                           │
+?? │                                                               │
+   └───────────────────────────────────────────────────────────────┘
+                               [Result]
+</code></pre><p>As far as the payload bodies of the other message types are concerned, the heartbeat message only contains the listener ID and a timestamp, while the registration payload includes information collected from the host the agent is running on, including username, hostname, IPv4 address, information about the operating system and information about the process the agent is running in. As with the command arguments, variable-length data fields contain a 4-byte prefix which defines the length of the data that follows. Alongside this metadata, the agent registration packet also contains the public key of the agent, which is then used by the team server to derive the AES encryption key, as outlined in the subsequent section in more detail.</p>
+
+<h2 id="key-exchange" class="header-anchor-wrapper">Key Exchange
+  <a href="#key-exchange" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>As mentioned before, the payload body of a network packet is serialized and encrypted. With symmetric ciphers like AES, the agent and team server have to agree on the same encryption key to process the data. However, the key exchange is far more difficult than just sending a randomly generated key over the network, as this would allow anyone to intercept and use it to decrypt and read the C2 traffic. The solution to this dilemma is public key cryptography. The server and all agents own a key pair, consisting of a private key that is kept secret and a public key which can be shared with everyone. The approach I originally considered was to use RSA<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, where the agent generates an AES session key, encrypts it with the server&rsquo;s public key and then embeds the encrypted key into the registration packet. However, due to the large key size required and computational overhead, I opted to go with the more elegant X25519<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> key exchange, which is based on elliptic-curve cryptography<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. On a high level, it involves the following steps:</p>
+<ol>
+<li>Both parties generate a <strong>32-byte private key</strong>, from which they derive the corresponding public key.</li>
+<li>Both parties calculate a <strong>shared secret</strong> by using their own private key and the other&rsquo;s public key.</li>
+<li>A <strong>32-byte session key</strong> is derived from the shared secret, which is used to encrypt all C2 communication.</li>
+<li>Ephemeral keys, such as the agent&rsquo;s private key and the shared secret are <strong>wiped from memory</strong> as soon as they are no longer needed to prevent them from being compromised.</li>
+</ol>
+<p>While the <em>Nim</em> language does not offer many battle-tested ECC libraries, it has some useful language features that made the implementation of the key exchange straightforward and elegant. Due to Nim&rsquo;s excellent interoperability with the C language via its foreign function interface (FFI), I was able to create a wrapper for the <a href="https://monocypher.org/">Monocypher</a> crypto-library to use it&rsquo;s X25519 implementation.</p>
+<p>Using the <code>{.compile.}</code> directive, the Monocypher library is directly included in the Nim build process, allowing the import of functions defined in the C source code using the <code>{.importc.}</code> pragma shown below.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nim" data-lang="nim"><span style="display:flex;"><span><span style="color:#007f7f">#[
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">    Directory structure
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">    - monocypher
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">        - monocypher.c
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">        - monocypher.h
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">    - crypto.nim
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">    - ...
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">]#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{.compile: <span style="color:#0ff;font-weight:bold">&#34;monocypher/monocypher.c&#34;</span>.}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># C function imports from (monocypher/monocypher.c)</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>crypto_x25519*(shared_secret: <span style="color:#fff;font-weight:bold">ptr</span> byte, your_secret_key: <span style="color:#fff;font-weight:bold">ptr</span> byte, their_public_key: <span style="color:#fff;font-weight:bold">ptr</span> byte) {.importc, cdecl.}
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>crypto_x25519_public_key*(public_key: <span style="color:#fff;font-weight:bold">ptr</span> byte, secret_key: <span style="color:#fff;font-weight:bold">ptr</span> byte) {.importc, cdecl.}
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>crypto_blake2b_keyed*(hash: <span style="color:#fff;font-weight:bold">ptr</span> byte, hash_size: csize_t, key: <span style="color:#fff;font-weight:bold">ptr</span> byte, key_size: csize_t, message: <span style="color:#fff;font-weight:bold">ptr</span> byte, message_size: csize_t) {.importc, cdecl.}
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>crypto_wipe*(data: <span style="color:#fff;font-weight:bold">ptr</span> byte, size: csize_t) {.importc, cdecl.}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Although it is possible to use the imported functions with their C types, it is preferred to implement wrapper functions that use Nim types instead, as shown using the <code>keyExchange</code> function below for example. This highly increases the comprehensibility of the code and makes it easier to use.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nim" data-lang="nim"><span style="display:flex;"><span><span style="color:#007f7f"># Perform X25519 key exchange</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">type</span> Key = <span style="color:#fff;font-weight:bold">array</span>[<span style="color:#ff0;font-weight:bold">32</span>, byte]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>keyExchange*(privateKey: Key, publicKey: Key): Key =
+</span></span><span style="display:flex;"><span>    crypto_x25519(result[<span style="color:#ff0;font-weight:bold">0</span>].<span style="color:#fff;font-weight:bold">addr</span>, privateKey[<span style="color:#ff0;font-weight:bold">0</span>].<span style="color:#fff;font-weight:bold">addr</span>, publicKey[<span style="color:#ff0;font-weight:bold">0</span>].<span style="color:#fff;font-weight:bold">addr</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>As mentioned before, the key exchange calculates a shared secret that is used for key derivation. This secret is, however, not suitable to be used as the encryption key, as it is not cryptographically random. To derive a session key, the secret is hashed using the Blake2B hashing algorithm along with some other information, such as the public keys and a message, to create a secure 32-byte key.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nim" data-lang="nim"><span style="display:flex;"><span><span style="color:#007f7f"># Key derivation</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>combineKeys(publicKey, otherPublicKey: Key): Key = 
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># XOR is a commutative operation, that ensures that the order of the public keys does not matter</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> i in <span style="color:#ff0;font-weight:bold">0</span>..&lt;<span style="color:#ff0;font-weight:bold">32</span>:
+</span></span><span style="display:flex;"><span>        result[i] = publicKey[i] xor otherPublicKey[i]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>deriveSessionKey*(keyPair: KeyPair, publicKey: Key): Key =
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> key: Key
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Calculate shared secret (https://monocypher.org/manual/x25519)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> sharedSecret = keyExchange(keyPair.privateKey, publicKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Add combined public keys to hash</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">let</span> combinedKeys: Key = combineKeys(keyPair.publicKey, publicKey)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">let</span> hashMessage: <span style="color:#fff;font-weight:bold">seq</span>[byte] = <span style="color:#0ff;font-weight:bold">&#34;CONQUEST&#34;</span>.toBytes() &amp; @combinedKeys 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Calculate Blake2b hash and extract the first 32 bytes for the AES key (https://monocypher.org/manual/blake2b)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">let</span> hash = blake2b(hashMessage, sharedSecret)
+</span></span><span style="display:flex;"><span>    copyMem(key[<span style="color:#ff0;font-weight:bold">0</span>].<span style="color:#fff;font-weight:bold">addr</span>, hash[<span style="color:#ff0;font-weight:bold">0</span>].<span style="color:#fff;font-weight:bold">addr</span>, sizeof(Key))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Cleanup </span>
+</span></span><span style="display:flex;"><span>    wipeKey(sharedSecret)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> key
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>With the actual key derivation covered, one question remains: How do the agent and the team server exchange their public keys? As the agent initiates the C2 communication, I needs to have the server&rsquo;s public key embedded into it&rsquo;s binary to avoid unnecessary network handshakes. This is straightforward to implement, thanks to Nim&rsquo;s <em>compile-time variables</em>. By adding the <code>-d</code> flag to the Nim compiler, we can pass values to variables that are defined using the <code>{.strdefine.}</code> or <code>{.intdefine.}</code> pragmas, making this feature incredibly useful for adding listener configuration to the agent or embedding the server&rsquo;s public key.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nim" data-lang="nim"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">const</span> ListenerUuid {.strdefine.}: <span style="color:#fff;font-weight:bold">string</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">const</span> SleepDelay {.intdefine.}: <span style="color:#fff;font-weight:bold">int</span> = <span style="color:#ff0;font-weight:bold">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">const</span> ServerPublicKey {.strdefine.}: <span style="color:#fff;font-weight:bold">string</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>In addition to processing compiler flags passed to the command-line, Nim also checks for configuration files named <code>nim.cfg</code> or <code>config.nims</code> in the current directory. I implemented an agent build process into Conquest, where this configuration file is overwritten with the relevant information, such as the IP address and port of the listener or the standard sleep delay. For the above-mentioned compile-time define pragmas, a <code>nim.cfg</code> file could look like the following.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nim" data-lang="nim"><span style="display:flex;"><span><span style="color:#007f7f"># nim.cfg </span>
+</span></span><span style="display:flex;"><span>-d:ListenerUuid=<span style="color:#0ff;font-weight:bold">&#34;D3AC0FF3&#34;</span>
+</span></span><span style="display:flex;"><span>-d:SleepDelay=<span style="color:#ff0;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>-d:ServerPublicKey=<span style="color:#0ff;font-weight:bold">&#34;mi9o0kPu1ZSbuYfnG5FmDUMAvEXEvp11OW9CQLCyL1U=&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+
+
+
+
+<div class="color-block content-margin color-block-note">
+
+    
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline>
+</svg>
+
+
+
+    <div class="color-block-content">
+        As the server&rsquo;s public key is a byte array, it is <strong>base64-encoded</strong> to embed it as a string.
+    </div>
+</div>
+
+<p>When the agent is executed, it generates its own key pair. Using the newly created private key and the servers&rsquo; public key, it subsequently derives the session key used for the packet encryption. At that point, the agent can wipe its own private key from memory, as it is no longer needed. For the server to be able to derive the same session key, the agent includes its public key in the registration packet.</p>
+<pre tabindex="0"><code>   0               4               8              12              16
+   ├───────────────┴───────────────┴───────────────┴───────────────┤
+0  │                                                               |
+   |                       Header (48 bytes)                       |
+   |                                                               |
+   ├───────────────────────────────────────────────────────────────┤
+48 │                       Agent Public Key                        │
+   │                          (32 bytes)                           │
+   ├───────────────────────────────────────────────────────────────┤
+80 │                                                               │
+   │                                                               │
+   │                      Encrypted Metadata                       │
+   │                                                               │
+   │                                                               │
+?? │                                                               │
+   └───────────────────────────────────────────────────────────────┘
+                            [Registration]
+</code></pre><p>When the server deserializes and parses the registration packet, it uses its own private key and the agent&rsquo;s public key to derive the same session key and stores it in a database. Following this exchange, all communication between an agent and the server is encrypted using this session key as explained in the following section.</p>
+
+<h2 id="packet-encryption" class="header-anchor-wrapper">Packet Encryption
+  <a href="#packet-encryption" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>With the key exchange completed, what follows is the encryption of a network packet&rsquo;s body using the AES-256 block cipher in the <em>Galois/Counter Mode (GCM)</em> mode of operation<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup><sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>. GCM provides authenticated encryption with associated data (AEAD), ensuring that both confidentiality and integrity are guaranteed. This is achieved by combining the Counter Mode (CTR) for encryption and GHASH for authentication. In addition to encrypting the data, an authentication tag, also known as <em>Galois Message Authentication Code (GMAC)</em> is calculated based on the encrypted data and additional authenticated data (AAD). AAD is any unencrypted data, for which integrity and authenticity should be ensured, such as the <em>sequence number</em> that prevents packet replay attacks. If the ciphertext or sequence number of a packet are modified before it is received, the recipient&rsquo;s recalculation of the 16-byte GMAC will not match the tag included in the packet header, allowing the server or agent to detect tampering and discard the packet.</p>
+<p>The <code>nimcrypto</code> library provides a easy-to-use AES-GCM implementation in Nim. As mentioned before, the packet&rsquo;s sequence number is added as AAD to ensure that modifications made to it are detected.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;" class="mc-table"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nim" data-lang="nim"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> nimcrypto 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>encrypt*(key: Key, iv: Iv, data: <span style="color:#fff;font-weight:bold">seq</span>[byte], sequenceNumber: uint32): (<span style="color:#fff;font-weight:bold">seq</span>[byte], AuthenticationTag) =
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Encrypt data using AES-256 GCM</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> encData = newSeq[byte](data.len)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> tag: AuthenticationTag
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> ctx: GCM[aes256]
+</span></span><span style="display:flex;"><span>    ctx.init(key, iv, sequenceNumber.toBytes())    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ctx.encrypt(data, encData)
+</span></span><span style="display:flex;"><span>    ctx.getTag(tag)
+</span></span><span style="display:flex;"><span>    ctx.clear()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> (encData, tag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">proc </span>decrypt*(key: Key, iv: Iv, encData: <span style="color:#fff;font-weight:bold">seq</span>[byte], sequenceNumber: uint32): (<span style="color:#fff;font-weight:bold">seq</span>[byte], AuthenticationTag) =
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># Decrypt data using AES-256 GCM</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> data = newSeq[byte](encData.len)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> tag: AuthenticationTag
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">var</span> ctx: GCM[aes256]
+</span></span><span style="display:flex;"><span>    ctx.init(key, iv, sequenceNumber.toBytes())
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ctx.decrypt(encData, data)
+</span></span><span style="display:flex;"><span>    ctx.getTag(tag)
+</span></span><span style="display:flex;"><span>    ctx.clear()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> (data, tag)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Looking at a registration request in Wireshark, we can see and differentiate the fields in the packet. The registration packet kicks off the sequence tracking with the sequence number 1, which is then incremented for each task and result packet sent. This sequence number is validated whenever a packet is received to prevent replay attacks. The hex data below also clearly shows the 12-byte IV, 16-byte GMAC and 32-byte public key. The byte-array with 101 entries contains the encrypted metadata collected from the target host.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Registration packet bytes" src=" /img/c2-traffic-nim/reg.png">
+    </div>
+    
+</figure></p>
+
+<h2 id="demo" class="header-anchor-wrapper">Demo
+  <a href="#demo" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>This section&rsquo;s purpose is to showcase the C2 traffic generated by the Conquest framework, parts of the user interface and some of the implemented commands and modules.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Executing whoami /all" src=" /img/c2-traffic-nim/whoami.png">
+    </div>
+    
+</figure></p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Filesystem operations" src=" /img/c2-traffic-nim/fs.png">
+    </div>
+    
+</figure></p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Conquest traffic" src=" /img/c2-traffic-nim/traffic.png">
+    </div>
+    
+</figure></p>
+
+<h2 id="closing-remarks" class="header-anchor-wrapper">Closing Remarks
+  <a href="#closing-remarks" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>Even though I find myself constantly rewriting parts of Conquest, such as the module system or serialization logic, I feel that the cryptographic aspect of the C2 traffic is pretty well designed and doesn&rsquo;t require too many improvements for now. Finishing the <a href="https://certs.zeropointsecurity.co.uk/fe4f999f-47c7-47f4-83be-c874ccddf6fa">CRTO</a> course and getting to know my way around Cobalt Strike, has sparked many more ideas I want to implement in my own framework, such as a functional token impersonation system. This project is currently closed-source, as I want to work on it privately until I feel like it&rsquo;s established enough to deserve a proper release. This will, however, not stop me from documenting my development journey with blog posts when I&rsquo;m hitting milestones on certain technical implementations.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://en.wikipedia.org/wiki/RSA_cryptosystem">https://en.wikipedia.org/wiki/RSA_cryptosystem</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.onlinehashcrack.com/guides/cryptography-algorithms/x25519-key-exchange-fast-secure-guide.php">https://www.onlinehashcrack.com/guides/cryptography-algorithms/x25519-key-exchange-fast-secure-guide.php</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Elliptic-curve cryptography (Computerphile): <a href="https://www.youtube.com/watch?v=NF1pwjL9-DE">https://www.youtube.com/watch?v=NF1pwjL9-DE</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">https://en.wikipedia.org/wiki/Galois/Counter_Mode</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>AES GCM (Computerphile): <a href="https://www.youtube.com/watch?v=-fpVv_T4xwA">https://www.youtube.com/watch?v=-fpVv_T4xwA</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article></div>
+    
+</div>
+
+
+    
+<div class="blog-footer">
+    <div class="icon">
+        <a href="https://github.com/jakobfriedl" target="_blank">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">
+        <a href="https://linkedin.com/in/jakobfriedl" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="https://x.com/virtualloc" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="/index.xml" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>RSS</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/>
+</svg>
+
+
+        </a>
+    </div>
+</div>
+
+
+
+                
+                    
+                
+            </div>
+        </main>
+<footer>
+    <article>Jakob Friedl © 2025</article>
+</footer>
+
+</body>
+</html>

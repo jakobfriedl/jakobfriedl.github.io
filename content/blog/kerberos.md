@@ -4,7 +4,7 @@ date: 2023-10-10T20:15:37+02:00
 
 footer: 'Jakob Friedl © 2023' 
 
-categories: []
+categories: ['active-directory']
 blog_post: true
 ---
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Active-Directory on Home</title>
+    <link>http://localhost:1313/categories/active-directory/</link>
+    <description>Recent content in Active-Directory on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Oct 2023 20:15:37 +0200</lastBuildDate><atom:link href="http://localhost:1313/categories/active-directory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kerberos Authentication Protocol</title>
+      <link>http://localhost:1313/blog/kerberos/</link>
+      <pubDate>Tue, 10 Oct 2023 20:15:37 +0200</pubDate>
+      
+      <guid>http://localhost:1313/blog/kerberos/</guid>
+      <description>&lt;p&gt;The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

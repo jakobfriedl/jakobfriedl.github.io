@@ -286,6 +286,76 @@
 </div>
 
     </div>
+    <h5 class="balloon-title-item-content">August 6, 2025</h5>
+</div>
+                <div class="balloon-card-item">
+    <div class="balloon-card-item-line">
+        
+<div class="balloon-line-container">
+    
+    <div class="balloon-line" style="width: 2px"></div>
+    
+</div>
+
+        <div class="balloon-dot"></div>
+
+        
+<div class="balloon-line-container">
+    
+    <div class="balloon-line" style="width: 2px"></div>
+    
+</div>
+
+    </div>
+
+    <div class="balloon-card-item-content" onclick="location.href='\/blog\/nim-c2-traffic\/';" style="cursor: pointer;">
+
+
+
+
+
+<article class="line-numbers">
+    
+    
+    
+    
+        <h1>Protecting C2 Traffic in Nim</h1>
+    
+    <p>For the last couple of months, I have been working on building a command and control framework using the <em>Nim</em> programming language called <em>Conquest</em>. While the development of the tool is still actively ongoing, I am pretty happy with the design of the C2 communication between the team server and the framework’s agents. This blog post outlines how I am combining symmetric and asymmetric cryptography to secure C2 traffic, ensuring that both the confidentiality and integrity of the network packets are guaranteed.</p>
+    
+    <div class="blog-meta-categories">
+    
+        
+            <span class="blog-meta-category">
+                <a href="/categories/c2-dev" class="tag">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+
+ <span>c2-dev</span></a>
+            </span>
+        
+    
+    </div>
+    
+</article></div>
+</div>
+
+            
+                <div class="balloon-title-item">
+    <div class="balloon-title-item-line">
+        
+<div class="balloon-line-container">
+    
+    <div class="balloon-line" style="width: 2px"></div>
+    
+</div>
+
+    </div>
     <h5 class="balloon-title-item-content">February 20, 2025</h5>
 </div>
                 <div class="balloon-card-item">
@@ -337,76 +407,6 @@
 </svg>
 
  <span>red-team</span></a>
-            </span>
-        
-    
-    </div>
-    
-</article></div>
-</div>
-
-            
-                <div class="balloon-title-item">
-    <div class="balloon-title-item-line">
-        
-<div class="balloon-line-container">
-    
-    <div class="balloon-line" style="width: 2px"></div>
-    
-</div>
-
-    </div>
-    <h5 class="balloon-title-item-content">January 28, 2025</h5>
-</div>
-                <div class="balloon-card-item">
-    <div class="balloon-card-item-line">
-        
-<div class="balloon-line-container">
-    
-    <div class="balloon-line" style="width: 2px"></div>
-    
-</div>
-
-        <div class="balloon-dot"></div>
-
-        
-<div class="balloon-line-container">
-    
-    <div class="balloon-line" style="width: 2px"></div>
-    
-</div>
-
-    </div>
-
-    <div class="balloon-card-item-content" onclick="location.href='\/blog\/windows-buffer-overflow\/';" style="cursor: pointer;">
-
-
-
-
-
-<article class="line-numbers">
-    
-    
-    
-    
-        <h1>Windows Binary Exploitation with Space Constraints</h1>
-    
-    <p>A buffer overflow is a flaw that allows an attacker to write more data to a buffer located on the stack than it can hold, which introduces security vulnerabilities due to the ability to overwrite adjacent memory addresses. In this post, I showcase the exploitation of a stack-based buffer overflow on Windows, where constraints of the target program required me to tweak my payload buffer to achieve code execution.</p>
-    
-    <div class="blog-meta-categories">
-    
-        
-            <span class="blog-meta-category">
-                <a href="/categories/exploitation" class="tag">
-<svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24" height="24" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-    stroke-linejoin="round">
-    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
-</svg>
-
- <span>exploitation</span></a>
             </span>
         
     
@@ -539,7 +539,7 @@
     
         
             <span class="blog-meta-category">
-                <a href="/categories/malware" class="tag">
+                <a href="/categories/malware-dev" class="tag">
 <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -548,7 +548,7 @@
     <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
 </svg>
 
- <span>malware</span></a>
+ <span>malware-dev</span></a>
             </span>
         
     
@@ -676,6 +676,21 @@
     <p>The Kerberos protocol provides a single-sign-on (SSO) mutual authentication solution for insecure networks or hosts, where clients and servers verify each others identity based on symmetric-key cryptography and a ticket-based authentication system. Most commonly used in Windows Active Directory environments, a user only has to enter their password once to be able to access a multitude of servers, shares or other resources, while the password is never directly sent across the network, unlike in less secure alternatives like NTLM.</p>
     
     <div class="blog-meta-categories">
+    
+        
+            <span class="blog-meta-category">
+                <a href="/categories/active-directory" class="tag">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+
+ <span>active-directory</span></a>
+            </span>
+        
     
     </div>
     

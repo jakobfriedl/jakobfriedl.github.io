@@ -1,0 +1,443 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang='en-us'><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href='http://localhost:1313/favicon.ico' type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>High-Level Red Team Training: Cybernetics &amp; APTLabs Review</title>
+
+    
+
+    
+
+    
+
+    
+        <meta property="og:url" content="http://localhost:1313/blog/cq/">
+  <meta property="og:site_name" content="Home">
+  <meta property="og:title" content="High-Level Red Team Training: Cybernetics & APTLabs Review">
+  <meta property="og:description" content="A few months ago, I published a blog post where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2024-01-27T22:24:39+02:00">
+    <meta property="article:modified_time" content="2024-01-27T22:24:39+02:00">
+
+    
+
+    
+        
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="High-Level Red Team Training: Cybernetics & APTLabs Review">
+  <meta name="twitter:description" content="A few months ago, I published a blog post where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers.">
+
+    <link rel="stylesheet" href="/style.css" integrity="">
+
+
+
+
+
+    
+    <script>
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'dark';
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    </script>
+<script defer src="/js/header.js" integrity=""></script>
+
+
+
+    <script defer src="/js/zooming.js" integrity=""></script>
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    <script defer src="/js/search-en-us.js" integrity=""></script>
+
+
+
+
+<link rel="stylesheet" href="http://localhost:1313/css/user.css">
+
+    
+</head>
+<body><header>
+    <div id="header_left">
+        <div id="sidebar_btn">
+            <input type="checkbox" id="sidebar_btn_input" class="hidden" />
+            <label id="sidebar_btn_label" for="sidebar_btn_input">
+                <svg id="menu_icon" width="26px" height="26px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+</svg>
+
+</svg>
+            </label>
+            <label id="sidebar_canvas_overlay_wrapper" for="sidebar_btn_input">
+                <div id="sidebar_canvas_overlay"></div>
+            </label>
+            <div id="sidebar">
+                <ul><li>
+                            <a href="/blog/">Blog</a></li><li>
+                            <a href="/categories/">Categories</a></li><li>
+                            <a href="/about/">About</a></li><li>
+                            <a href="/"></a></li></ul>
+            </div>
+        </div>
+    
+        <div class="brand">
+            <div>
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbox"><nav id="navbar" class="pure-menu">
+    <ul class="pure-menu-list"><li class="navbar-item pure-menu-item insection">
+                    
+                        <a href="/blog/" class="pure-menu-link">Blog</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/categories/" class="pure-menu-link">Categories</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/about/" class="pure-menu-link">About</a>
+                    
+                </li><li class="navbar-item pure-menu-item ">
+                    
+                        <a href="/" class="pure-menu-link"></a>
+                    
+                </li></ul>
+</nav>
+<div id="theme_tool">
+            <svg id="dark_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+
+</svg>
+            <svg id="light_mode_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+</svg>
+
+</svg>
+        </div>
+
+        
+            <div id="search_tool">
+                <svg id="search_btn" class="toolbox-btn" width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+
+</svg><div id="search_menu_wrapper" class="hidden">
+    <div id="search_menu">
+        <div id="search_menu_toolbar">
+            <div id="search_menu_input_wrapper">
+                <input id="search_menu_input" type="text" placeholder='Search Posts'>
+            </div>
+            <div id="search_menu_close_btn">
+                <svg width="18px" height="18px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+</svg>
+            </div>
+        </div>
+        <div id="search_menu_results">
+        </div>
+    </div>
+</div>
+</div>
+        
+ 
+    </div>
+</header>
+<main>
+            <div id="content" class="content-margin">
+                
+
+<h1>High-Level Red Team Training: Cybernetics &amp; APTLabs Review</h1>
+
+<div class="blog-post-meta">
+    
+    <span class="date">January 27, 2024</span>
+    
+    
+    
+    <span> • </span>
+     
+ <span class="blog-meta-category">
+    <a href="/categories/hackthebox/">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+
+<span>hackthebox</span></a>
+</span>
+    
+</div>
+
+
+
+
+<details class="collapsible-menu-wrapper"><summary class="collapsible-menu-type"><span>Table of contents</span></summary><div class="collapsible-menu">
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#cybernetics-advanced-ad">Cybernetics: Advanced AD</a></li>
+    <li><a href="#aptlabs-hardcore-threat-simulation">APTLabs: Hardcore Threat Simulation</a></li>
+    <li><a href="#recommended-toolset">Recommended Toolset</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+        
+    </div></details>
+
+
+<div class="blog-body">
+
+    
+        <h2 class="blog-introduction-header" id="introduction">Introduction</h2>
+      
+    
+    
+    <div class="content-margin">
+
+
+
+<article class="line-numbers">
+    
+    
+    <p>A few months ago, I published a <a href="/blog/offshore-rastalabs-zephyr">blog post</a> where I reviewed the first three HackTheBox Pro Labs that I completed in summer 2023: Offshore, RastaLabs and Zephyr. Over the winter months of this year, I took on the challenge to complete the two remaining advanced labs: Cybernetics and APTLabs. They are both rated as highly challenging, realistic and modern training environments for red team operators and penetration testers.</p>
+<p>In this blog post, I want to share the journey I went through while completing these labs with my good friend and colleague <a href="https://leosmith.wtf/">Leo</a> and I&rsquo;m going to give a brief review of the labs themselves and my opinion on them.</p>
+<p>
+
+
+
+
+
+
+
+
+
+<figure class="">
+    <div>
+        <img loading="lazy" alt="Header" src=" /img/htb-labs-2/labs.png">
+    </div>
+    
+</figure></p>
+
+<h2 id="cybernetics-advanced-ad" class="header-anchor-wrapper">Cybernetics: Advanced AD
+  <a href="#cybernetics-advanced-ad" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>Being considered the &ldquo;easier&rdquo; lab of the two, Cybernetics was the first network that was tackled. This Red Team Operator Level 2 lab simulates a red team engagement against a massive and immersive corporate Active Directory environment. The lab is huge: 28 hosts, split up in 5 different domains and 25 distinct flags to collect while moving laterally through the network. As always, the end goal is to obtain Domain Admin privileges on all domains and collect the flags that are planted along the way. While there are a few web applications that are needed to be exploited to progress in the lab, most of the attacks in Cybernetics revolve around Active Directory exploitation, privilege escalation and lateral movement. A huge aspect of the lab which hadn&rsquo;t been covered in the previous ones is the usage of AD Certificate Services to issue certificates and use them for authentication. In order to log in to some of the machines, a valid certificate needs to be presented as a second authentication factor. I personally had to set up a secondary Windows virtual machine, which I used to request and store the certificates. Yet another interesting usage of this technology was the ability to request Code-Signing certificates to execute malicious code under a trusted signature. Cybernetics also simulates real users that are targeted through phishing attacks. The attacker is required to create a malicious document that is sent to the victim and then execute the payload on the victim&rsquo;s machine. Of course, the lab also includes it&rsquo;s fair share of Kerberos attacks, such as the classic resource-based constrained delegation attack, which had become a favourite of mine, as well as SQL Server attacks that exploit linked database servers on separated domains.</p>
+<p>All in all, I would probably consider Cybernetics to be my favourite Pro Lab out of all of them, due to it&rsquo;s size, variety of attack vectors and the fact that is not frustratingly difficult, but still challenging enough to be learned from. Cybernetics required me to take my researching skills to the next level, working with technologies that I had never used or even heard of before. I had to improve my situational awareness and learn to keep track of all valuable information that was collected. For anyone interested in trying this lab, I highly recommend using a proper command and control framework, like <a href="https://github.com/HavocFramework/Havoc/">Havoc</a>, since it drastically simplifies managing compromised hosts, keeping persistence and provides built-in tools to move laterally. For note-taking, I personally use <a href="https://www.notion.so/product">Notion</a>, since it makes it easy for me to organize my notes based on hosts and domains, as well as to keep track of the credentials and flags that I have collected.</p>
+
+<h2 id="aptlabs-hardcore-threat-simulation" class="header-anchor-wrapper">APTLabs: Hardcore Threat Simulation
+  <a href="#aptlabs-hardcore-threat-simulation" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>Cybernetics was already quite a challenge, due to the variety of new attack vectors and technologies that I had not been familiar with. Little did I know how much harder the final lab was going to be. APTLabs takes it&rsquo;s name from the abbreviation APT, which stands for Advanced Persistent Threat. An APT is a group of highly skilled and motivated attackers that are usually sponsored by a nation state. They are known to be extremely stealthy and persistent, often staying in a network for months or even years without being detected. This Red Team Operator Level 3 lab simulates an attack of an external threat actor against the fictitious service provider Gigantic Hosting. The hosts in APTLabs are fully hardened, patched and are not exploitable using CVEs and exploits found on the Internet. Each of the 18 hosts in the lab could be considered a &ldquo;Insane&rdquo;-rated HackTheBox standalone machine. The network is split into 5 domains with their own Active Directory environment each. The goal is to obtain Domain Admin privileges wherever possible and collect the 20 flags that are placed throughout the network.</p>
+<p>APTLabs requires a lot of enumeration, research and creativity. The lab is designed to be as realistic as possible, which means that there are plenty of modern defense mechanisms in place that restrict the freedom of the adversary. These security mechanisms include multi-factor authentication, AppLocker, JEA and many more. All attacks on the network are highly sophisticated and advanced, often requiring multiple steps to be chained together. For instance, there is a lot of focus set on relaying or spoofing attacks. This usually involves coercing authentication from one host to target, in order to compromise it or capturing credentials by utilising man-in-the-middle attacks. Plenty of Active Directory and Kerberos attack vectors are covered, but they usually include some sort of twist that changes the way the attack is performed, requiring some additional configuration or process. The TTPs (tactics, techniques and procedures) in this lab are incredibly interesting and useful for red teamers and penetration testers, since they target technologies and services that are widely used in modern corporate environments, like SCCM, ADFS or MSSQL.</p>
+<p>It took me roughly 2 months to finish APTLabs. It was incredibly challenging and frustrating at times, but I have learning insanely much during the process. I had to learn to think outside the box and to be creative with the tools and techniques that I had at my disposal. I had to learn to be patient and to not give up, even if I was stuck on a machine for days. I had to learn to be organized and to keep track of all the information that I had collected. APTLabs pushed me outside of my comfort zone, but at the end of the day, there is nothing more rewarding than looking at that hard-earned certificate, knowing what it took to get it.</p>
+
+<h2 id="recommended-toolset" class="header-anchor-wrapper">Recommended Toolset
+  <a href="#recommended-toolset" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>In this section, I want to provide a list of the tools that a used to most during my work on the HackTheBox Pro Labs so far. I have a <a href="https://github.com/jakobfriedl/precompiled-binaries">GitHub repository</a>, where I usually push compiled executables or scripts that I find useful. This repository also provides a well structured README and organizes the tools based on their intended use case.</p>
+<ul>
+<li><strong>Havoc</strong>: The most important tool in any red teamer&rsquo;s arsenal. Havoc is a command and control framework with a beautiful user interface and a flagship agent that made infecting machines during the labs a breeze. It provides a lot of useful tools to move laterally, keep persistence and manage compromised hosts, like the dotnet inline-execute command to execute .NET assemblies in memory.</li>
+<li><strong>ligolo-ng</strong>: Ligolo-ng is a simple, lightweight and fast tool that allows penetration testers and red teamers to establish tunnels from a reverse TCP/TLS connection using a tun interface. It made pivoting between domains much easier and faster.</li>
+<li><strong>BloodHound</strong>: BloodHound is an absolute necessity when it comes to Active Directory enumeration. It allows you to visualize the relationships between objects in an Active Directory environment, like trusts, ACLs and group memberships and find paths to escalate privileges and move laterally.</li>
+<li><strong>Rubeus</strong>: There is no Active Directory without Kerberos and there is no Active Directory exploitation without Rubeus. Rubeus is a C# toolset that allows you to perform Kerberos attacks, like AS-REP Roasting, Kerberoasting, ticket attacks and many more. It is one of the most important tools in my arsenal and I used it on every single Windows machine during the labs.</li>
+<li><strong>SharpEfsPotato</strong>: This tool is primarily used together with Havoc to escalate privileges on a machine, where the user has the SeImpersonatePrivilege privilege. More often than not, it was necessary to run commands with SYSTEM privileges, which was achieved by executing SharpEfsPotato with Havoc in memory.</li>
+<li><strong>PowerView</strong>: PowerView is a collection of PowerShell functions that are used to perform Active Directory enumeration and exploitation. It is a must-have for any red teamer or penetration tester and is best used in combination with BloodHound.</li>
+<li><strong>Powermad</strong>: Powermad is a toolset of PowerShell scripts that are used to perform DNS exploits, like adding and modifying ADIDNS nodes. Furthermore, it can be used to easily create new machine accounts in Active Directory, which is necessary to exploit RBCD. The tool was very frequently used in APTLabs and Cybernetics.</li>
+<li><strong>Impacket</strong>: When no shell has been obtained on a machine, Impacket is the way to go. It is a collection of Python scripts that allow you to perform a variety of attacks against Windows machines, like SMB and MSSQL attacks, as well as AS-REP- and Kerberoasting. The incredible impacket-secretsdump command is used to dump the NTLM hashes of all users on a host or domain if a valid set of administrator credentials is provided.</li>
+<li><strong>CrackMapExec</strong>: The Linux-based CrackMapExec (CME) allows you to perform Active Directory enumeration, as well as exploitation using it&rsquo;s module system. Particularly useful was the LAPS module, which allowed me to dump the local administrator password of a machine. I often used CME after compromising a user, to see if I could find any other machines that the user had access to.</li>
+</ul>
+<blockquote>
+<p>Edit: Instead of CrackMapExec, I now use it&rsquo;s successor <a href="https://github.com/Pennyw0rth/NetExec">NetExec</a>, which basically works the same way, but is more actively maintained and has a few additional features.</p>
+</blockquote>
+<p>Remember, this is only a small selection of the tools that I used during the labs. I highly recommend checking out my <a href="https://github.com/jakobfriedl/precompiled-binaries">precompiled-binaries</a> repository on Github, where I have compiled a list of all the tools that I used during the labs. I update this repository quite regularly, so make sure to star it if you find it useful.</p>
+
+<h2 id="conclusion" class="header-anchor-wrapper">Conclusion
+  <a href="#conclusion" class="header-anchor-link">
+    <svg width="16px" height="16px" viewBox="0 0 24 24">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+    stroke-linejoin="round">
+    <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+</svg>
+
+</svg>
+  </a>
+</h2>
+
+<p>As already mentioned, Cybernetics and APTLabs elevated my knowledge on Active Directory enumeration and exploitation techniques, expanded my adversarial toolset and helped me develop situational awareness in complex environments. I am very grateful to have been able to complete them and to now consider myself a Level 3 Red Team Operator. The labs provide a challenge which I would recommend to anyone interested in advanced Active Directory attacks and are definitely worth the price. For more beginner- or intermediate-level difficulty, I would recommend the other Pro Labs, like Offshore and Zephyr, which I have reviewed in my previous blog post.</p>
+</article></div>
+    
+</div>
+
+
+    
+<div class="blog-footer">
+    <div class="icon">
+        <a href="https://github.com/jakobfriedl" target="_blank">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">
+        <a href="https://linkedin.com/in/jakobfriedl" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="https://x.com/virtualloc" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+</svg>
+
+
+        </a>
+    </div>
+    <div class="icon">    
+        <a href="/index.xml" target="_blank" class="icon">
+            
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <title>RSS</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/>
+</svg>
+
+
+        </a>
+    </div>
+</div>
+
+
+
+                
+                    
+                
+            </div>
+        </main>
+<footer>
+    <article>Jakob Friedl © 2024</article>
+</footer>
+
+</body>
+</html>

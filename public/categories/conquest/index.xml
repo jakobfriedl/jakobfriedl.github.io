@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Conquest on Home</title>
+    <link>http://localhost:1313/categories/conquest/</link>
+    <description>Recent content in Conquest on Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 06 Aug 2025 12:55:49 +0200</lastBuildDate><atom:link href="http://localhost:1313/categories/conquest/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Securing C2 Traffic in Nim</title>
+      <link>http://localhost:1313/blog/nim-c2-traffic/</link>
+      <pubDate>Wed, 06 Aug 2025 12:55:49 +0200</pubDate>
+      
+      <guid>http://localhost:1313/blog/nim-c2-traffic/</guid>
+      <description>&lt;p&gt;For the last couple of months, I have been working on building a command and control framework from scratch in the Nim programming language called &lt;em&gt;Conquest&lt;/em&gt;. While the development of the tool is still actively ongoing, I am pretty happy with the design of the C2 communication between the team server and the framework’s agents. This blog post outlines how I am combining symmetric and asymmetric cryptography to secure C2 traffic, ensuring that both the confidentiality and integrity of the network packets are guaranteed.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
