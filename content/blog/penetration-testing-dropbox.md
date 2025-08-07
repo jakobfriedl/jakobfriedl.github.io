@@ -472,7 +472,7 @@ Now, every minute, the Raspberry Pi sends a POST request with its hostname and n
 
 ![Successful check-in](/img/pentesting-dropbox/20250220155626.png)
 
-If the Raspberry Pi is offline, meaning that the script could reach the server, the websites displays the last check-in with a red border. 
+If the Raspberry Pi is offline, meaning that the script could reach the server, the website displays the last check-in with a red border. 
 ![Failed check-in](/img/pentesting-dropbox/20250220155746.png)
 
 ## Next Steps
